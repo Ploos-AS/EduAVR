@@ -4,8 +4,12 @@
 
 volatile uint8_t timer_events;
 
+void timer0_compa_probe(void) __attribute__((noinline, used));
+void timer0_compa_probe(void) { __asm__ __volatile__("" ::: "memory"); }
+
 ISR(TIMER0_COMPA_vect)
 {
+    timer0_compa_probe();
     ++timer_events;
 }
 
