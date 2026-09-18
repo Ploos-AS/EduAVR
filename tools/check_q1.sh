@@ -61,8 +61,8 @@ probe_timer_irq() {
         -ex "target remote :1234" \
         -ex "break timer0_compa_probe" \
         -ex "continue" \
-        -ex "info registers pc sp sreg" \
-        -ex "detach" >"$log" 2>&1
+        -ex "info registers pc sp" \
+        -ex "quit" >"$log" 2>&1
     rc=$?
     set -e
 
@@ -97,7 +97,7 @@ probe_pwm_config() {
         -ex "p/x *(unsigned char*)0x44" \
         -ex "p/x *(unsigned char*)0x45" \
         -ex "p/x *(unsigned char*)0x47" \
-        -ex "detach" >"$log" 2>&1
+        -ex "quit" >"$log" 2>&1
     rc=$?
     set -e
 
@@ -149,7 +149,7 @@ probe_usart0_config() {
         -ex "p/x *(unsigned char*)0xc0" \
         -ex "p/x *(unsigned char*)0xc1" \
         -ex "p/x *(unsigned char*)0xc2" \
-        -ex "detach" >"$log" 2>&1
+        -ex "quit" >"$log" 2>&1
     rc=$?
     set -e
 
