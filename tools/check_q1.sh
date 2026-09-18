@@ -142,7 +142,7 @@ probe_usart0_config() {
     set +e
     timeout 10s avr-gdb -q -batch "$elf" \
         -ex "target remote :1234" \
-        -ex "break echo_loop" \
+        -ex "break usart0_ready" \
         -ex "continue" \
         -ex "p/x *(unsigned char*)0xc5" \
         -ex "p/x *(unsigned char*)0xc4" \
