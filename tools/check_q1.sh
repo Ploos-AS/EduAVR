@@ -43,4 +43,35 @@ for elf in build/blink-c.elf build/blink-asm.elf build/timer-isr-c.elf build/tim
         fail "avr-gdb did not load symbols from $elf"
 done
 
+probe_timer_irq() {
+    elf="$1"
+    log="$elf.irq.gdb.log"
+
+    simavr -m atmega1284p -f 8000000 -g "$elf" >"$elf.irq.sim.log" 2>&1 &
+    sim_pid=$!
+    trap 'kill "$sim_pid" 2>/dev/null || true' EXIT INT TERM
+    sleep 1
+
+    set +e
+    timeout 10s avr-gdb -q -batch "$elf" \
+        -ex "target remote :1234" \
+        -ex "break TIMER0_COMPA_vect" \
+        -ex "continue" \
+        -ex "info registers pc sp sreg" \
+        -ex "detach" >"$log" 2>&1
+    rc=$?
+    set -e
+
+    kill "$sim_pid" 2>/dev/null || true
+    wait "$sim_pid" 2>/dev/null || true
+    trap - EXIT INT TERM
+
+    test "$rc" -eq 0 || { cat "$log" >&2; fail "GDB timer IRQ probe failed for $elf"; }
+    grep -q "Breakpoint .*TIMER0_COMPA_vect" "$log" ||
+        { cat "$log" >&2; fail "Timer0 compare ISR was not reached in $elf"; }
+}
+
+probe_timer_irq build/timer-isr-c.elf
+probe_timer_irq build/timer-isr-asm.elf
+
 printf '%s\n' "Q1 PASS"
