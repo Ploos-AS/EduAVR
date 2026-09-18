@@ -2,6 +2,8 @@
 
 .global main
 .global twi_ready
+.global twi_readback_ready
+.global twi_readback
 
 .section .text
 main:
@@ -31,14 +33,44 @@ main:
     ldi r17, 0x55
     rcall twi_write
 
-    ; STOP
+    ; STOP after write
     ldi r16, _BV(TWINT) | _BV(TWSTO) | _BV(TWEN)
     sts TWCR, r16
+
+    ; Set EEPROM byte address again.
+    ldi r16, _BV(TWINT) | _BV(TWSTA) | _BV(TWEN)
+    sts TWCR, r16
+    rcall twi_wait
+    ldi r17, 0xa0
+    rcall twi_write
+    ldi r17, 0x10
+    rcall twi_write
+
+    ; Repeated START, address 0x50 in read direction => 0xa1.
+    ldi r16, _BV(TWINT) | _BV(TWSTA) | _BV(TWEN)
+    sts TWCR, r16
+    rcall twi_wait
+    ldi r17, 0xa1
+    rcall twi_write
+
+    ; Receive one byte and NACK it.
+    ldi r16, _BV(TWINT) | _BV(TWEN)
+    sts TWCR, r16
+    rcall twi_wait
+    lds r18, TWDR
+    sts twi_readback, r18
+
+    ldi r16, _BV(TWINT) | _BV(TWSTO) | _BV(TWEN)
+    sts TWCR, r16
+    rcall twi_readback_ready
 
 twi_idle:
     rjmp twi_idle
 
 twi_ready:
+    ret
+
+twi_readback_ready:
     ret
 
 twi_wait:
@@ -53,3 +85,7 @@ twi_write:
     sts TWCR, r16
     rcall twi_wait
     ret
+
+.section .bss
+twi_readback:
+    .byte 1
