@@ -1,6 +1,7 @@
 #include <avr/io.h>
 
 .global main
+.global usart0_ready
 
 .equ UBRR_VALUE, 51
 
@@ -20,6 +21,10 @@ main:
 
     ldi r16, _BV(UCSZ01) | _BV(UCSZ00)
     sts UCSR0C, r16
+    rcall usart0_ready
+
+usart0_ready:
+    ret
 
 echo_loop:
 wait_rx:
