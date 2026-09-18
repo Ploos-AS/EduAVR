@@ -301,3 +301,11 @@ build/q1-spi-datapath build/spi-c.elf
 build/q1-spi-datapath build/spi-asm.elf
 
 printf '%s\n' "Q1 PASS"
+
+
+# Deterministic TWI data-path qualification with a virtual EEPROM-like peer.
+cc -std=c11 -Wall -Wextra -Werror -o build/q1-twi-datapath \
+    tools/q1_twi_datapath.c \
+    -I/usr/include/simavr -lsimavr -lelf
+build/q1-twi-datapath build/twi-c.elf
+build/q1-twi-datapath build/twi-asm.elf
