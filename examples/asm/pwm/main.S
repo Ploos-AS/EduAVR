@@ -20,5 +20,6 @@ main:
     ldi r16, _BV(CS01) | _BV(CS00)
     out _SFR_IO_ADDR(TCCR0B), r16
 
+pwm_ready:
 loop:
     rjmp loop
