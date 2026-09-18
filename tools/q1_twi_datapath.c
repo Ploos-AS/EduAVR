@@ -66,7 +66,7 @@ int main(int argc, char **argv)
     uint32_t readback_addr = 0;
     for (uint32_t i = 0; i < fw.symbolcount; ++i) {
         if (fw.symbol[i] && !strcmp(fw.symbol[i]->symbol, "twi_readback")) {
-            readback_addr = fw.symbol[i]->addr - AVR_SEGMENT_OFFSET_DATA;
+            readback_addr = fw.symbol[i]->addr - 0x00800000UL;
             break;
         }
     }
