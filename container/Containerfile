@@ -7,9 +7,12 @@ RUN apt-get update \
       avarice \
       binutils-avr \
       ca-certificates \
+      gcc \
       gcc-avr \
       gdb-avr \
       git \
+      libelf-dev \
+      libsimavr-dev \
       make \
       simavr \
  && rm -rf /var/lib/apt/lists/*
