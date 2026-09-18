@@ -184,4 +184,13 @@ probe_usart0_config() {
 probe_usart0_config build/usart0-echo-c.elf
 probe_usart0_config build/usart0-echo-asm.elf
 
+
+# Deterministic USART0 data-path qualification using simavr's IRQ API.
+# Feed bytes into RX and require the echo firmware to reproduce them on TX.
+cc -std=c11 -Wall -Wextra -Werror -o build/q1-usart-loopback \
+    tools/q1_usart_loopback.c \
+    -I/usr/include/simavr -lsimavr -lelf
+build/q1-usart-loopback build/usart0-echo-c.elf
+build/q1-usart-loopback build/usart0-echo-asm.elf
+
 printf '%s\n' "Q1 PASS"
