@@ -59,7 +59,7 @@ probe_timer_irq() {
     set +e
     timeout 10s avr-gdb -q -batch "$elf" \
         -ex "target remote :1234" \
-        -ex "break TIMER0_COMPA_vect" \
+        -ex "break timer0_compa_probe" \
         -ex "continue" \
         -ex "info registers pc sp sreg" \
         -ex "detach" >"$log" 2>&1
@@ -71,7 +71,7 @@ probe_timer_irq() {
     trap - EXIT INT TERM
 
     test "$rc" -eq 0 || { cat "$log" >&2; fail "GDB timer IRQ probe failed for $elf"; }
-    grep -q "Breakpoint .*TIMER0_COMPA_vect" "$log" ||
+    grep -q "Breakpoint .*timer0_compa_probe" "$log" ||
         { cat "$log" >&2; fail "Timer0 compare ISR was not reached in $elf"; }
 }
 
