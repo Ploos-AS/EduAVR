@@ -365,6 +365,10 @@ cc -std=c11 -Wall -Wextra -Werror -o build/q1-dual-uart-bridge \
 build/q1-dual-uart-bridge build/dual-uart-bridge-c.elf
 build/q1-dual-uart-bridge build/dual-uart-bridge-asm.elf
 
+# The same bidirectional data-path harness stresses the interrupt/ring-buffer bridge.
+build/q1-dual-uart-bridge build/dual-uart-irq-bridge-c.elf
+build/q1-dual-uart-bridge build/dual-uart-irq-bridge-asm.elf
+
 # Deterministic SPI controller data-path qualification using simavr's SPI IRQ API.
 # Firmware transmits 0x55; the virtual peripheral responds with 0xaa.
 cc -std=c11 -Wall -Wextra -Werror -o build/q1-spi-datapath \
