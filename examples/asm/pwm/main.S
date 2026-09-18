@@ -1,6 +1,7 @@
 #include <avr/io.h>
 
 .global main
+.global pwm_ready
 
 .section .text
 main:
