@@ -358,6 +358,13 @@ cc -std=c11 -Wall -Wextra -Werror -o build/q1-usart1-irq-ring \
 build/q1-usart1-irq-ring build/usart1-irq-ring-c.elf
 build/q1-usart1-irq-ring build/usart1-irq-ring-asm.elf
 
+# Bidirectional USART0 <-> USART1 bridge qualification.
+cc -std=c11 -Wall -Wextra -Werror -o build/q1-dual-uart-bridge \
+    tools/q1_dual_uart_bridge.c \
+    -I/usr/include/simavr -lsimavr -lelf
+build/q1-dual-uart-bridge build/dual-uart-bridge-c.elf
+build/q1-dual-uart-bridge build/dual-uart-bridge-asm.elf
+
 # Deterministic SPI controller data-path qualification using simavr's SPI IRQ API.
 # Firmware transmits 0x55; the virtual peripheral responds with 0xaa.
 cc -std=c11 -Wall -Wextra -Werror -o build/q1-spi-datapath \
@@ -366,12 +373,11 @@ cc -std=c11 -Wall -Wextra -Werror -o build/q1-spi-datapath \
 build/q1-spi-datapath build/spi-c.elf
 build/q1-spi-datapath build/spi-asm.elf
 
-printf '%s\n' "Q1 PASS"
-
-
 # Deterministic TWI data-path qualification with a virtual EEPROM-like peer.
 cc -std=c11 -Wall -Wextra -Werror -o build/q1-twi-datapath \
     tools/q1_twi_datapath.c \
     -I/usr/include/simavr -lsimavr -lelf
 build/q1-twi-datapath build/twi-c.elf
 build/q1-twi-datapath build/twi-asm.elf
+
+printf '%s\n' "Q1 PASS"
