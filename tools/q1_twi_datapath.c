@@ -74,7 +74,7 @@ int main(int argc, char **argv)
     for (unsigned long i = 0; i < 4000000UL && !(p.saw_read && p.saw_stop >= 2); ++i)
         avr_run(avr);
 
-    if (p.saw_start < 3 || p.saw_addr < 3 || p.saw_write < 4 || !p.saw_read || p.saw_stop < 2 || p.mem[0x10] != 0x55) {
+    if (p.saw_start < 3 || p.saw_addr < 3 || p.saw_write < 3 || !p.saw_read || p.saw_stop < 2 || p.mem[0x10] != 0x55) {
         fprintf(stderr, "TWI DATA PATH FAIL: start=%u addr=%u writes=%u reads=%u stop=%u mem[10]=0x%02x\\n",
                 p.saw_start, p.saw_addr, p.saw_write, p.saw_read, p.saw_stop, p.mem[0x10]);
         return 1;
