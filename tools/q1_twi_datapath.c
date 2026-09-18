@@ -13,7 +13,7 @@ typedef struct {
     unsigned index;
     uint8_t reg;
     uint8_t mem[256];
-    unsigned saw_start, saw_addr, saw_write, saw_stop;
+    unsigned saw_start, saw_addr, saw_write, saw_read, saw_stop;
 } peer_t;
 
 static void peer_out(struct avr_irq_t *irq, uint32_t value, void *param)
@@ -27,6 +27,7 @@ static void peer_out(struct avr_irq_t *irq, uint32_t value, void *param)
         p->saw_start++;
         if ((v.u.twi.addr & 0xfe) == 0xa0 || v.u.twi.addr == 0x50) {
             p->selected = 1;
+            p->index = 0;
             p->saw_addr++;
             avr_raise_irq(p->input, avr_twi_irq_msg(TWI_COND_ACK, v.u.twi.addr, 1));
         }
@@ -37,6 +38,11 @@ static void peer_out(struct avr_irq_t *irq, uint32_t value, void *param)
         if (p->index++ == 0) p->reg = v.u.twi.data;
         else p->mem[p->reg++] = v.u.twi.data;
         avr_raise_irq(p->input, avr_twi_irq_msg(TWI_COND_ACK, v.u.twi.addr, 1));
+    }
+    if (v.u.twi.msg & TWI_COND_READ) {
+        if (!p->selected) return;
+        p->saw_read++;
+        avr_raise_irq(p->input, avr_twi_irq_msg(TWI_COND_READ, v.u.twi.addr, p->mem[p->reg++]));
     }
     if (v.u.twi.msg & TWI_COND_STOP) {
         p->saw_stop++;
@@ -65,14 +71,14 @@ int main(int argc, char **argv)
     if (!p.input || !output) { fprintf(stderr, "TWI IRQ unavailable\n"); return 2; }
     avr_irq_register_notify(output, peer_out, &p);
 
-    for (unsigned long i = 0; i < 2000000UL && !p.saw_stop; ++i)
+    for (unsigned long i = 0; i < 4000000UL && !(p.saw_read && p.saw_stop >= 2); ++i)
         avr_run(avr);
 
-    if (!p.saw_start || !p.saw_addr || p.saw_write < 2 || !p.saw_stop || p.mem[0x10] != 0x55) {
-        fprintf(stderr, "TWI DATA PATH FAIL: start=%u addr=%u writes=%u stop=%u mem[10]=0x%02x\n",
-                p.saw_start, p.saw_addr, p.saw_write, p.saw_stop, p.mem[0x10]);
+    if (p.saw_start < 3 || p.saw_addr < 3 || p.saw_write < 4 || !p.saw_read || p.saw_stop < 2 || p.mem[0x10] != 0x55) {
+        fprintf(stderr, "TWI DATA PATH FAIL: start=%u addr=%u writes=%u reads=%u stop=%u mem[10]=0x%02x\\n",
+                p.saw_start, p.saw_addr, p.saw_write, p.saw_read, p.saw_stop, p.mem[0x10]);
         return 1;
     }
-    printf("TWI DATA PATH PASS: START address=0x50 write [0x10]=0x55 STOP\n");
+    printf("TWI DATA PATH PASS: write [0x10]=0x55 and read-back transaction completed\\n");
     return 0;
 }
