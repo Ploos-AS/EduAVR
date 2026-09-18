@@ -24,7 +24,7 @@ timers: $(BUILD)/timer-isr-c.hex $(BUILD)/timer-isr-asm.hex
 
 pwm: $(BUILD)/pwm-c.hex $(BUILD)/pwm-asm.hex
 
-usart: $(BUILD)/usart0-echo-c.hex $(BUILD)/usart0-echo-asm.hex $(BUILD)/usart0-irq-ring-c.hex $(BUILD)/usart0-irq-ring-asm.hex
+usart: $(BUILD)/usart0-echo-c.hex $(BUILD)/usart0-echo-asm.hex $(BUILD)/usart0-irq-ring-c.hex $(BUILD)/usart0-irq-ring-asm.hex $(BUILD)/usart1-echo-c.hex $(BUILD)/usart1-echo-asm.hex
 
 spi: $(BUILD)/spi-c.hex $(BUILD)/spi-asm.hex
 
@@ -60,6 +60,12 @@ $(BUILD)/usart0-irq-ring-c.elf: examples/c/usart0-irq-ring/main.c | $(BUILD)
 $(BUILD)/usart0-irq-ring-asm.elf: examples/asm/usart0-irq-ring/main.S | $(BUILD)
 	$(CC) $(CFLAGS) $< -o $@
 
+$(BUILD)/usart1-echo-c.elf: examples/c/usart1-echo/main.c | $(BUILD)
+	$(CC) $(CFLAGS) $< -o $@
+
+$(BUILD)/usart1-echo-asm.elf: examples/asm/usart1-echo/main.S | $(BUILD)
+	$(CC) $(CFLAGS) $< -o $@
+
 $(BUILD)/spi-c.elf: examples/c/spi/main.c | $(BUILD)
 	$(CC) $(CFLAGS) $< -o $@
 
@@ -86,6 +92,8 @@ disasm: all
 	$(OBJDUMP) -d -S $(BUILD)/usart0-echo-asm.elf > $(BUILD)/usart0-echo-asm.lst
 	$(OBJDUMP) -d -S $(BUILD)/usart0-irq-ring-c.elf > $(BUILD)/usart0-irq-ring-c.lst
 	$(OBJDUMP) -d -S $(BUILD)/usart0-irq-ring-asm.elf > $(BUILD)/usart0-irq-ring-asm.lst
+	$(OBJDUMP) -d -S $(BUILD)/usart1-echo-c.elf > $(BUILD)/usart1-echo-c.lst
+	$(OBJDUMP) -d -S $(BUILD)/usart1-echo-asm.elf > $(BUILD)/usart1-echo-asm.lst
 	$(OBJDUMP) -d -S $(BUILD)/spi-c.elf > $(BUILD)/spi-c.lst
 	$(OBJDUMP) -d -S $(BUILD)/spi-asm.elf > $(BUILD)/spi-asm.lst
 	$(OBJDUMP) -d -S $(BUILD)/twi-c.elf > $(BUILD)/twi-c.lst
