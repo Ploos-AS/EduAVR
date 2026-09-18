@@ -10,9 +10,9 @@ LDFLAGS := -mmcu=$(MCU)
 
 BUILD := build
 
-.PHONY: all c asm disasm size check clean
+.PHONY: all c asm timers disasm size check clean
 
-all: c asm
+all: c asm timers
 
 $(BUILD):
 	mkdir -p $(BUILD)
@@ -20,10 +20,18 @@ $(BUILD):
 c: $(BUILD)/blink-c.hex
 asm: $(BUILD)/blink-asm.hex
 
+timers: $(BUILD)/timer-isr-c.hex $(BUILD)/timer-isr-asm.hex
+
 $(BUILD)/blink-c.elf: examples/c/blink/main.c | $(BUILD)
 	$(CC) $(CFLAGS) $< -o $@
 
 $(BUILD)/blink-asm.elf: examples/asm/blink/main.S | $(BUILD)
+	$(CC) $(CFLAGS) $< -o $@
+
+$(BUILD)/timer-isr-c.elf: examples/c/timer-isr/main.c | $(BUILD)
+	$(CC) $(CFLAGS) $< -o $@
+
+$(BUILD)/timer-isr-asm.elf: examples/asm/timer-isr/main.S | $(BUILD)
 	$(CC) $(CFLAGS) $< -o $@
 
 $(BUILD)/%.hex: $(BUILD)/%.elf
@@ -32,6 +40,8 @@ $(BUILD)/%.hex: $(BUILD)/%.elf
 disasm: all
 	$(OBJDUMP) -d -S $(BUILD)/blink-c.elf > $(BUILD)/blink-c.lst
 	$(OBJDUMP) -d -S $(BUILD)/blink-asm.elf > $(BUILD)/blink-asm.lst
+	$(OBJDUMP) -d -S $(BUILD)/timer-isr-c.elf > $(BUILD)/timer-isr-c.lst
+	$(OBJDUMP) -d -S $(BUILD)/timer-isr-asm.elf > $(BUILD)/timer-isr-asm.lst
 
 size: all
 	$(SIZE) -C --mcu=$(MCU) $(BUILD)/*.elf
