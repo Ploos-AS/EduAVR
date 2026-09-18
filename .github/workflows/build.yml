@@ -18,7 +18,9 @@ jobs:
       - name: Install checkout dependencies
         run: apt-get update && apt-get install -y git ca-certificates
       - uses: actions/checkout@v4
-      - name: Install AVR toolchain
-        run: apt-get update && apt-get install -y gcc-avr binutils-avr avr-libc avrdude make
-      - name: Qualify M1
+      - name: Install AVR toolchain and simulator
+        run: apt-get update && apt-get install -y gcc-avr binutils-avr avr-libc avrdude avarice gdb-avr make simavr coreutils
+      - name: Qualify M1 / Q0
         run: sh tools/check_m1.sh
+      - name: Qualify Q1 simulator
+        run: sh tools/check_q1.sh
