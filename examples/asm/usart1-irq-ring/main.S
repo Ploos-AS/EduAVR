@@ -20,8 +20,8 @@ tx_tail: .skip 1
 ; symbols used by avr-libc instead of placing raw .org vectors here.
 .global __vector_28
 .global __vector_29
-.set __vector_20, usart1_rx_isr
-.set __vector_21, usart1_udre_isr
+.set __vector_28, usart1_rx_isr
+.set __vector_29, usart1_udre_isr
 
 main:
     ldi r16, hi8(UBRR_VALUE)
