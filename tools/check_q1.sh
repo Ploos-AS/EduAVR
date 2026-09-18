@@ -76,4 +76,55 @@ probe_timer_irq() {
 probe_timer_irq build/timer-isr-c.elf
 probe_timer_irq build/timer-isr-asm.elf
 
+
+probe_pwm_config() {
+    elf="$1"
+    log="$elf.pwm.gdb.log"
+
+    simavr -m atmega1284p -f 8000000 -g "$elf" >"$elf.pwm.sim.log" 2>&1 &
+    sim_pid=$!
+    trap 'kill "$sim_pid" 2>/dev/null || true' EXIT INT TERM
+    sleep 1
+
+    set +e
+    timeout 10s avr-gdb -q -batch "$elf" \
+        -ex "target remote :1234" \
+        -ex "break loop" \
+        -ex "continue" \
+        -ex "p/x *(unsigned char*)0x24" \
+        -ex "p/x *(unsigned char*)0x44" \
+        -ex "p/x *(unsigned char*)0x45" \
+        -ex "p/x *(unsigned char*)0x47" \
+        -ex "detach" >"$log" 2>&1
+    rc=$?
+    set -e
+
+    kill "$sim_pid" 2>/dev/null || true
+    wait "$sim_pid" 2>/dev/null || true
+    trap - EXIT INT TERM
+
+    test "$rc" -eq 0 || { cat "$log" >&2; fail "GDB PWM probe failed for $elf"; }
+
+    # ATmega1284P data-space addresses:
+    # DDRB=0x24 -> PB3 output => bit 3 set
+    # TCCR0A=0x44 -> COM0A1|WGM01|WGM00 = 0x83
+    # TCCR0B=0x45 -> CS01|CS00 = 0x03
+    # OCR0A=0x47 -> 63 = 0x3f
+    values=$(grep -E '^\\$[0-9]+ = 0x' "$log" | sed 's/.*= //')
+    set -- $values
+    test "$#" -ge 4 || { cat "$log" >&2; fail "could not read PWM registers from $elf"; }
+    ddrb=$1; tccr0a=$2; tccr0b=$3; ocr0a=$4
+
+    case "$ddrb" in
+        0x8|0x08|0x9|0x09|0xa|0x0a|0xb|0x0b|0xc|0x0c|0xd|0x0d|0xe|0x0e|0xf|0x0f) ;;
+        *) fail "PB3 not configured as output in $elf (DDRB=$ddrb)" ;;
+    esac
+    test "$tccr0a" = "0x83" || fail "unexpected TCCR0A in $elf: $tccr0a"
+    test "$tccr0b" = "0x3" || test "$tccr0b" = "0x03" || fail "unexpected TCCR0B in $elf: $tccr0b"
+    test "$ocr0a" = "0x3f" || fail "unexpected OCR0A in $elf: $ocr0a"
+}
+
+probe_pwm_config build/pwm-c.elf
+probe_pwm_config build/pwm-asm.elf
+
 printf '%s\n' "Q1 PASS"
