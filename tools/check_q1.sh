@@ -112,7 +112,7 @@ probe_pwm_config() {
     # TCCR0A=0x44 -> COM0A1|WGM01|WGM00 = 0x83
     # TCCR0B=0x45 -> CS01|CS00 = 0x03
     # OCR0A=0x47 -> 63 = 0x3f
-    values=$(grep -E '^\\$[0-9]+ = 0x' "$log" | sed 's/.*= //')
+    values=$(awk '/^[$][0-9]+ = 0x/ { sub(/^.*= /, ""); print }' "$log")
     set -- $values
     test "$#" -ge 4 || { cat "$log" >&2; fail "could not read PWM registers from $elf"; }
     ddrb=$1; tccr0a=$2; tccr0b=$3; ocr0a=$4
@@ -159,7 +159,7 @@ probe_usart0_config() {
 
     test "$rc" -eq 0 || { cat "$log" >&2; fail "GDB USART0 probe failed for $elf"; }
 
-    values=$(grep -E '^\\$[0-9]+ = 0x' "$log" | sed 's/.*= //')
+    values=$(awk '/^[$][0-9]+ = 0x/ { sub(/^.*= /, ""); print }' "$log")
     set -- $values
     test "$#" -ge 5 || { cat "$log" >&2; fail "could not read USART0 registers from $elf"; }
 
