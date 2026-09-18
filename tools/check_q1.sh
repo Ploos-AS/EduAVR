@@ -38,9 +38,11 @@ run_sim build/pwm-c.elf
 run_sim build/pwm-asm.elf
 run_sim build/usart0-echo-c.elf
 run_sim build/usart0-echo-asm.elf
+run_sim build/spi-c.elf
+run_sim build/spi-asm.elf
 
 # Confirm GDB can read both AVR ELF files and their symbols non-interactively.
-for elf in build/blink-c.elf build/blink-asm.elf build/timer-isr-c.elf build/timer-isr-asm.elf build/pwm-c.elf build/pwm-asm.elf build/usart0-echo-c.elf build/usart0-echo-asm.elf; do
+for elf in build/blink-c.elf build/blink-asm.elf build/timer-isr-c.elf build/timer-isr-asm.elf build/pwm-c.elf build/pwm-asm.elf build/usart0-echo-c.elf build/usart0-echo-asm.elf build/spi-c.elf build/spi-asm.elf; do
     avr-gdb -q -batch         -ex "file $elf"         -ex "info files" >"$elf.gdb.log" 2>&1 ||
         { cat "$elf.gdb.log" >&2; fail "avr-gdb could not inspect $elf"; }
     grep -q "Symbols from" "$elf.gdb.log" ||
@@ -184,6 +186,53 @@ probe_usart0_config() {
 probe_usart0_config build/usart0-echo-c.elf
 probe_usart0_config build/usart0-echo-asm.elf
 
+
+
+probe_spi_config() {
+    elf="$1"
+    log="$elf.spi.gdb.log"
+
+    simavr -m atmega1284p -f 8000000 -g "$elf" >"$elf.spi.sim.log" 2>&1 &
+    sim_pid=$!
+    trap 'kill "$sim_pid" 2>/dev/null || true' EXIT INT TERM
+    sleep 1
+
+    set +e
+    timeout 10s avr-gdb -q -batch "$elf" \
+        -ex "target remote :1234" \
+        -ex "break spi_ready" \
+        -ex "continue" \
+        -ex "p/x *(unsigned char*)0x24" \
+        -ex "p/x *(unsigned char*)0x4c" \
+        -ex "p/x *(unsigned char*)0x4d" \
+        -ex "quit" >"$log" 2>&1
+    rc=$?
+    set -e
+
+    kill "$sim_pid" 2>/dev/null || true
+    wait "$sim_pid" 2>/dev/null || true
+    trap - EXIT INT TERM
+
+    test "$rc" -eq 0 || { cat "$log" >&2; fail "GDB SPI probe failed for $elf"; }
+
+    values=$(awk '/^[$][0-9]+ = 0x/ { sub(/^.*= /, ""); print }' "$log")
+    set -- $values
+    test "$#" -ge 3 || { cat "$log" >&2; fail "could not read SPI registers from $elf"; }
+    ddrb=$1; spcr=$2; spsr=$3
+
+    # PB4/SS, PB5/MOSI and PB7/SCK are outputs; PB6/MISO remains input.
+    test "$ddrb" = "0xb0" || fail "unexpected SPI DDRB in $elf: $ddrb"
+    # SPE|MSTR|SPR0 = 0x51: enabled controller, mode 0, F_CPU/16.
+    test "$spcr" = "0x51" || fail "unexpected SPCR in $elf: $spcr"
+    # SPI2X must be clear. Other SPSR bits are live peripheral state.
+    case "$spsr" in
+        0x0|0x00|0x80) ;;
+        *) fail "unexpected SPSR in $elf: $spsr" ;;
+    esac
+}
+
+probe_spi_config build/spi-c.elf
+probe_spi_config build/spi-asm.elf
 
 # Deterministic USART0 data-path qualification using simavr's IRQ API.
 # Feed bytes into RX and require the echo firmware to reproduce them on TX.
