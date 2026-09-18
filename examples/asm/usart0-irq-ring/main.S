@@ -16,13 +16,12 @@ tx_tail: .skip 1
 
 .section .text
 
-; ATmega1284P interrupt vectors use 4-byte JMP entries.
-; Vector 20 (USART0 RX complete) is at byte address 0x50;
-; vector 21 (USART0 data register empty) is at byte address 0x54.
-.org 0x50
-    jmp usart0_rx_isr
-.org 0x54
-    jmp usart0_udre_isr
+; avr-gcc startup code owns the vector table. Override the weak ISR
+; symbols used by avr-libc instead of placing raw .org vectors here.
+.global __vector_20
+.global __vector_21
+.set __vector_20, usart0_rx_isr
+.set __vector_21, usart0_udre_isr
 
 main:
     ldi r16, hi8(UBRR_VALUE)
