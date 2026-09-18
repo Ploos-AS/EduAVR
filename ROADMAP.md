@@ -98,6 +98,22 @@ Compiler diagnostics, host-side sanitizers where applicable, stack guards/canari
 ## S12 — Security qualification
 Static analysis, host fuzzing, Q1 simulator regression and targeted Q2 hardware qualification.
 
+## Course 2 appendices
+
+### Appendix S-A — Extended debugging
+Advanced debugging for security work: instruction-level GDB/simavr sessions, stack and SRAM forensics, watchpoints, corrupted-state reconstruction, interrupt-aware debugging, crash triage, fault localization, optimized-code debugging and repeatable debugger-driven security labs. Builds directly on Course 1 Appendix B.
+
+### Appendix S-B — Extended reverse engineering
+Advanced analysis of controlled AVR firmware: stripped ELF and raw HEX, vector-table reconstruction, function discovery, call/control-flow analysis, compiler idioms, data/code identification, peripheral-register inference, protocol-behaviour reconstruction and comparison of recovered behaviour with source. Builds directly on Course 1 Appendix C.
+
+### Appendix S-C — Firmware forensics
+Crash-state capture, SRAM/EEPROM inspection, persistent-state analysis, firmware/version identification, integrity evidence and reproducible incident-analysis exercises on EduAVR lab firmware.
+
+### Appendix S-D — Fuzzing and adversarial testing
+Host-side fuzz harnesses, corpus design, malformed serial/protocol inputs, deterministic reproduction, minimization of failing cases and replay against Q1 simulator targets.
+
+The extended security appendices use only deliberately vulnerable or controlled EduAVR targets and focus on understanding, diagnosis, remediation and verification.
+
 ## Security lab infrastructure
 Planned controlled targets include `unsafe-copy`, `off-by-one`, `integer-wrap`, `stack-corruption`, `uart-parser`, `ringbuffer-overrun` and `eeprom-trust`. Labs must remain deterministic, educational and isolated from real-world targets.
 
