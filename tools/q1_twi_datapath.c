@@ -5,6 +5,10 @@
 #include "sim_avr.h"
 #include "sim_elf.h"
 #include "avr_twi.h"
+#include <fcntl.h>
+#include <unistd.h>
+#include <libelf.h>
+#include <gelf.h>
 
 typedef struct {
     avr_t *avr;
@@ -64,12 +68,32 @@ int main(int argc, char **argv)
     avr->frequency = 8000000;
 
     uint32_t readback_addr = 0;
-    for (uint32_t i = 0; i < fw.symbolcount; ++i) {
-        if (fw.symbol[i] && !strcmp(fw.symbol[i]->symbol, "twi_readback")) {
-            readback_addr = fw.symbol[i]->addr - 0x00800000UL;
-            break;
+    if (elf_version(EV_CURRENT) == EV_NONE) return 2;
+    int fd = open(argv[1], O_RDONLY);
+    if (fd < 0) return 2;
+    Elf *elf = elf_begin(fd, ELF_C_READ, NULL);
+    if (!elf) { close(fd); return 2; }
+    Elf_Scn *scn = NULL;
+    while ((scn = elf_nextscn(elf, scn)) != NULL && !readback_addr) {
+        GElf_Shdr shdr;
+        if (!gelf_getshdr(scn, &shdr) || shdr.sh_type != SHT_SYMTAB) continue;
+        Elf_Data *data = elf_getdata(scn, NULL);
+        if (!data || !shdr.sh_entsize) continue;
+        size_t count = shdr.sh_size / shdr.sh_entsize;
+        for (size_t i = 0; i < count; ++i) {
+            GElf_Sym sym;
+            if (!gelf_getsym(data, (int)i, &sym)) continue;
+            const char *name = elf_strptr(elf, shdr.sh_link, sym.st_name);
+            if (name && strcmp(name, "twi_readback") == 0) {
+                uint64_t addr = sym.st_value;
+                if (addr >= 0x800000ULL) addr -= 0x800000ULL;
+                if (addr <= 0xffffULL) readback_addr = (uint32_t)addr;
+                break;
+            }
         }
     }
+    elf_end(elf);
+    close(fd);
     if (!readback_addr) { fprintf(stderr, "twi_readback symbol unavailable\n"); return 2; }
 
     peer_t p;
