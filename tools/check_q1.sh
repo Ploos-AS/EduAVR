@@ -71,7 +71,7 @@ probe_timer_irq() {
     trap - EXIT INT TERM
 
     test "$rc" -eq 0 || { cat "$log" >&2; fail "GDB timer IRQ probe failed for $elf"; }
-    grep -q "Breakpoint .*timer0_compa_probe" "$log" ||
+    grep -Eq "Breakpoint [0-9]+,.*|in timer0_compa_probe" "$log" ||
         { cat "$log" >&2; fail "Timer0 compare ISR was not reached in $elf"; }
 }
 
