@@ -36,9 +36,11 @@ run_sim build/timer-isr-c.elf
 run_sim build/timer-isr-asm.elf
 run_sim build/pwm-c.elf
 run_sim build/pwm-asm.elf
+run_sim build/usart0-echo-c.elf
+run_sim build/usart0-echo-asm.elf
 
 # Confirm GDB can read both AVR ELF files and their symbols non-interactively.
-for elf in build/blink-c.elf build/blink-asm.elf build/timer-isr-c.elf build/timer-isr-asm.elf build/pwm-c.elf build/pwm-asm.elf; do
+for elf in build/blink-c.elf build/blink-asm.elf build/timer-isr-c.elf build/timer-isr-asm.elf build/pwm-c.elf build/pwm-asm.elf build/usart0-echo-c.elf build/usart0-echo-asm.elf; do
     avr-gdb -q -batch         -ex "file $elf"         -ex "info files" >"$elf.gdb.log" 2>&1 ||
         { cat "$elf.gdb.log" >&2; fail "avr-gdb could not inspect $elf"; }
     grep -q "Symbols from" "$elf.gdb.log" ||
@@ -126,5 +128,60 @@ probe_pwm_config() {
 
 probe_pwm_config build/pwm-c.elf
 probe_pwm_config build/pwm-asm.elf
+
+
+probe_usart0_config() {
+    elf="$1"
+    log="$elf.usart.gdb.log"
+
+    simavr -m atmega1284p -f 8000000 -g "$elf" >"$elf.usart.sim.log" 2>&1 &
+    sim_pid=$!
+    trap 'kill "$sim_pid" 2>/dev/null || true' EXIT INT TERM
+    sleep 1
+
+    set +e
+    timeout 10s avr-gdb -q -batch "$elf" \
+        -ex "target remote :1234" \
+        -ex "break echo_loop" \
+        -ex "continue" \
+        -ex "p/x *(unsigned char*)0xc5" \
+        -ex "p/x *(unsigned char*)0xc4" \
+        -ex "p/x *(unsigned char*)0xc0" \
+        -ex "p/x *(unsigned char*)0xc1" \
+        -ex "p/x *(unsigned char*)0xc2" \
+        -ex "detach" >"$log" 2>&1
+    rc=$?
+    set -e
+
+    kill "$sim_pid" 2>/dev/null || true
+    wait "$sim_pid" 2>/dev/null || true
+    trap - EXIT INT TERM
+
+    test "$rc" -eq 0 || { cat "$log" >&2; fail "GDB USART0 probe failed for $elf"; }
+
+    values=$(grep -E '^\\$[0-9]+ = 0x' "$log" | sed 's/.*= //')
+    set -- $values
+    test "$#" -ge 5 || { cat "$log" >&2; fail "could not read USART0 registers from $elf"; }
+
+    ubrr0h=$1; ubrr0l=$2; ucsr0a=$3; ucsr0b=$4; ucsr0c=$5
+
+    test "$ubrr0h" = "0x0" || test "$ubrr0h" = "0x00" ||
+        fail "unexpected UBRR0H in $elf: $ubrr0h"
+    test "$ubrr0l" = "0x33" ||
+        fail "unexpected UBRR0L in $elf: $ubrr0l"
+    test "$ucsr0b" = "0x18" ||
+        fail "RX/TX not enabled as expected in $elf: UCSR0B=$ucsr0b"
+    test "$ucsr0c" = "0x6" || test "$ucsr0c" = "0x06" ||
+        fail "USART0 not configured for 8-bit frame as expected in $elf: UCSR0C=$ucsr0c"
+
+    # UCSR0A contains live status bits, so only assert that U2X0 remains clear.
+    case "$ucsr0a" in
+        0x*) ;;
+        *) fail "invalid UCSR0A value in $elf: $ucsr0a" ;;
+    esac
+}
+
+probe_usart0_config build/usart0-echo-c.elf
+probe_usart0_config build/usart0-echo-asm.elf
 
 printf '%s\n' "Q1 PASS"
