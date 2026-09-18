@@ -4,14 +4,27 @@ Q1 is EduAVR's default software runtime qualification.
 
 ## Automated acceptance
 
-`tools/check_q1.sh`:
+`tools/check_q1.sh` builds and runs the paired C and hand-written AVR assembly examples against the ATmega1284P simavr model. The current suite qualifies:
 
-1. builds both reference Blink implementations;
-2. confirms simavr advertises the ATmega1284(P) core;
-3. boots the C ELF in simavr;
-4. boots the hand-written AVR assembly ELF in simavr;
-5. treats continued execution of each endless firmware loop as success;
-6. verifies avr-gdb can load and inspect both AVR ELF files.
+- Blink execution and avr-gdb inspection.
+- Timer0 interrupt delivery to a stable firmware probe.
+- PWM register configuration.
+- USART0 polling RX -> firmware -> TX loopback.
+- USART0 interrupt-driven RX/TX ring buffers with a 32-byte loopback.
+- SPI controller configuration and a modeled transfer to a virtual peripheral.
+- TWI/I2C controller configuration and a modeled EEPROM transaction.
+
+### TWI/I2C roundtrip
+
+The TWI Q1 data-path test performs a complete modeled firmware roundtrip in both C and assembly:
+
+1. write `0x55` to virtual EEPROM register `0x10`;
+2. address register `0x10` again;
+3. issue a repeated START and read transaction;
+4. return the EEPROM byte through simavr's TWI model;
+5. require the firmware's `twi_readback` SRAM byte to equal `0x55`.
+
+This is stronger than observing bus events alone: Q1 verifies that the AVR firmware actually consumes the modeled read response.
 
 Run:
 
@@ -27,8 +40,8 @@ Q1 PASS
 
 ## CI
 
-GitHub Actions runs M1/Q0 and Q1 using the same Debian AVR environment. This makes simulator qualification reproducible without a physical STK500.
+GitHub Actions runs M1/Q0 and Q1 using the same Debian AVR environment. Run `35383245332` qualified commit `0c78ccb197f4efe7bf2d2030aaafff2b9decf721` successfully after the USART0 assembly ISR vector linkage and TWI SRAM assertion were enabled.
 
 ## Boundary
 
-Q1 proves only behavior exercised by the simulator/model. Hardware/electrical claims remain Q2.
+Q1 proves only behavior exercised by the simulator/model. It does **not** qualify STK500 programming, voltage levels, pull-ups, signal integrity, real bus timing, external devices, oscillator accuracy, reset/power behavior, or other electrical properties. Those remain Q2 physical qualification.
