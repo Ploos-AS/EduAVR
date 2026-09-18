@@ -20,7 +20,10 @@ int main(int argc,char **argv){
  rx0=avr_io_getirq(a,AVR_IOCTL_UART_GETIRQ('0'),UART_IRQ_INPUT); rx1=avr_io_getirq(a,AVR_IOCTL_UART_GETIRQ('1'),UART_IRQ_INPUT);
  t0=avr_io_getirq(a,AVR_IOCTL_UART_GETIRQ('0'),UART_IRQ_OUTPUT); t1=avr_io_getirq(a,AVR_IOCTL_UART_GETIRQ('1'),UART_IRQ_OUTPUT);
  x0=avr_io_getirq(a,AVR_IOCTL_UART_GETIRQ('0'),UART_IRQ_OUT_XON); x1=avr_io_getirq(a,AVR_IOCTL_UART_GETIRQ('1'),UART_IRQ_OUT_XON);
- if(!rx0||!rx1||!t0||!t1)return 2; avr_irq_register_notify(t0,tx0,NULL);avr_irq_register_notify(t1,tx1,NULL);
+ if (!rx0 || !rx1 || !t0 || !t1)
+  return 2;
+ avr_irq_register_notify(t0, tx0, NULL);
+ avr_irq_register_notify(t1, tx1, NULL);
  lim=a->cycle+(uint64_t)a->frequency*4;
  while(a->cycle<lim&&(n0<sizeof out0||n1<sizeof out1)){int st=avr_run(a);if(st==cpu_Done||st==cpu_Crashed)return 1;
   if(s0<sizeof(msg0)-1&&(!x0||x0->value))avr_raise_irq(rx0,msg0[s0++]);
