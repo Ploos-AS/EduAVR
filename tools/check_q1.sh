@@ -38,13 +38,15 @@ run_sim build/pwm-c.elf
 run_sim build/pwm-asm.elf
 run_sim build/usart0-echo-c.elf
 run_sim build/usart0-echo-asm.elf
+run_sim build/usart0-irq-ring-c.elf
+run_sim build/usart0-irq-ring-asm.elf
 run_sim build/spi-c.elf
 run_sim build/spi-asm.elf
 run_sim build/twi-c.elf
 run_sim build/twi-asm.elf
 
 # Confirm GDB can read both AVR ELF files and their symbols non-interactively.
-for elf in build/blink-c.elf build/blink-asm.elf build/timer-isr-c.elf build/timer-isr-asm.elf build/pwm-c.elf build/pwm-asm.elf build/usart0-echo-c.elf build/usart0-echo-asm.elf build/spi-c.elf build/spi-asm.elf build/twi-c.elf build/twi-asm.elf; do
+for elf in build/blink-c.elf build/blink-asm.elf build/timer-isr-c.elf build/timer-isr-asm.elf build/pwm-c.elf build/pwm-asm.elf build/usart0-echo-c.elf build/usart0-echo-asm.elf build/usart0-irq-ring-c.elf build/usart0-irq-ring-asm.elf build/spi-c.elf build/spi-asm.elf build/twi-c.elf build/twi-asm.elf; do
     avr-gdb -q -batch         -ex "file $elf"         -ex "info files" >"$elf.gdb.log" 2>&1 ||
         { cat "$elf.gdb.log" >&2; fail "avr-gdb could not inspect $elf"; }
     grep -q "Symbols from" "$elf.gdb.log" ||
@@ -290,6 +292,13 @@ cc -std=c11 -Wall -Wextra -Werror -o build/q1-usart-loopback \
     -I/usr/include/simavr -lsimavr -lelf
 build/q1-usart-loopback build/usart0-echo-c.elf
 build/q1-usart-loopback build/usart0-echo-asm.elf
+
+# Interrupt-driven USART0 RX/TX ring-buffer qualification.
+cc -std=c11 -Wall -Wextra -Werror -o build/q1-usart-irq-ring \
+    tools/q1_usart_irq_ring.c \
+    -I/usr/include/simavr -lsimavr -lelf
+build/q1-usart-irq-ring build/usart0-irq-ring-c.elf
+build/q1-usart-irq-ring build/usart0-irq-ring-asm.elf
 
 
 # Deterministic SPI controller data-path qualification using simavr's SPI IRQ API.
