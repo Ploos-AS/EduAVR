@@ -34,9 +34,11 @@ run_sim build/blink-c.elf
 run_sim build/blink-asm.elf
 run_sim build/timer-isr-c.elf
 run_sim build/timer-isr-asm.elf
+run_sim build/pwm-c.elf
+run_sim build/pwm-asm.elf
 
 # Confirm GDB can read both AVR ELF files and their symbols non-interactively.
-for elf in build/blink-c.elf build/blink-asm.elf build/timer-isr-c.elf build/timer-isr-asm.elf; do
+for elf in build/blink-c.elf build/blink-asm.elf build/timer-isr-c.elf build/timer-isr-asm.elf build/pwm-c.elf build/pwm-asm.elf; do
     avr-gdb -q -batch         -ex "file $elf"         -ex "info files" >"$elf.gdb.log" 2>&1 ||
         { cat "$elf.gdb.log" >&2; fail "avr-gdb could not inspect $elf"; }
     grep -q "Symbols from" "$elf.gdb.log" ||
