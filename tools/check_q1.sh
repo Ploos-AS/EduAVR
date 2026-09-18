@@ -358,6 +358,12 @@ cc -std=c11 -Wall -Wextra -Werror -o build/q1-usart1-irq-ring \
 build/q1-usart1-irq-ring build/usart1-irq-ring-c.elf
 build/q1-usart1-irq-ring build/usart1-irq-ring-asm.elf
 
+# Robust USART normal-path qualification. Reuse the deterministic USART0
+# loopback harness: modeled RX/TX must remain byte-identical. FE/DOR/UPE are
+# intentionally not claimed here unless the simulator can model them reliably.
+build/q1-usart-loopback build/usart-robust-c.elf
+build/q1-usart-loopback build/usart-robust-asm.elf
+
 # Bidirectional USART0 <-> USART1 bridge qualification.
 cc -std=c11 -Wall -Wextra -Werror -o build/q1-dual-uart-bridge \
     tools/q1_dual_uart_bridge.c \
