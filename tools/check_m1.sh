@@ -6,7 +6,7 @@ fail() {
     exit 1
 }
 
-for tool in avr-gcc avr-objcopy avr-objdump avr-size avrdude make; do
+for tool in avr-gcc avr-objcopy avr-objdump avr-size avr-gdb avrdude avarice make simavr; do
     command -v "$tool" >/dev/null 2>&1 || fail "missing tool: $tool"
 done
 
