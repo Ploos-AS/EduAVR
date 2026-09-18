@@ -26,7 +26,7 @@ pwm: $(BUILD)/pwm-c.hex $(BUILD)/pwm-asm.hex
 
 usart: $(BUILD)/usart0-echo-c.hex $(BUILD)/usart0-echo-asm.hex $(BUILD)/usart0-irq-ring-c.hex $(BUILD)/usart0-irq-ring-asm.hex $(BUILD)/usart1-echo-c.hex $(BUILD)/usart1-echo-asm.hex $(BUILD)/usart1-irq-ring-c.hex $(BUILD)/usart1-irq-ring-asm.hex
 
-bridge: $(BUILD)/dual-uart-bridge-c.hex $(BUILD)/dual-uart-bridge-asm.hex
+bridge: $(BUILD)/dual-uart-bridge-c.hex $(BUILD)/dual-uart-bridge-asm.hex $(BUILD)/dual-uart-irq-bridge-c.hex $(BUILD)/dual-uart-irq-bridge-asm.hex
 
 spi: $(BUILD)/spi-c.hex $(BUILD)/spi-asm.hex
 
@@ -78,6 +78,12 @@ $(BUILD)/dual-uart-bridge-c.elf: examples/c/dual-uart-bridge/main.c | $(BUILD)
 	$(CC) $(CFLAGS) $< -o $@
 
 $(BUILD)/dual-uart-bridge-asm.elf: examples/asm/dual-uart-bridge/main.S | $(BUILD)
+	$(CC) $(CFLAGS) $< -o $@
+
+$(BUILD)/dual-uart-irq-bridge-c.elf: examples/c/dual-uart-irq-bridge/main.c | $(BUILD)
+	$(CC) $(CFLAGS) $< -o $@
+
+$(BUILD)/dual-uart-irq-bridge-asm.elf: examples/asm/dual-uart-irq-bridge/main.S | $(BUILD)
 	$(CC) $(CFLAGS) $< -o $@
 
 $(BUILD)/spi-c.elf: examples/c/spi/main.c | $(BUILD)
