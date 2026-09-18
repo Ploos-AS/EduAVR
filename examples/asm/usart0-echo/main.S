@@ -22,6 +22,7 @@ main:
     ldi r16, _BV(UCSZ01) | _BV(UCSZ00)
     sts UCSR0C, r16
     rcall usart0_ready
+    rjmp echo_loop
 
 usart0_ready:
     ret
