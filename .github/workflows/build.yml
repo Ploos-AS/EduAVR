@@ -19,7 +19,7 @@ jobs:
         run: apt-get update && apt-get install -y git ca-certificates
       - uses: actions/checkout@v4
       - name: Install AVR toolchain and simulator
-        run: apt-get update && apt-get install -y gcc-avr binutils-avr avr-libc avrdude avarice gdb-avr make simavr coreutils
+        run: apt-get update && apt-get install -y gcc gcc-avr binutils-avr avr-libc avrdude avarice gdb-avr make simavr libsimavr-dev libelf-dev coreutils
       - name: Qualify M1 / Q0
         run: sh tools/check_m1.sh
       - name: Qualify Q1 simulator
