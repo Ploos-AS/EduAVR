@@ -16,11 +16,12 @@ tx_tail: .skip 1
 
 .section .text
 
-; USART0 RX complete vector, ATmega1284P vector number 20.
-.org 0x28
+; ATmega1284P interrupt vectors use 4-byte JMP entries.
+; Vector 20 (USART0 RX complete) is at byte address 0x50;
+; vector 21 (USART0 data register empty) is at byte address 0x54.
+.org 0x50
     jmp usart0_rx_isr
-; USART0 data register empty vector, vector number 21.
-.org 0x2a
+.org 0x54
     jmp usart0_udre_isr
 
 main:
