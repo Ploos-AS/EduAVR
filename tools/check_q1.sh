@@ -242,4 +242,13 @@ cc -std=c11 -Wall -Wextra -Werror -o build/q1-usart-loopback \
 build/q1-usart-loopback build/usart0-echo-c.elf
 build/q1-usart-loopback build/usart0-echo-asm.elf
 
+
+# Deterministic SPI controller data-path qualification using simavr's SPI IRQ API.
+# Firmware transmits 0x55; the virtual peripheral responds with 0xaa.
+cc -std=c11 -Wall -Wextra -Werror -o build/q1-spi-datapath \
+    tools/q1_spi_datapath.c \
+    -I/usr/include/simavr -lsimavr -lelf
+build/q1-spi-datapath build/spi-c.elf
+build/q1-spi-datapath build/spi-asm.elf
+
 printf '%s\n' "Q1 PASS"
