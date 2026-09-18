@@ -10,9 +10,9 @@ LDFLAGS := -mmcu=$(MCU)
 
 BUILD := build
 
-.PHONY: all c asm timers pwm disasm size check clean
+.PHONY: all c asm timers pwm usart disasm size check clean
 
-all: c asm timers pwm
+all: c asm timers pwm usart
 
 $(BUILD):
 	mkdir -p $(BUILD)
@@ -23,6 +23,8 @@ asm: $(BUILD)/blink-asm.hex
 timers: $(BUILD)/timer-isr-c.hex $(BUILD)/timer-isr-asm.hex
 
 pwm: $(BUILD)/pwm-c.hex $(BUILD)/pwm-asm.hex
+
+usart: $(BUILD)/usart0-echo-c.hex $(BUILD)/usart0-echo-asm.hex
 
 $(BUILD)/blink-c.elf: examples/c/blink/main.c | $(BUILD)
 	$(CC) $(CFLAGS) $< -o $@
@@ -42,6 +44,12 @@ $(BUILD)/pwm-c.elf: examples/c/pwm/main.c | $(BUILD)
 $(BUILD)/pwm-asm.elf: examples/asm/pwm/main.S | $(BUILD)
 	$(CC) $(CFLAGS) $< -o $@
 
+$(BUILD)/usart0-echo-c.elf: examples/c/usart0-echo/main.c | $(BUILD)
+	$(CC) $(CFLAGS) $< -o $@
+
+$(BUILD)/usart0-echo-asm.elf: examples/asm/usart0-echo/main.S | $(BUILD)
+	$(CC) $(CFLAGS) $< -o $@
+
 $(BUILD)/%.hex: $(BUILD)/%.elf
 	$(OBJCOPY) -O ihex -R .eeprom $< $@
 
@@ -52,6 +60,8 @@ disasm: all
 	$(OBJDUMP) -d -S $(BUILD)/timer-isr-asm.elf > $(BUILD)/timer-isr-asm.lst
 	$(OBJDUMP) -d -S $(BUILD)/pwm-c.elf > $(BUILD)/pwm-c.lst
 	$(OBJDUMP) -d -S $(BUILD)/pwm-asm.elf > $(BUILD)/pwm-asm.lst
+	$(OBJDUMP) -d -S $(BUILD)/usart0-echo-c.elf > $(BUILD)/usart0-echo-c.lst
+	$(OBJDUMP) -d -S $(BUILD)/usart0-echo-asm.elf > $(BUILD)/usart0-echo-asm.lst
 
 size: all
 	$(SIZE) -C --mcu=$(MCU) $(BUILD)/*.elf
