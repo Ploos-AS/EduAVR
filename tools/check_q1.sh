@@ -40,13 +40,15 @@ run_sim build/usart0-echo-c.elf
 run_sim build/usart0-echo-asm.elf
 run_sim build/usart0-irq-ring-c.elf
 run_sim build/usart0-irq-ring-asm.elf
+run_sim build/usart1-echo-c.elf
+run_sim build/usart1-echo-asm.elf
 run_sim build/spi-c.elf
 run_sim build/spi-asm.elf
 run_sim build/twi-c.elf
 run_sim build/twi-asm.elf
 
 # Confirm GDB can read both AVR ELF files and their symbols non-interactively.
-for elf in build/blink-c.elf build/blink-asm.elf build/timer-isr-c.elf build/timer-isr-asm.elf build/pwm-c.elf build/pwm-asm.elf build/usart0-echo-c.elf build/usart0-echo-asm.elf build/usart0-irq-ring-c.elf build/usart0-irq-ring-asm.elf build/spi-c.elf build/spi-asm.elf build/twi-c.elf build/twi-asm.elf; do
+for elf in build/blink-c.elf build/blink-asm.elf build/timer-isr-c.elf build/timer-isr-asm.elf build/pwm-c.elf build/pwm-asm.elf build/usart0-echo-c.elf build/usart0-echo-asm.elf build/usart0-irq-ring-c.elf build/usart0-irq-ring-asm.elf build/usart1-echo-c.elf build/usart1-echo-asm.elf build/spi-c.elf build/spi-asm.elf build/twi-c.elf build/twi-asm.elf; do
     avr-gdb -q -batch         -ex "file $elf"         -ex "info files" >"$elf.gdb.log" 2>&1 ||
         { cat "$elf.gdb.log" >&2; fail "avr-gdb could not inspect $elf"; }
     grep -q "Symbols from" "$elf.gdb.log" ||
@@ -192,6 +194,43 @@ probe_usart0_config build/usart0-echo-asm.elf
 
 
 
+
+probe_usart1_config() {
+    elf="$1"
+    log="$elf.usart1.gdb.log"
+    simavr -m atmega1284p -f 8000000 -g "$elf" >"$elf.usart1.sim.log" 2>&1 &
+    sim_pid=$!
+    trap 'kill "$sim_pid" 2>/dev/null || true' EXIT INT TERM
+    sleep 1
+    set +e
+    timeout 10s avr-gdb -q -batch "$elf" \
+        -ex "target remote :1234" \
+        -ex "break usart1_ready" \
+        -ex "continue" \
+        -ex "p/x *(unsigned char*)0xcd" \
+        -ex "p/x *(unsigned char*)0xcc" \
+        -ex "p/x *(unsigned char*)0xc8" \
+        -ex "p/x *(unsigned char*)0xc9" \
+        -ex "p/x *(unsigned char*)0xca" \
+        -ex "quit" >"$log" 2>&1
+    rc=$?
+    set -e
+    kill "$sim_pid" 2>/dev/null || true
+    wait "$sim_pid" 2>/dev/null || true
+    trap - EXIT INT TERM
+    test "$rc" -eq 0 || { cat "$log" >&2; fail "GDB USART1 probe failed for $elf"; }
+    values=$(awk '/^[$][0-9]+ = 0x/ { sub(/^.*= /, ""); print }' "$log")
+    set -- $values
+    test "$#" -ge 5 || { cat "$log" >&2; fail "could not read USART1 registers from $elf"; }
+    test "$1" = "0x0" || test "$1" = "0x00" || fail "unexpected UBRR1H in $elf: $1"
+    test "$2" = "0x33" || fail "unexpected UBRR1L in $elf: $2"
+    test "$4" = "0x18" || fail "RX/TX not enabled in $elf: UCSR1B=$4"
+    test "$5" = "0x6" || test "$5" = "0x06" || fail "USART1 frame mismatch in $elf: UCSR1C=$5"
+}
+
+probe_usart1_config build/usart1-echo-c.elf
+probe_usart1_config build/usart1-echo-asm.elf
+
 probe_spi_config() {
     elf="$1"
     log="$elf.spi.gdb.log"
@@ -292,6 +331,14 @@ cc -std=c11 -Wall -Wextra -Werror -o build/q1-usart-loopback \
     -I/usr/include/simavr -lsimavr -lelf
 build/q1-usart-loopback build/usart0-echo-c.elf
 build/q1-usart-loopback build/usart0-echo-asm.elf
+
+
+# Deterministic USART1 RX -> firmware -> TX qualification.
+cc -std=c11 -Wall -Wextra -Werror -o build/q1-usart1-loopback \
+    tools/q1_usart1_loopback.c \
+    -I/usr/include/simavr -lsimavr -lelf
+build/q1-usart1-loopback build/usart1-echo-c.elf
+build/q1-usart1-loopback build/usart1-echo-asm.elf
 
 # Interrupt-driven USART0 RX/TX ring-buffer qualification.
 cc -std=c11 -Wall -Wextra -Werror -o build/q1-usart-irq-ring \
