@@ -31,9 +31,13 @@ static void usart0_putc(uint8_t value)
     UDR0 = value;
 }
 
+void usart0_ready(void) __attribute__((noinline, used));
+void usart0_ready(void) { __asm__ __volatile__("" ::: "memory"); }
+
 int main(void)
 {
     usart0_init();
+    usart0_ready();
 
     for (;;) {
         usart0_putc(usart0_getc());
