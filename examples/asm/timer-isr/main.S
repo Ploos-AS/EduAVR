@@ -2,6 +2,7 @@
 
 .global main
 .global TIMER0_COMPA_vect
+.global timer0_compa_probe
 
 .section .bss
 timer_events:
@@ -37,6 +38,9 @@ loop:
     rjmp loop
 
 TIMER0_COMPA_vect:
+    rjmp timer0_compa_probe
+
+timer0_compa_probe:
     push r16
     in r16, _SFR_IO_ADDR(SREG)
     push r16
