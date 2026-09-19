@@ -1,5 +1,14 @@
 # Lab 01 — From source to simulated AVR
 
+## Metadata
+
+- **Mode:** SIM
+- **Level:** 1 Beginner
+- **Primary language phase:** ASM → C
+- **Hardware:** None
+- **Qualification:** Q1 simulator
+- **Concepts:** build, disassembly, simavr, avr-gdb, registers, SRAM, I/O state
+
 This lab introduces the EduAVR execution ladder without requiring physical hardware.
 
 ## Goals
@@ -60,3 +69,8 @@ A simulator can qualify deterministic CPU/software behaviour such as instruction
 Simulation does **not** prove electrical behaviour, oscillator accuracy, voltage levels, signal integrity, real switch bounce, programmer wiring, physical UART levels, ADC noise/accuracy or that a particular STK500 setup works.
 
 EduAVR therefore uses simulation-first qualification and a smaller set of explicit hardware checkpoints.
+
+
+## Under the hood
+
+Relate the implementation back through the full EduAVR chain: **C (where used) → generated AVR instructions → registers/memory → peripheral behavior → physical result (where applicable)**. Explain compiler choices instead of expecting C and hand-written assembly to be instruction-for-instruction identical.
