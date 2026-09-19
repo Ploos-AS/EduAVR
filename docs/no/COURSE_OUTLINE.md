@@ -47,6 +47,11 @@ Publiserte appendikser:
 - **F — Programmering og bootloadere**
 - **G — Elektronikk for AVR-programmerere**
 - **H — Protokollanalyse**
-- **I — [Slik leser du AVR-datablader](appendix-i-reading-datasheets.md)**
+- **I — [Ytelse og optimalisering](vedlegg-i-ytelse.md)**
+- **J — [Testing og kvalifikasjon](vedlegg-j-testing-kvalifikasjon.md)**
+- **K — [Bygg ditt eget AVR-board](vedlegg-k-bygg-avr-board.md)**
+- **L — [AVR for retro computing](vedlegg-l-retro.md)**
+- **M — [Overlevelsesguide for datablad](vedlegg-m-databladguide.md)**
+- **Utvidet guide — [Slik leser du AVR-datablader](appendix-i-reading-datasheets.md)**
 
-Fremtidige appendikser kan dekke ytelse/optimalisering, testing/kvalifikasjon, bygging av et AVR-kort og retrogrensesnitt. De legges inn som publisert kursinnhold først når Markdown-kildene finnes.
+Disse kildene finnes nå i begge språkspor. Semantisk paritet vurderes separat fra at filene bare finnes.
