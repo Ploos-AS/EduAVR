@@ -18,13 +18,13 @@ EduAVR teaches AVR from the hardware upward, with **Assembly and C side by side*
 9. [Dual-UART bridge](08-dual-uart-bridge.md)
 10. [SPI](08-spi.md)
 11. [TWI / I2C](09-twi-i2c.md)
+12. [EEPROM](10-eeprom.md)
 
 ## Planned core expansion
 
 The original curriculum also identifies these topics for dedicated lessons as the course grows:
 
 - ADC
-- EEPROM — paired C/Assembly implementation and Q1 write/readback already exist; the bilingual core lesson still needs to be published
 - buffers, pointers, structs and `volatile`
 - compiler optimization and disassembly
 - small reusable drivers
