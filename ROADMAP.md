@@ -7,7 +7,7 @@
 - **M2:** substantially implemented in bilingual course material, exercises and paired C/assembly examples.
 - **M3:** substantially implemented; timer/interrupt/PWM paths are exercised by Q1.
 - **M4:** substantially implemented; USART0/1 polling and IRQ/ring buffers, dual-UART bridges, SPI and TWI/I2C have Q1 coverage.
-- **M5:** started; ADC and EEPROM learner exercises exist, but the milestone is not yet complete.
+- **M5:** in progress; EEPROM has paired C/Assembly implementation, deterministic Q1 write/readback and a bilingual core lesson. ADC remains incomplete, so the milestone is not yet complete.
 - **M6-M8:** planned/incremental material only; not complete.
 - **M9/Q2:** in progress through EduBoard-AVR convergence; physical qualification remains separate from simulator claims.
 
