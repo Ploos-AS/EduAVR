@@ -346,8 +346,8 @@ probe_resource_budget() {
     before_lo=${before_lo#0x}
     deep_hi=${deep_hi#0x}
     deep_lo=${deep_lo#0x}
-    before=$((16#$before_hi$before_lo))
-    deep=$((16#$deep_hi$deep_lo))
+    before=$(printf '%d' "0x$before_hi$before_lo")
+    deep=$(printf '%d' "0x$deep_hi$deep_lo")
     test "$deep" -lt "$before" ||
         fail "stack did not move downward in $elf: before=0x${before_hi}${before_lo} deep=0x${deep_hi}${deep_lo}"
     avr-nm -S --size-sort "$elf" | grep -Eq '[[:space:]]00000010[[:space:]][Bb][[:space:]]budget_static$' ||
