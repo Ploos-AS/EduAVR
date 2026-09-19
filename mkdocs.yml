@@ -76,6 +76,7 @@ nav:
       - TWI / I2C: en/09-twi-i2c.md
       - EEPROM: en/10-eeprom.md
       - ADC: en/11-adc.md
+      - Pointers, buffers and structs: en/12-data-structures.md
       - Appendices:
           - Arduino: en/appendix-a-arduino.md
           - Debugging: en/appendix-b-debugging.md
@@ -106,6 +107,7 @@ nav:
       - TWI / I2C: no/09-twi-i2c.md
       - EEPROM: no/10-eeprom.md
       - ADC: no/11-adc.md
+      - Pekere, buffere og structs: no/12-data-structures.md
       - Appendikser:
           - Arduino: no/vedlegg-a-arduino.md
           - Debugging: no/vedlegg-b-debugging.md
