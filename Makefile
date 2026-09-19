@@ -10,15 +10,17 @@ LDFLAGS := -mmcu=$(MCU)
 
 BUILD := build
 
-.PHONY: all c asm timers pwm usart bridge robust spi twi disasm size check clean
+.PHONY: all c asm stack timers pwm usart bridge robust spi twi disasm size check clean
 
-all: c asm timers pwm usart bridge robust spi twi
+all: c asm stack timers pwm usart bridge robust spi twi
 
 $(BUILD):
 	mkdir -p $(BUILD)
 
 c: $(BUILD)/blink-c.hex
 asm: $(BUILD)/blink-asm.hex
+
+stack: $(BUILD)/stack-functions-c.hex $(BUILD)/stack-functions-asm.hex
 
 timers: $(BUILD)/timer-isr-c.hex $(BUILD)/timer-isr-asm.hex
 
@@ -38,6 +40,12 @@ $(BUILD)/blink-c.elf: examples/c/blink/main.c | $(BUILD)
 	$(CC) $(CFLAGS) $< -o $@
 
 $(BUILD)/blink-asm.elf: examples/asm/blink/main.S | $(BUILD)
+	$(CC) $(CFLAGS) $< -o $@
+
+$(BUILD)/stack-functions-c.elf: examples/c/stack-functions/main.c | $(BUILD)
+	$(CC) $(CFLAGS) $< -o $@
+
+$(BUILD)/stack-functions-asm.elf: examples/asm/stack-functions/main.S | $(BUILD)
 	$(CC) $(CFLAGS) $< -o $@
 
 $(BUILD)/timer-isr-c.elf: examples/c/timer-isr/main.c | $(BUILD)
@@ -112,6 +120,8 @@ $(BUILD)/%.hex: $(BUILD)/%.elf
 disasm: all
 	$(OBJDUMP) -d -S $(BUILD)/blink-c.elf > $(BUILD)/blink-c.lst
 	$(OBJDUMP) -d -S $(BUILD)/blink-asm.elf > $(BUILD)/blink-asm.lst
+	$(OBJDUMP) -d -S $(BUILD)/stack-functions-c.elf > $(BUILD)/stack-functions-c.lst
+	$(OBJDUMP) -d -S $(BUILD)/stack-functions-asm.elf > $(BUILD)/stack-functions-asm.lst
 	$(OBJDUMP) -d -S $(BUILD)/timer-isr-c.elf > $(BUILD)/timer-isr-c.lst
 	$(OBJDUMP) -d -S $(BUILD)/timer-isr-asm.elf > $(BUILD)/timer-isr-asm.lst
 	$(OBJDUMP) -d -S $(BUILD)/pwm-c.elf > $(BUILD)/pwm-c.lst
