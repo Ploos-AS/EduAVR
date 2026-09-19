@@ -18,13 +18,13 @@ EduAVR lærer AVR fra maskinvaren og opp, med **Assembly og C side om side**.
 9. [Dual-UART-bro](08-dual-uart-bridge.md)
 10. [SPI](08-spi.md)
 11. [TWI / I²C](09-twi-i2c.md)
+12. [EEPROM](10-eeprom.md)
 
 ## Planlagt utvidelse
 
 Følgende emner er ikke ferdige publiserte kjerneleksjoner ennå:
 
 - ADC
-- EEPROM — paret C/Assembly-implementasjon og Q1 write/readback finnes allerede, men den tospråklige kjerneleksjonen gjenstår
 - buffere, pekere, structs og `volatile`
 - compiler-optimalisering og disassembly
 - små gjenbrukbare drivere
