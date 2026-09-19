@@ -63,8 +63,8 @@ make check
 Or use the OCI student environment:
 
 ```sh
-podman build -t eduavr-dev -f container/Containerfile .
-podman run --rm -it -v "$PWD:/work" eduavr-dev
+podman build -t eduavr-dev -f Containerfile .
+podman run --rm -it -v "$PWD:/workspace:Z" -w /workspace eduavr-dev
 ```
 
 Docker can use the same Containerfile.
@@ -80,7 +80,7 @@ Both tracks are first-class course material.
 
 M0 foundation and M1 reproducible toolchain: complete and qualified in GitHub Actions.
 
-Course 1 foundations through M5 are implemented at the published-course/Q1 level. Q1 simulator qualification covers paired C/AVR-assembly examples including GPIO, stack/ABI, timers, modeled PWM waveform, USART0/1 polling and interrupt-driven ring buffers, dual-UART bridges, SPI, TWI/I2C, EEPROM write/readback and modeled ADC conversion. M6 systems programming has started with paired data-structures examples and deterministic Q1 coverage. Q2 physical qualification on EduBoard-AVR/STK500 remains separate and pending.
+Course 1 foundations through M5 are implemented at the published-course/Q1 level. Q1 simulator qualification covers paired C/AVR-assembly examples including GPIO, stack/ABI, timers, modeled PWM waveform, USART0/1 polling and interrupt-driven ring buffers, dual-UART bridges, SPI, TWI/I2C, EEPROM write/readback and modeled ADC conversion. M6 systems programming now includes published bilingual lessons and deterministic paired C/Assembly Q1 coverage for data structures, ISR/main shared-state atomicity, and SRAM/stack resource budgeting. Q2 physical qualification on EduBoard-AVR/STK500 remains separate and pending.
 
 For the reconciled implementation inventory, see [docs/STATUS.md](docs/STATUS.md).
 
