@@ -12,7 +12,8 @@ opt_result: .skip 2
 .type weighted_sum, @function
 weighted_sum:
     ; X points to eight bytes. r25:r24 is the 16-bit sum.
-    movw r26, r24
+    mov r26, r24
+    mov r27, r25
     clr r24
     clr r25
     ldi r20, 1
