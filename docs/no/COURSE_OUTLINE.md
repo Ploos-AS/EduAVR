@@ -22,12 +22,13 @@ EduAVR lærer AVR fra maskinvaren og opp, med **Assembly og C side om side**.
 13. [ADC](11-adc.md)
 14. [Pekere, buffere og structs](12-data-structures.md)
 15. [volatile, interrupts og atomicitet](13-volatile-atomicity.md)
+16. [SRAM- og stackbudsjett](14-resource-budget.md)
 
 ## Planlagt utvidelse
 
 Følgende emner er ikke ferdige publiserte kjerneleksjoner ennå:
 
-- stack/SRAM-budsjettering og compiler-optimalisering/disassembly
+- compiler-optimalisering/disassembly
 - små gjenbrukbare drivere
 - systemintegrasjon
 - capstone-prosjekt
