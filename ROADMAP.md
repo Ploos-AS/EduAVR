@@ -3,10 +3,10 @@
 ## M0 — Foundation
 - Define course identity and learning philosophy
 - ATmega1284P-PU as first reference MCU
-- Atmel STK500 as first reference board
-- English and Norwegian course tracks
+- EduBoard-AVR as the primary course board; Atmel STK500 retained as a supported reference/development platform
+- English and Norwegian are equal first-class course tracks; substantive course/reference material must be kept in sync
 - Open-source command-line toolchain
-- Assembly and C taught side by side
+- Assembly first, then equivalent register-level C; generated assembly reconnects C to the hardware
 - Arduino reserved for an appendix
 - Establish licensing policy
 
@@ -38,8 +38,11 @@ Ethernet experiments, MQTT concepts and Home Assistant integration.
 ## M8 — Capstones
 Serial/retro gateway, sensor node, protocol/debug tool and terminal/BBS controller candidates.
 
-## M9 — EduAVR Trainer
-Design a maker-friendly educational board after STK500-based course requirements are validated.
+## M9 — EduBoard-AVR convergence and qualification
+EduBoard-AVR is developed in parallel with the course, not after it. Use board-validating exercises to feed requirements back into EduBoard before schematic/PCB freeze. After a stable Q2-qualified board revision exists, freeze the course hardware mapping and resume broad board-specific lesson expansion. STK500 remains a useful secondary/reference platform.
+
+## Language parity
+The canonical course is published in both **English (`docs/en`) and Norwegian (`docs/no`)**. Neither language is a reduced summary track. New or materially changed chapters, appendices and learner-facing reference material should receive equivalent content in both tracks; temporary translation lag should be treated as work-in-progress and not as completion.
 
 ## Appendices — reference and advanced practice
 - **A — AVR and Arduino:** comprehensive mapping from Arduino IDE/CLI, sketches, libraries and bootloaders to registers, avr-gcc and generated assembly.
