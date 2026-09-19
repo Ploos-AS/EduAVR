@@ -21,4 +21,20 @@
 19. Systemintegrasjon
 20. Avsluttende prosjekt
 
-Vedlegg A tar for seg AVR og Arduino etter den register-nære kjernen.
+## Referansevedlegg
+
+- **A — AVR og Arduino** — framework-abstraksjoner tilbake til AVR-hardware/verktøy.
+- **B — Debugging av AVR** — avr-gdb, simulering og hardware-debugging.
+- **C — Disassembly og reverse engineering** — ELF/HEX, vectors, symboler og kontrollert analyse.
+- **D — C ↔ assembler og kompilatoroppførsel** — ABI, volatile, optimalisering og generert kode.
+- **E — Minneinternt** — Flash, SRAM, EEPROM, seksjoner, startup, stack og PROGMEM.
+- **F — Programmering og bootloadere** — ISP, AVRDUDE, fuses, lock bits, boot sections og recovery.
+- **G — Elektronikk for AVR-programmerere** — inputs, loads, drivere, decoupling, clocks og spenningsdomener.
+- **H — Protokollanalyse** — UART/SPI/TWI-captures koblet til firmware.
+- **I — Ytelse og optimalisering** — cycles, latency, størrelse, SRAM og måling.
+- **J — Testing og kvalifikasjon** — Q0/Q1/Q2, regression, CI og HIL.
+- **K — Bygg ditt eget AVR-board** — minimumssystem, breadboard, bring-up og PCB.
+- **L — AVR for retro computing** — observerbare serial/protocol bridges og retro-interfaces.
+- **M — Overlevelsesguide for datablad** — registre, timing, elektriske tabeller og errata.
+
+Engelsk og norsk er likestilte kursløp. Referansevedlegg og annet vesentlig elevmateriale skal holdes innholdsmessig synkronisert mellom `docs/en` og `docs/no`.
