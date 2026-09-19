@@ -86,8 +86,8 @@ probe_stack_abi() {
     test "$result" = "0x46" || fail "ABI argument/result check failed in $elf: result=$result"
     test "$before" = "$after" || fail "stack did not balance in $elf: before=$before after=$after"
 
-    before_dec=$((before))
-    inside_dec=$((inside))
+    before_dec=$(printf "%d" "$before")
+    inside_dec=$(printf "%d" "$inside")
     test "$inside_dec" -lt "$before_dec" ||
         fail "stack pointer did not move downward inside call in $elf: before=$before inside=$inside"
 }
