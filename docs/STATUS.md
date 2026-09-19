@@ -92,7 +92,7 @@ Both language tracks now publish appendices A-M, plus an extended datasheet-read
 - M — Datasheet survival guide;
 - Extended guide — Reading AVR datasheets.
 
-The appendix files exist in both language tracks, but semantic parity still requires active review; publication does not by itself imply identical depth. Course 2 security material remains roadmap scope.
+Appendices A-M have now completed a semantic EN/NO parity pass. The extended datasheet-reading guide also exists in both languages. Future edits must preserve this parity; publication or file presence alone is not sufficient. Course 2 security material remains roadmap scope.
 
 ## Infrastructure
 
@@ -122,7 +122,7 @@ Implemented repository infrastructure includes:
 ## Known reconciliation items / next work
 
 1. Continue language-parity checks as new chapters are added.
-2. Continue semantic EN/NO parity work for appendices A-M; several Norwegian versions are currently shorter than their English counterparts.
+2. Preserve semantic EN/NO parity for appendices A-M and the extended datasheet-reading guide as they evolve.
 3. Add real EduBoard CAD/Q2 visuals only from stable board revisions and physical evidence.
 
 This file should be updated whenever a milestone changes materially. The executable tests and CI are authoritative for qualification claims; the published navigation is authoritative for what is currently part of the course.
