@@ -1,8 +1,15 @@
 # EduAVR
 
+[![Course site](https://img.shields.io/badge/course-GitHub%20Pages-blue)](https://ploos-as.github.io/EduAVR/)
+[![Deploy course to GitHub Pages](https://github.com/Ploos-AS/EduAVR/actions/workflows/pages.yml/badge.svg)](https://github.com/Ploos-AS/EduAVR/actions/workflows/pages.yml)
+
 **Learn AVR from the silicon up — Assembly first, then C, with an open toolchain.**
 
 EduAVR is a bilingual, open-source course for learning AVR microcontrollers from the hardware upward.
+
+**Published course:** https://ploos-as.github.io/EduAVR/
+
+The Markdown files in this repository are the single source of truth. The HTML course site is generated from them with MkDocs Material and published automatically through GitHub Pages.
 
 ## Reference platform
 
