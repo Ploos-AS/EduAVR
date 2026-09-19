@@ -1,40 +1,55 @@
 # EduAVR course outline
 
-1. Microcontrollers and ATmega1284P
-2. Toolchain: build, flash and inspect
-3. AVR architecture and memory
-4. AVR assembly fundamentals
-5. C on a microcontroller
-6. GPIO
-7. Functions, stack and calling conventions
-8. Timers and counters
-9. Interrupts
-10. PWM
-11. USART and terminals
-12. ADC
-13. SPI
-14. TWI/I2C
-15. EEPROM
-16. Buffers, pointers, structs and volatile
-17. Compiler optimization and disassembly
-18. Small reusable drivers
-19. Systems integration
-20. Capstone
+EduAVR teaches AVR from the hardware upward, with **Assembly and C side by side**.
+
+!!! info "Single source of truth"
+    This Markdown file and the course lessons are the course source. GitHub Pages generates the HTML edition directly from the Markdown sources.
+
+## Current core course
+
+1. [Course principles](00-course-principles.md)
+2. [Open AVR toolchain](01-toolchain.md)
+3. [AVR architecture](02-avr-architecture.md)
+4. [GPIO](03-gpio.md)
+5. [Stack and functions](04-stack-functions.md)
+6. [Timers and interrupts](05-timers-interrupts.md)
+7. [PWM](06-pwm.md)
+8. [USART](07-usart.md)
+9. [Dual-UART bridge](08-dual-uart-bridge.md)
+10. [SPI](08-spi.md)
+11. [TWI / I2C](09-twi-i2c.md)
+
+## Planned core expansion
+
+The original curriculum also identifies these topics for dedicated lessons as the course grows:
+
+- ADC
+- EEPROM
+- buffers, pointers, structs and `volatile`
+- compiler optimization and disassembly
+- small reusable drivers
+- systems integration
+- capstone project
+
+These are roadmap items rather than published core lessons until their Markdown lesson, examples and appropriate qualification evidence exist.
+
+## Working method
+
+Each lesson combines theory with practical inspection of the machine. Build C and Assembly, inspect disassembly, use simulation where it provides valid evidence, and move to physical hardware when the claim concerns electrical behavior.
 
 ## Reference appendices
 
-- **A — AVR and Arduino** — framework abstractions mapped back to AVR hardware/toolchain.
-- **B — Debugging AVR** — avr-gdb, simulation and hardware-debug workflows.
-- **C — Disassembly and reverse engineering** — ELF/HEX, vectors, symbols and controlled firmware analysis.
-- **D — C ↔ Assembly and compiler behaviour** — ABI, volatile, optimization and generated code.
-- **E — Memory internals** — Flash, SRAM, EEPROM, sections, startup, stack and PROGMEM.
-- **F — Programming and bootloaders** — ISP, AVRDUDE, fuses, lock bits, boot sections and recovery.
-- **G — Electronics for AVR programmers** — inputs, loads, drivers, decoupling, clocks and voltage domains.
-- **H — Protocol analysis** — UART/SPI/TWI captures correlated with firmware.
-- **I — Performance and optimization** — cycles, latency, size, SRAM and measurement.
-- **J — Testing and qualification** — Q0/Q1/Q2, regression, CI and HIL.
-- **K — Build your own AVR board** — minimum system, breadboard, bring-up and PCB.
-- **L — AVR for retro computing** — observable serial/protocol bridges and retro interfaces.
-- **M — Datasheet survival guide** — registers, timing, electrical tables and errata.
+Published appendices currently cover:
+
+- **A — AVR and Arduino**
+- **B — Debugging AVR**
+- **C — Disassembly and reverse engineering**
+- **D — C ↔ Assembly and compiler behaviour**
+- **E — Memory internals**
+- **F — Programming and bootloaders**
+- **G — Electronics for AVR programmers**
+- **H — Protocol analysis**
+
+The curriculum also reserves future appendices for performance/optimization, testing/qualification, building an AVR board, retro-computing interfaces and datasheet reading. They should be added to the published course only when their Markdown sources exist.
 
 The appendices are reference material and advanced practice. They can mature while EduBoard-AVR hardware is being stabilized because most are not tied to a moving board revision.
