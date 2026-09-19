@@ -20,6 +20,7 @@ Q1 is EduAVR's default software runtime qualification.
 - TWI/I2C controller configuration and modeled EEPROM write/readback.
 - EEPROM write/readback in paired C/Assembly firmware: address `0x12`, value `0x5a`.
 - ADC0 configuration plus modeled 2500 mV analog input -> firmware conversion, approximately 775 in both C and Assembly.
+- Shared ISR/main state: paired C/Assembly firmware verifies interrupt progress and a coherent protected 16-bit snapshot, demonstrating the distinction between `volatile` visibility and atomicity.
 
 ### PWM waveform
 
