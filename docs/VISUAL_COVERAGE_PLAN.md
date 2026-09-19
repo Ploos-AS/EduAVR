@@ -127,13 +127,13 @@ Notes:
 ## Production order
 
 ### Phase V1 — repository/toolchain visuals
-Produce toolchain, ELF/disassembly, compiler comparison, memory/size, CI and conceptual diagrams. These are independent of the unfinished board.
+**QUALIFIED / automated.** CI produces `eduavr-v1-visual-sources` with real toolchain, ELF/disassembly, compiler-comparison and size material. The artifact also carries a manifest linking figure sources to teaching use.
 
 ### Phase V2 — EduBoard CAD visuals
 After schematic sections are stable, export real KiCad excerpts and board renders. Never redraw pin mappings from memory.
 
 ### Phase V3 — Q1 simulator/debugger visuals
-Capture deterministic sessions from qualified examples. Prefer scripted/reproducible setup.
+**QUALIFIED / automated for timer, PWM, USART0/1, SPI and TWI.** CI preserves the verbatim simavr/avr-gdb logs from the same Q1 qualification run under `q1/`, with a bilingual-use figure manifest. These logs are canonical figure sources; they may be typeset/cropped for readability, but must not be presented as photographed terminal UI. Additional stack/CALL and EEPROM/ADC sessions remain future coverage.
 
 ### Phase V4 — Q2 physical visuals
 After prototype availability, photograph the board and capture actual electrical behavior. Link captures to board revision and firmware build.
