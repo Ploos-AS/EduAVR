@@ -19,6 +19,7 @@ Q1 is EduAVR's default software runtime qualification.
 - SPI controller configuration and modeled transfer to a virtual peripheral.
 - TWI/I2C controller configuration and modeled EEPROM write/readback.
 - EEPROM write/readback in paired C/Assembly firmware: address `0x12`, value `0x5a`.
+- ADC0 configuration plus modeled 2500 mV analog input -> firmware conversion, approximately 775 in both C and Assembly.
 
 ### PWM waveform
 
@@ -51,8 +52,8 @@ The simulator suite already provides strong Q1 coverage for the currently implem
 | Dual USART bridge | Q1 bidirectional data path | Add overflow/back-pressure tests when those policies are taught. |
 | SPI | Q1 data path | Add mode/clock variants with a virtual peripheral. |
 | TWI/I2C | Q1 roundtrip | Add ACK/NACK and error-path tests where simavr models them reliably. |
-| ADC | Not yet a core example | Add a simulator-backed ADC lesson only after validating the model/API; retain analog accuracy as Q2. |
-| EEPROM | Q1 write/readback | Paired C/Assembly firmware deterministically writes `0x5a` at address `0x12` and reads it back. Promote this implemented material into a bilingual core lesson. |
+| ADC | Q1 modeled data path | Paired C/Assembly firmware converts an injected 2500 mV ADC0 input to approximately 775 in the qualified simavr model. Physical accuracy remains Q2. |
+| EEPROM | Q1 write/readback | Paired C/Assembly firmware deterministically writes `0x5a` at address `0x12` and reads it back. Bilingual core lesson published. |
 
 This table is intentionally conservative: a new Q1 claim is added only when the simulator test observes the behavior directly and reproducibly.
 
