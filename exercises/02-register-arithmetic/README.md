@@ -1,7 +1,6 @@
 # Exercise 02 — Registers and arithmetic
 
 ## Metadata
-
 - **Mode:** SIM
 - **Level:** 1 Beginner
 - **Primary language phase:** ASM → C
@@ -9,25 +8,56 @@
 - **Qualification:** Q1 simulator
 - **Concepts:** registers, arithmetic, SREG, carry, zero, overflow
 
-Write the same tiny calculation twice:
+## Learning objectives
+After this exercise you should be able to explain what an 8-bit register is, follow values through AVR instructions, predict simple arithmetic results and identify why SREG flags change. You should also see how a simple C expression becomes AVR instructions.
 
-1. directly in AVR assembly;
-2. in C using `uint8_t`.
+## Mental model
+```text
+constant -> register r16 --+
+                           +-> ADD -> result register
+constant -> register r17 --+           |
+                                       +-> SREG flags (Z, C, ...)
+```
 
-Use values that fit in eight bits. Then:
+## Short theory
+An AVR register stores a fixed-width binary value. Arithmetic produces both a result and status information in SREG. With 8-bit arithmetic, values can wrap when the mathematical result no longer fits.
 
-- build both programs;
-- inspect the disassembly;
-- single-step both with avr-gdb;
-- record which registers change;
-- repeat with a calculation that overflows 8 bits;
-- inspect SREG and explain the carry/zero flags you observe.
+## Part A — Assembly
+Load two small constants into registers and add them. Before running, write down the expected binary and hexadecimal result. Single-step the program and observe both registers and SREG.
 
-Do not judge the C version by whether it uses exactly the registers you expected. Explain why the compiler is free to choose registers and optimize operations.
+Repeat with values that:
+1. produce an ordinary non-zero result;
+2. produce zero;
+3. overflow the unsigned 8-bit range.
 
-**Required qualification:** Q1 simulator.
+## Observe
+Record a table with operands, predicted result, actual result, Z flag and C flag. Explain every difference between prediction and observation.
 
+## Part B — C
+Implement the same calculations with `uint8_t`. Build and disassemble the program, then single-step it. Do not expect GCC to choose the same registers as your hand-written program.
 
 ## Under the hood
+Trace one expression through:
+```text
+a + b -> compiler -> AVR arithmetic instruction(s) -> result register -> SREG
+```
+Identify where the C abstraction stops exposing details you could see directly in assembly.
 
-Relate the implementation back through the full EduAVR chain: **C (where used) → generated AVR instructions → registers/memory → peripheral behavior → physical result (where applicable)**. Explain compiler choices instead of expecting C and hand-written assembly to be instruction-for-instruction identical.
+## Task
+Write a tiny program that adds three 8-bit values. Predict the final value and flags before running it. Then choose inputs that make the final result wrap.
+
+## Expected result
+Your predicted and simulated register values should agree, and you should be able to explain the relevant SREG flags rather than merely report them.
+
+## Questions
+- Why can 255 + 1 become 0 in an 8-bit register?
+- What is the difference between the zero and carry flags?
+- Does C guarantee which AVR register stores a variable?
+- Why might optimized C use fewer instructions than expected?
+- What did simulation prove here that did not require hardware?
+
+## Challenge
+Implement a 16-bit addition using two 8-bit register pairs and explain how carry propagates from the low byte to the high byte.
+
+## Qualification boundary
+Q1 simulation is sufficient because this exercise concerns deterministic CPU/register behavior. No electrical claim is made.
