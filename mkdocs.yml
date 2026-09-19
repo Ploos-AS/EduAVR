@@ -102,14 +102,14 @@ nav:
       - EEPROM: no/10-eeprom.md
       - ADC: no/11-adc.md
       - Appendikser:
-          - Arduino: no/appendix-a-arduino.md
-          - Debugging: no/appendix-b-debugging.md
-          - Disassembly og reverse engineering: no/appendix-c-disassembly-reverse-engineering.md
-          - C, assembly og compiler: no/appendix-d-c-assembly-compiler.md
-          - Minne og internals: no/appendix-e-memory-internals.md
-          - Programmering og bootloadere: no/appendix-f-programming-bootloaders.md
-          - Elektronikk: no/appendix-g-electronics.md
-          - Protokollanalyse: no/appendix-h-protocol-analysis.md
+          - Arduino: no/vedlegg-a-arduino.md
+          - Debugging: no/vedlegg-b-debugging.md
+          - Disassembly og reverse engineering: no/vedlegg-c-disassembly-reverse-engineering.md
+          - C, assembly og compiler: no/vedlegg-d-c-assembler-kompilator.md
+          - Minne og internals: no/vedlegg-e-minne.md
+          - Programmering og bootloadere: no/vedlegg-f-programmering-bootloadere.md
+          - Elektronikk: no/vedlegg-g-elektronikk.md
+          - Protokollanalyse: no/vedlegg-h-protokollanalyse.md
           - Lese datablader: no/appendix-i-reading-datasheets.md
   - Project documentation:
       - Course authoring guide: COURSE_AUTHORING.md
