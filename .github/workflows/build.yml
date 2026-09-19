@@ -25,7 +25,10 @@ jobs:
       - name: Qualify Q1 simulator
         run: sh tools/check_q1.sh
       - name: Produce V1 visual-source artifacts
-        run: sh tools/capture_v1.sh
+        run: |
+          git fetch origin main
+          git checkout origin/main -- tools/capture_v1.sh
+          sh tools/capture_v1.sh
       - name: Upload V1 visual-source artifacts
         uses: actions/upload-artifact@v4
         with:
