@@ -319,7 +319,7 @@ probe_resource_budget() {
         -ex "p/x *(unsigned short*)&budget_sp_deep" \
         -ex "p/x *(unsigned short*)&budget_sp_after" \
         -ex "p/x (unsigned short)&budget_static" \
-        -ex "p/x (unsigned short)&budget_static+16" \
+        -ex "p/x (unsigned short)((unsigned char*)&budget_static+16)" \
         -ex "quit" >"$log" 2>&1
     rc=$?
     set -e
