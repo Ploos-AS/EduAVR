@@ -101,6 +101,7 @@ nav:
           - Elektronikk: no/appendix-g-electronics.md
           - Protokollanalyse: no/appendix-h-protocol-analysis.md
   - Project documentation:
+      - Course authoring guide: COURSE_AUTHORING.md
       - Simulation policy: SIMULATION_POLICY.md
       - Visual policy: VISUAL_POLICY.md
       - Visual coverage plan: VISUAL_COVERAGE_PLAN.md
