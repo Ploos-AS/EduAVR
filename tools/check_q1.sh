@@ -60,6 +60,8 @@ run_sim build/data-structures-c.elf
 run_sim build/data-structures-asm.elf
 run_sim build/shared-state-c.elf
 run_sim build/shared-state-asm.elf
+run_sim build/resource-budget-c.elf
+run_sim build/resource-budget-asm.elf
 
 probe_gpio_config() {
     elf="$1"
@@ -299,8 +301,47 @@ probe_shared_state() {
 probe_shared_state build/shared-state-c.elf
 probe_shared_state build/shared-state-asm.elf
 
+
+probe_resource_budget() {
+    elf="$1"
+    log="$elf.budget.gdb.log"
+    simavr -m atmega1284p -f 8000000 -g "$elf" >"$elf.budget.sim.log" 2>&1 &
+    sim_pid=$!
+    trap 'kill "$sim_pid" 2>/dev/null || true' EXIT INT TERM
+    sleep 1
+    set +e
+    timeout 10s avr-gdb -q -batch "$elf" \
+        -ex "target remote :1234" \
+        -ex "break budget_ready" \
+        -ex "continue" \
+        -ex "p/x *(unsigned char*)&budget_result" \
+        -ex "p/x *(unsigned short*)&budget_sp_before" \
+        -ex "p/x *(unsigned short*)&budget_sp_deep" \
+        -ex "p/x *(unsigned short*)&budget_sp_after" \
+        -ex "p/x (unsigned short)&budget_static" \
+        -ex "p/x (unsigned short)&budget_static+16" \
+        -ex "quit" >"$log" 2>&1
+    rc=$?
+    set -e
+    kill "$sim_pid" 2>/dev/null || true
+    wait "$sim_pid" 2>/dev/null || true
+    trap - EXIT INT TERM
+    test "$rc" -eq 0 || { cat "$log" >&2; fail "GDB resource-budget probe failed for $elf"; }
+    values=$(awk '/^[$][0-9]+ = 0x/ { sub(/^.*= /, ""); print }' "$log")
+    set -- $values
+    test "$#" -ge 6 || { cat "$log" >&2; fail "could not read resource-budget values from $elf"; }
+    test "$1" = "0x47" || fail "unexpected budget result in $elf: $1"
+    test "$2" = "$4" || fail "stack did not restore in $elf: before=$2 after=$4"
+    before_dec=$(printf "%d" "$2"); deep_dec=$(printf "%d" "$3")
+    test "$deep_dec" -lt "$before_dec" || fail "stack did not move down in $elf: before=$2 deep=$3"
+    start_dec=$(printf "%d" "$5"); end_dec=$(printf "%d" "$6")
+    test $((end_dec-start_dec)) -eq 16 || fail "static SRAM object is not 16 bytes in $elf"
+}
+probe_resource_budget build/resource-budget-c.elf
+probe_resource_budget build/resource-budget-asm.elf
+
 # Confirm GDB can read both AVR ELF files and their symbols non-interactively.
-for elf in build/blink-c.elf build/blink-asm.elf build/gpio-c.elf build/gpio-asm.elf build/stack-functions-c.elf build/stack-functions-asm.elf build/eeprom-c.elf build/eeprom-asm.elf build/adc-c.elf build/adc-asm.elf build/data-structures-c.elf build/data-structures-asm.elf build/shared-state-c.elf build/shared-state-asm.elf build/timer-isr-c.elf build/timer-isr-asm.elf build/pwm-c.elf build/pwm-asm.elf build/usart0-echo-c.elf build/usart0-echo-asm.elf build/usart0-irq-ring-c.elf build/usart0-irq-ring-asm.elf build/usart1-echo-c.elf build/usart1-echo-asm.elf build/usart1-irq-ring-c.elf build/usart1-irq-ring-asm.elf build/spi-c.elf build/spi-asm.elf build/twi-c.elf build/twi-asm.elf; do
+for elf in build/blink-c.elf build/blink-asm.elf build/gpio-c.elf build/gpio-asm.elf build/stack-functions-c.elf build/stack-functions-asm.elf build/eeprom-c.elf build/eeprom-asm.elf build/adc-c.elf build/adc-asm.elf build/data-structures-c.elf build/data-structures-asm.elf build/shared-state-c.elf build/shared-state-asm.elf build/resource-budget-c.elf build/resource-budget-asm.elf build/timer-isr-c.elf build/timer-isr-asm.elf build/pwm-c.elf build/pwm-asm.elf build/usart0-echo-c.elf build/usart0-echo-asm.elf build/usart0-irq-ring-c.elf build/usart0-irq-ring-asm.elf build/usart1-echo-c.elf build/usart1-echo-asm.elf build/usart1-irq-ring-c.elf build/usart1-irq-ring-asm.elf build/spi-c.elf build/spi-asm.elf build/twi-c.elf build/twi-asm.elf; do
     avr-gdb -q -batch         -ex "file $elf"         -ex "info files" >"$elf.gdb.log" 2>&1 ||
         { cat "$elf.gdb.log" >&2; fail "avr-gdb could not inspect $elf"; }
     grep -q "Symbols from" "$elf.gdb.log" ||
