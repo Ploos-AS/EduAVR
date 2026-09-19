@@ -75,7 +75,7 @@ Current automated Q1 evidence covers:
 
 ## Published appendices
 
-Both language tracks currently publish appendices A-I:
+Both language tracks now publish appendices A-M, plus an extended datasheet-reading guide:
 
 - A — AVR and Arduino;
 - B — Debugging;
@@ -85,9 +85,14 @@ Both language tracks currently publish appendices A-I:
 - F — Programming and bootloaders;
 - G — Electronics;
 - H — Protocol analysis;
-- I — Reading AVR datasheets.
+- I — Performance and optimization;
+- J — Testing and qualification;
+- K — Build your own AVR board;
+- L — AVR for retro computing;
+- M — Datasheet survival guide;
+- Extended guide — Reading AVR datasheets.
 
-The broader roadmap also describes future appendices J-M and Course 2 security material. Those are roadmap scope, not current published-course completion.
+The appendix files exist in both language tracks, but semantic parity still requires active review; publication does not by itself imply identical depth. Course 2 security material remains roadmap scope.
 
 ## Infrastructure
 
@@ -117,7 +122,7 @@ Implemented repository infrastructure includes:
 ## Known reconciliation items / next work
 
 1. Continue language-parity checks as new chapters are added.
-2. Expand appendices J-M only when their actual Markdown content exists.
+2. Continue semantic EN/NO parity work for appendices A-M; several Norwegian versions are currently shorter than their English counterparts.
 3. Add real EduBoard CAD/Q2 visuals only from stable board revisions and physical evidence.
 
 This file should be updated whenever a milestone changes materially. The executable tests and CI are authoritative for qualification claims; the published navigation is authoritative for what is currently part of the course.
