@@ -60,6 +60,8 @@ mkdir -p "$OUT/q1"
 for src in \
   build/stack-functions-c.elf.stack.gdb.log \
   build/stack-functions-asm.elf.stack.gdb.log \
+  build/eeprom-c.elf.eeprom.gdb.log \
+  build/eeprom-asm.elf.eeprom.gdb.log \
   build/timer-isr-c.elf.irq.gdb.log \
   build/timer-isr-asm.elf.irq.gdb.log \
   build/pwm-c.elf.pwm.gdb.log \
@@ -89,6 +91,8 @@ only captions and explanation.
 | --- | --- | --- |
 | stack-functions-c.elf.stack.gdb.log | C ABI result and stack-pointer before/inside/after call | Q1 |
 | stack-functions-asm.elf.stack.gdb.log | Assembly CALL/RET result and stack-pointer balance | Q1 |
+| eeprom-c.elf.eeprom.gdb.log | C EEPROM write/read persistence probe | Q1 |
+| eeprom-asm.elf.eeprom.gdb.log | Assembly EEPROM write/read persistence probe | Q1 |
 | timer-isr-c.elf.irq.gdb.log | Timer compare interrupt: breakpoint, PC and SP | Q1 |
 | timer-isr-asm.elf.irq.gdb.log | Same interrupt path in assembly | Q1 |
 | pwm-c.elf.pwm.gdb.log | DDRB/TCCR0A/TCCR0B/OCR0A after C setup | Q1 |
@@ -117,6 +121,7 @@ Qualification level: Q1 (simulated)
 
 Expected coverage:
 - Stack/functions ABI: result plus SP before/inside/after CALL/RET
+- EEPROM write/read round trip in C and assembly
 - Timer0 compare interrupt breakpoint and PC/SP
 - PWM register configuration
 - USART0 register configuration
@@ -127,7 +132,7 @@ Expected coverage:
 A missing expected log is an error in the visual capture pipeline.
 EOF
 
-expected_q1_logs=14
+expected_q1_logs=16
 actual_q1_logs=$(find "$OUT/q1" -maxdepth 1 -name '*.log' | wc -l)
 test "$actual_q1_logs" -eq "$expected_q1_logs" || {
   echo "V1 capture FAIL: expected $expected_q1_logs Q1 logs, found $actual_q1_logs" >&2

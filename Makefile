@@ -10,9 +10,9 @@ LDFLAGS := -mmcu=$(MCU)
 
 BUILD := build
 
-.PHONY: all c asm gpio stack timers pwm usart bridge robust spi twi disasm size check clean
+.PHONY: all c asm gpio stack timers pwm usart bridge robust spi twi eeprom disasm size check clean
 
-all: c asm gpio stack timers pwm usart bridge robust spi twi
+all: c asm gpio stack timers pwm usart bridge robust spi twi eeprom
 
 $(BUILD):
 	mkdir -p $(BUILD)
@@ -37,6 +37,8 @@ robust: $(BUILD)/usart-robust-c.hex $(BUILD)/usart-robust-asm.hex
 spi: $(BUILD)/spi-c.hex $(BUILD)/spi-asm.hex
 
 twi: $(BUILD)/twi-c.hex $(BUILD)/twi-asm.hex
+
+eeprom: $(BUILD)/eeprom-c.hex $(BUILD)/eeprom-asm.hex
 
 $(BUILD)/blink-c.elf: examples/c/blink/main.c | $(BUILD)
 	$(CC) $(CFLAGS) $< -o $@
@@ -122,6 +124,12 @@ $(BUILD)/twi-c.elf: examples/c/twi/main.c | $(BUILD)
 $(BUILD)/twi-asm.elf: examples/asm/twi/main.S | $(BUILD)
 	$(CC) $(CFLAGS) $< -o $@
 
+$(BUILD)/eeprom-c.elf: examples/c/eeprom/main.c | $(BUILD)
+	$(CC) $(CFLAGS) $< -o $@
+
+$(BUILD)/eeprom-asm.elf: examples/asm/eeprom/main.S | $(BUILD)
+	$(CC) $(CFLAGS) $< -o $@
+
 $(BUILD)/%.hex: $(BUILD)/%.elf
 	$(OBJCOPY) -O ihex -R .eeprom $< $@
 
@@ -148,6 +156,8 @@ disasm: all
 	$(OBJDUMP) -d -S $(BUILD)/spi-asm.elf > $(BUILD)/spi-asm.lst
 	$(OBJDUMP) -d -S $(BUILD)/twi-c.elf > $(BUILD)/twi-c.lst
 	$(OBJDUMP) -d -S $(BUILD)/twi-asm.elf > $(BUILD)/twi-asm.lst
+	$(OBJDUMP) -d -S $(BUILD)/eeprom-c.elf > $(BUILD)/eeprom-c.lst
+	$(OBJDUMP) -d -S $(BUILD)/eeprom-asm.elf > $(BUILD)/eeprom-asm.lst
 
 size: all
 	$(SIZE) -C --mcu=$(MCU) $(BUILD)/*.elf

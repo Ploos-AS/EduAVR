@@ -133,7 +133,7 @@ Notes:
 After schematic sections are stable, export real KiCad excerpts and board renders. Never redraw pin mappings from memory.
 
 ### Phase V3 — Q1 simulator/debugger visuals
-**QUALIFIED / automated for timer, PWM, USART0/1, SPI and TWI.** CI preserves the verbatim simavr/avr-gdb logs from the same Q1 qualification run under `q1/`, with a bilingual-use figure manifest. These logs are canonical figure sources; they may be typeset/cropped for readability, but must not be presented as photographed terminal UI. Stack/CALL is also Q1-qualified and its paired C/Assembly GDB logs are preserved in the artifact. EEPROM/ADC sessions remain future coverage.
+**QUALIFIED / automated for timer, PWM, USART0/1, SPI and TWI.** CI preserves the verbatim simavr/avr-gdb logs from the same Q1 qualification run under `q1/`, with a bilingual-use figure manifest. These logs are canonical figure sources; they may be typeset/cropped for readability, but must not be presented as photographed terminal UI. Stack/CALL is also Q1-qualified and its paired C/Assembly GDB logs are preserved in the artifact. EEPROM is Q1-qualified with paired C/Assembly write/read evidence preserved in the artifact. ADC remains future Q1 coverage.
 
 ### Phase V4 — Q2 physical visuals
 After prototype availability, photograph the board and capture actual electrical behavior. Link captures to board revision and firmware build.
