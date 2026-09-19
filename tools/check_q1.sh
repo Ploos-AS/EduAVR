@@ -330,9 +330,14 @@ probe_resource_budget() {
     test "$#" -ge 4 || { cat "$log" >&2; fail "could not read resource-budget values from $elf"; }
     test "$1" = "0x47" || fail "unexpected budget result in $elf: $1"
     test "$2" = "$4" || fail "stack did not restore in $elf: before=$2 after=$4"
-    before_dec=$(printf "%d" "$2"); deep_dec=$(printf "%d" "$3")
+    before_dec=$(printf "%d" "$2")
+    deep_dec=$(printf "%d" "$3")
     test "$deep_dec" -lt "$before_dec" || fail "stack did not move down in $elf: before=$2 deep=$3"
-    avr-nm -S --size-sort "$elf" | grep -Eq '[[:space:]]00000010[[:space:]][Bb][[:space:]]budget_staticprobe_resource_budget build/resource-budget-c.elf
+    avr-nm -S --size-sort "$elf" | grep -Eq '[[:space:]]00000010[[:space:]][Bb][[:space:]]budget_static$' ||
+        fail "budget_static is not a 16-byte SRAM symbol in $elf"
+}
+
+probe_resource_budget build/resource-budget-c.elf
 probe_resource_budget build/resource-budget-asm.elf
 
 # Confirm GDB can read both AVR ELF files and their symbols non-interactively.
