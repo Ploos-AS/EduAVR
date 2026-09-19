@@ -78,6 +78,7 @@ nav:
       - ADC: en/11-adc.md
       - Pointers, buffers and structs: en/12-data-structures.md
       - volatile, interrupts and atomicity: en/13-volatile-atomicity.md
+      - SRAM and stack resource budgets: en/14-resource-budget.md
       - Appendices:
           - Arduino: en/appendix-a-arduino.md
           - Debugging: en/appendix-b-debugging.md
@@ -110,6 +111,7 @@ nav:
       - ADC: no/11-adc.md
       - Pekere, buffere og structs: no/12-data-structures.md
       - volatile, interrupts og atomicitet: no/13-volatile-atomicity.md
+      - SRAM- og stackbudsjett: no/14-resource-budget.md
       - Appendikser:
           - Arduino: no/vedlegg-a-arduino.md
           - Debugging: no/vedlegg-b-debugging.md
