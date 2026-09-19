@@ -21,6 +21,7 @@ Q1 is EduAVR's default software runtime qualification.
 - EEPROM write/readback in paired C/Assembly firmware: address `0x12`, value `0x5a`.
 - ADC0 configuration plus modeled 2500 mV analog input -> firmware conversion, approximately 775 in both C and Assembly.
 - Shared ISR/main state: paired C/Assembly firmware verifies interrupt progress and a coherent protected 16-bit snapshot, demonstrating the distinction between `volatile` visibility and atomicity.
+- SRAM/stack resource budget: paired C/Assembly firmware verifies a deterministic worker result, downward stack movement inside the worker and restoration of SP after return.
 
 ### PWM waveform
 
@@ -55,6 +56,7 @@ The simulator suite already provides strong Q1 coverage for the currently implem
 | TWI/I2C | Q1 roundtrip | Add ACK/NACK and error-path tests where simavr models them reliably. |
 | ADC | Q1 modeled data path | Paired C/Assembly firmware converts an injected 2500 mV ADC0 input to approximately 775 in the qualified simavr model. Physical accuracy remains Q2. |
 | EEPROM | Q1 write/readback | Paired C/Assembly firmware deterministically writes `0x5a` at address `0x12` and reads it back. Bilingual core lesson published. |
+| Systems/resource budget | Q1 | Paired C/Assembly firmware observes stack depth and verifies balanced SP; static SRAM remains visible through ELF/`avr-size`. |
 
 This table is intentionally conservative: a new Q1 claim is added only when the simulator test observes the behavior directly and reproducibly.
 
