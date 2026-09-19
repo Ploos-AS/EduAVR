@@ -58,6 +58,8 @@ run_sim build/adc-c.elf
 run_sim build/adc-asm.elf
 run_sim build/data-structures-c.elf
 run_sim build/data-structures-asm.elf
+run_sim build/shared-state-c.elf
+run_sim build/shared-state-asm.elf
 
 probe_gpio_config() {
     elf="$1"
@@ -260,8 +262,45 @@ probe_data_structures() {
 probe_data_structures build/data-structures-c.elf
 probe_data_structures build/data-structures-asm.elf
 
+
+probe_shared_state() {
+    elf="$1"
+    log="$elf.shared.gdb.log"
+    simavr -m atmega1284p -f 8000000 -g "$elf" >"$elf.shared.sim.log" 2>&1 &
+    sim_pid=$!
+    trap 'kill "$sim_pid" 2>/dev/null || true' EXIT INT TERM
+    sleep 1
+    set +e
+    timeout 10s avr-gdb -q -batch "$elf" \
+        -ex "target remote :1234" \
+        -ex "break shared_state_ready" \
+        -ex "continue" \
+        -ex "p/x *(unsigned char*)&snapshot_low" \
+        -ex "p/x *(unsigned char*)&snapshot_high" \
+        -ex "p/x *(unsigned char*)&snapshot_ticks" \
+        -ex "quit" >"$log" 2>&1
+    rc=$?
+    set -e
+    kill "$sim_pid" 2>/dev/null || true
+    wait "$sim_pid" 2>/dev/null || true
+    trap - EXIT INT TERM
+    test "$rc" -eq 0 || { cat "$log" >&2; fail "GDB shared-state probe failed for $elf"; }
+    values=$(awk '/^[$][0-9]+ = 0x/ { sub(/^.*= /, ""); print }' "$log")
+    set -- $values
+    test "$#" -ge 3 || { cat "$log" >&2; fail "could not read shared-state snapshot from $elf"; }
+    low_dec=$(printf "%d" "$1")
+    high_dec=$(printf "%d" "$2")
+    ticks_dec=$(printf "%d" "$3")
+    test "$ticks_dec" -ge 3 || fail "shared-state timer did not advance in $elf: ticks=$3"
+    test "$low_dec" -eq "$ticks_dec" || fail "shared-state low byte/ticks mismatch in $elf: low=$1 ticks=$3"
+    test "$high_dec" -eq "$ticks_dec" || fail "shared-state high byte/ticks mismatch in $elf: high=$2 ticks=$3"
+}
+
+probe_shared_state build/shared-state-c.elf
+probe_shared_state build/shared-state-asm.elf
+
 # Confirm GDB can read both AVR ELF files and their symbols non-interactively.
-for elf in build/blink-c.elf build/blink-asm.elf build/gpio-c.elf build/gpio-asm.elf build/stack-functions-c.elf build/stack-functions-asm.elf build/eeprom-c.elf build/eeprom-asm.elf build/adc-c.elf build/adc-asm.elf build/data-structures-c.elf build/data-structures-asm.elf build/timer-isr-c.elf build/timer-isr-asm.elf build/pwm-c.elf build/pwm-asm.elf build/usart0-echo-c.elf build/usart0-echo-asm.elf build/usart0-irq-ring-c.elf build/usart0-irq-ring-asm.elf build/usart1-echo-c.elf build/usart1-echo-asm.elf build/usart1-irq-ring-c.elf build/usart1-irq-ring-asm.elf build/spi-c.elf build/spi-asm.elf build/twi-c.elf build/twi-asm.elf; do
+for elf in build/blink-c.elf build/blink-asm.elf build/gpio-c.elf build/gpio-asm.elf build/stack-functions-c.elf build/stack-functions-asm.elf build/eeprom-c.elf build/eeprom-asm.elf build/adc-c.elf build/adc-asm.elf build/data-structures-c.elf build/data-structures-asm.elf build/shared-state-c.elf build/shared-state-asm.elf build/timer-isr-c.elf build/timer-isr-asm.elf build/pwm-c.elf build/pwm-asm.elf build/usart0-echo-c.elf build/usart0-echo-asm.elf build/usart0-irq-ring-c.elf build/usart0-irq-ring-asm.elf build/usart1-echo-c.elf build/usart1-echo-asm.elf build/usart1-irq-ring-c.elf build/usart1-irq-ring-asm.elf build/spi-c.elf build/spi-asm.elf build/twi-c.elf build/twi-asm.elf; do
     avr-gdb -q -batch         -ex "file $elf"         -ex "info files" >"$elf.gdb.log" 2>&1 ||
         { cat "$elf.gdb.log" >&2; fail "avr-gdb could not inspect $elf"; }
     grep -q "Symbols from" "$elf.gdb.log" ||
