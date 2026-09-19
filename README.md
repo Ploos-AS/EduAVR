@@ -71,9 +71,9 @@ Both tracks are first-class course material.
 
 ## Status
 
-M0 foundation: complete.
+M0 foundation and M1 reproducible toolchain: complete and qualified in GitHub Actions.
 
-M1 reproducible toolchain: implemented; GitHub Actions qualification is pending confirmation.
+Course 1 foundations through M4 communications are substantially implemented. Q1 simulator qualification covers paired C/AVR-assembly examples including timers, PWM, USART0/1 polling and interrupt-driven ring buffers, dual-UART bridges, SPI and TWI/I2C. M5 learner exercises have started; Q2 physical qualification on EduBoard-AVR/STK500 remains separate and pending.
 
 See [ROADMAP.md](ROADMAP.md).
 
