@@ -18,6 +18,8 @@ mkdir -p "$OUT"
 } > "$OUT/01-toolchain.txt"
 
 make clean all disasm >/dev/null
+# make clean removes build/, including OUT; recreate capture directory afterwards.
+mkdir -p "$OUT"
 
 {
   echo "EduAVR build artifacts"
