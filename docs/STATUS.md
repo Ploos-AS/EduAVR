@@ -14,7 +14,7 @@ This is the repository-level status snapshot. It distinguishes published course 
 
 ## Published core course
 
-The published navigation currently contains thirteen core chapters in each language:
+The published navigation currently contains fifteen core chapters in each language:
 
 1. course principles;
 2. toolchain;
@@ -28,7 +28,9 @@ The published navigation currently contains thirteen core chapters in each langu
 10. SPI;
 11. TWI/I2C;
 12. EEPROM;
-13. ADC.
+13. ADC;
+14. pointers, buffers and structs;
+15. volatile, interrupts and atomicity.
 
 ## Executable paired C/Assembly examples
 
@@ -49,7 +51,9 @@ The build currently contains paired C and hand-written Assembly firmware for:
 - SPI;
 - TWI/I2C;
 - EEPROM;
-- ADC.
+- ADC;
+- data structures;
+- shared ISR/main state.
 
 EEPROM and ADC implementation, qualification and published curriculum are now aligned.
 
@@ -72,6 +76,8 @@ Current automated Q1 evidence covers:
 | TWI/I2C | controller configuration plus virtual EEPROM roundtrip |
 | EEPROM | paired firmware writes 0x5a at address 0x12 and reads 0x5a back |
 | ADC | paired firmware converts modeled ADC0 2500 mV input to approximately 775 |
+| Data structures | deterministic buffer, pointer, struct layout and sum state |
+| Shared state | Timer0 interrupt progress plus coherent protected 16-bit snapshot in paired C/Assembly |
 
 ## Published appendices
 
@@ -116,7 +122,8 @@ Implemented repository infrastructure includes:
 - **M3:** substantially implemented with Q1 timers/interrupts/PWM evidence.
 - **M4:** substantially implemented with Q1 USART/SPI/TWI evidence.
 - **M5:** complete at Q1/course level. EEPROM and ADC both have paired C/Assembly examples, deterministic simulator evidence and bilingual core lessons. Physical ADC behavior remains Q2.
-- **M6-M8:** planned/incremental; not complete.
+- **M6:** in progress with two published bilingual lessons: data structures and volatile/interrupt atomicity, both backed by paired C/Assembly and deterministic Q1 evidence.
+- **M7-M8:** planned/incremental; not complete.
 - **M9/Q2:** board convergence is in progress; physical qualification remains separate.
 
 ## Known reconciliation items / next work
