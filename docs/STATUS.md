@@ -14,7 +14,7 @@ This is the repository-level status snapshot. It distinguishes published course 
 
 ## Published core course
 
-The published navigation currently contains eleven core chapters in each language:
+The published navigation currently contains thirteen core chapters in each language:
 
 1. course principles;
 2. toolchain;
@@ -26,9 +26,9 @@ The published navigation currently contains eleven core chapters in each languag
 8. USART;
 9. dual-UART bridge;
 10. SPI;
-11. TWI/I2C.
-
-EEPROM is now a published bilingual core chapter with paired implementation and Q1 evidence. ADC is **not yet a published core chapter**.
+11. TWI/I2C;
+12. EEPROM;
+13. ADC.
 
 ## Executable paired C/Assembly examples
 
@@ -48,9 +48,10 @@ The build currently contains paired C and hand-written Assembly firmware for:
 - robust USART;
 - SPI;
 - TWI/I2C;
-- EEPROM.
+- EEPROM;
+- ADC.
 
-EEPROM implementation, qualification and published curriculum are now aligned.
+EEPROM and ADC implementation, qualification and published curriculum are now aligned.
 
 ## Q1 simulator qualification
 
@@ -70,8 +71,7 @@ Current automated Q1 evidence covers:
 | SPI | controller configuration plus virtual peripheral transfer |
 | TWI/I2C | controller configuration plus virtual EEPROM roundtrip |
 | EEPROM | paired firmware writes 0x5a at address 0x12 and reads 0x5a back |
-
-ADC has no equivalent core example or Q1 qualification yet.
+| ADC | paired firmware converts modeled ADC0 2500 mV input to approximately 775 |
 
 ## Published appendices
 
@@ -110,15 +110,14 @@ Implemented repository infrastructure includes:
 - **M2:** substantially implemented and represented in the published bilingual core.
 - **M3:** substantially implemented with Q1 timers/interrupts/PWM evidence.
 - **M4:** substantially implemented with Q1 USART/SPI/TWI evidence.
-- **M5:** in progress. EEPROM implementation, Q1 evidence and bilingual core lesson are complete; ADC remains missing.
+- **M5:** complete at Q1/course level. EEPROM and ADC both have paired C/Assembly examples, deterministic simulator evidence and bilingual core lessons. Physical ADC behavior remains Q2.
 - **M6-M8:** planned/incremental; not complete.
 - **M9/Q2:** board convergence is in progress; physical qualification remains separate.
 
 ## Known reconciliation items / next work
 
-1. Design and validate ADC simulation support before making a Q1 claim; analog/electrical accuracy remains Q2.
-2. Continue language-parity checks as new chapters are added.
-3. Expand appendices J-M only when their actual Markdown content exists.
-4. Add real EduBoard CAD/Q2 visuals only from stable board revisions and physical evidence.
+1. Continue language-parity checks as new chapters are added.
+2. Expand appendices J-M only when their actual Markdown content exists.
+3. Add real EduBoard CAD/Q2 visuals only from stable board revisions and physical evidence.
 
 This file should be updated whenever a milestone changes materially. The executable tests and CI are authoritative for qualification claims; the published navigation is authoritative for what is currently part of the course.
