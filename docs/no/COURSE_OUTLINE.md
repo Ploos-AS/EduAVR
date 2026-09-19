@@ -21,6 +21,20 @@ EduAVR lærer AVR fra maskinvaren og opp, med **Assembly og C side om side**.
 
 ## Arbeidsmåte
 
-Hver leksjon kombinerer teori med praktisk inspeksjon av maskinen. Bygg C og Assembly, undersøk disassembly, bruk simulatoren der den gir gyldig evidens, og gå til fysisk maskinvare når oppgaven handler om elektrisk oppførsel.
+Hver leksjon kombinerer teori med praktisk inspeksjon av maskinen. Bygg C og Assembly, undersøk disassembly, bruk simulatoren i størst praktisk mulig grad der den gir gyldig evidens, og gå til fysisk maskinvare bare når oppgaven avhenger av elektrisk eller annen ikke-modellert oppførsel.
 
-Appendiksene gir fordypning i blant annet Arduino, debugging, reverse engineering, compiler-output, minne, bootloadere, elektronikk og protokollanalyse.
+## Referanseappendikser
+
+Publiserte appendikser:
+
+- **A — AVR og Arduino**
+- **B — Debugging AVR**
+- **C — Disassembly og reverse engineering**
+- **D — C ↔ Assembly og compiler**
+- **E — Minne og internals**
+- **F — Programmering og bootloadere**
+- **G — Elektronikk for AVR-programmerere**
+- **H — Protokollanalyse**
+- **I — [Slik leser du AVR-datablader](appendix-i-reading-datasheets.md)**
+
+Fremtidige appendikser kan dekke ytelse/optimalisering, testing/kvalifikasjon, bygging av et AVR-kort og retrogrensesnitt. De legges inn som publisert kursinnhold først når Markdown-kildene finnes.
