@@ -49,8 +49,13 @@ Published appendices currently cover:
 - **F — Programming and bootloaders**
 - **G — Electronics for AVR programmers**
 - **H — Protocol analysis**
-- **I — [Reading AVR datasheets](appendix-i-reading-datasheets.md)**
+- **I — [Performance and optimization](appendix-i-performance.md)**
+- **J — [Testing and qualification](appendix-j-testing-qualification.md)**
+- **K — [Build your own AVR board](appendix-k-build-board.md)**
+- **L — [AVR for retro computing](appendix-l-retro-computing.md)**
+- **M — [Datasheet survival guide](appendix-m-datasheet-guide.md)**
+- **Extended guide — [Reading AVR datasheets](appendix-i-reading-datasheets.md)**
 
-Future appendices may cover performance/optimization, testing/qualification, building an AVR board and retro-computing interfaces. They should be added to the published course only when their Markdown sources exist.
+These sources now exist in both language tracks. Semantic parity is reviewed separately from mere file presence.
 
 The appendices are reference material and advanced practice. They can mature while EduBoard-AVR hardware is being stabilized because most are not tied to a moving board revision.
