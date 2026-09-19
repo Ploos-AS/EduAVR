@@ -65,10 +65,10 @@ probe_stack_abi() {
         -ex "target remote :1234" \
         -ex "break stack_ready" \
         -ex "continue" \
-        -ex "p/x stack_result" \
-        -ex "p/x stack_sp_before" \
-        -ex "p/x stack_sp_inside" \
-        -ex "p/x stack_sp_after" \
+        -ex "p/x *(unsigned char*)&stack_result" \
+        -ex "p/x *(unsigned short*)&stack_sp_before" \
+        -ex "p/x *(unsigned short*)&stack_sp_inside" \
+        -ex "p/x *(unsigned short*)&stack_sp_after" \
         -ex "quit" >"$log" 2>&1
     rc=$?
     set -e
