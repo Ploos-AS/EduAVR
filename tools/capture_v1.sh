@@ -76,6 +76,31 @@ do
   fi
 done
 
+cat > "$OUT/q1/FIGURE_MANIFEST.md" <<EOF
+# Q1 figure-source manifest
+
+All entries below are verbatim outputs from the qualified simavr/avr-gdb run.
+Use the same technical source in English and Norwegian course material; localize
+only captions and explanation.
+
+| Figure source | Teaching use | Qualification |
+| --- | --- | --- |
+| timer-isr-c.elf.irq.gdb.log | Timer compare interrupt: breakpoint, PC and SP | Q1 |
+| timer-isr-asm.elf.irq.gdb.log | Same interrupt path in assembly | Q1 |
+| pwm-c.elf.pwm.gdb.log | DDRB/TCCR0A/TCCR0B/OCR0A after C setup | Q1 |
+| pwm-asm.elf.pwm.gdb.log | Same PWM registers after assembly setup | Q1 |
+| usart0-echo-c.elf.usart.gdb.log | USART0 baud/frame/RX/TX configuration in C | Q1 |
+| usart0-echo-asm.elf.usart.gdb.log | Same USART0 configuration in assembly | Q1 |
+| usart1-echo-c.elf.usart1.gdb.log | USART1 configuration in C | Q1 |
+| usart1-echo-asm.elf.usart1.gdb.log | USART1 configuration in assembly | Q1 |
+| spi-c.elf.spi.gdb.log | DDRB/SPCR/SPSR SPI setup in C | Q1 |
+| spi-asm.elf.spi.gdb.log | Same SPI setup in assembly | Q1 |
+| twi-c.elf.twi.gdb.log | TWBR/TWSR/TWCR TWI setup in C | Q1 |
+| twi-asm.elf.twi.gdb.log | Same TWI setup in assembly | Q1 |
+
+Repository commit: $(git rev-parse HEAD)
+EOF
+
 cat > "$OUT/q1/README.txt" <<EOF
 EduAVR Q1 simulator/debugger capture
 
