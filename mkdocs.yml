@@ -4,6 +4,8 @@ site_url: https://ploos-as.github.io/EduAVR/
 repo_url: https://github.com/Ploos-AS/EduAVR
 repo_name: Ploos-AS/EduAVR
 edit_uri: edit/main/docs/
+site_author: Ploos AS
+copyright: Copyright &copy; 2026 Ploos AS
 
 theme:
   name: material
@@ -78,6 +80,7 @@ nav:
           - Programming and bootloaders: en/appendix-f-programming-bootloaders.md
           - Electronics: en/appendix-g-electronics.md
           - Protocol analysis: en/appendix-h-protocol-analysis.md
+          - Reading datasheets: en/appendix-i-reading-datasheets.md
   - Norsk:
       - Kursoversikt: no/COURSE_OUTLINE.md
       - Kursprinsipper: no/00-course-principles.md
@@ -100,6 +103,7 @@ nav:
           - Programmering og bootloadere: no/appendix-f-programming-bootloaders.md
           - Elektronikk: no/appendix-g-electronics.md
           - Protokollanalyse: no/appendix-h-protocol-analysis.md
+          - Lese datablader: no/appendix-i-reading-datasheets.md
   - Project documentation:
       - Course authoring guide: COURSE_AUTHORING.md
       - Simulation policy: SIMULATION_POLICY.md
