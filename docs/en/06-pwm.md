@@ -39,7 +39,7 @@ Build the C and Assembly variants, compare their register configuration, then ch
 
 ## Qualification
 
-Q1 can verify register configuration, instruction flow and modeled timer/output-compare behavior. Q2 is required for claims about voltage waveform, frequency accuracy, rise/fall behavior, LED brightness or instrument measurements.
+Q1 verifies register configuration, instruction flow and modeled timer/output-compare behavior. The automated paired C/Assembly test observes OC0A/PB3 edges through simavr and measures the resulting duty cycle, requiring the configured approximately 25% waveform. Q2 is required for claims about voltage waveform, frequency accuracy, rise/fall behavior, LED brightness or instrument measurements.
 
 ## Check your understanding
 
