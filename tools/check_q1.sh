@@ -342,8 +342,8 @@ probe_resource_budget() {
     test "$result" = "0x47" || fail "unexpected budget result in $elf: $result"
     test "$before_lo" = "$after_lo" && test "$before_hi" = "$after_hi" ||
         fail "stack did not restore in $elf: before=${before_hi}${before_lo} after=${after_hi}${after_lo}"
-    before=$(printf '%d' "0x$before_hi$before_lo")
-    deep=$(printf '%d' "0x$deep_hi$deep_lo")
+    before=$((16#$before_hi$before_lo))
+    deep=$((16#$deep_hi$deep_lo))
     test "$deep" -lt "$before" ||
         fail "stack did not move downward in $elf: before=0x${before_hi}${before_lo} deep=0x${deep_hi}${deep_lo}"
     avr-nm -S --size-sort "$elf" | grep -Eq '[[:space:]]00000010[[:space:]][Bb][[:space:]]budget_static$' ||
