@@ -1,0 +1,7 @@
+# Generated documentation output
+site/
+
+# Python / MkDocs local environment
+.venv/
+__pycache__/
+*.py[cod]
