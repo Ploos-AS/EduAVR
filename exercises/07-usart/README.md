@@ -1,5 +1,14 @@
 # Exercise 07 — USART0 terminal
 
+## Metadata
+
+- **Mode:** SIM → BOARD
+- **Level:** 2 Intermediate
+- **Primary language phase:** ASM → C
+- **Hardware:** EduBoard-AVR or STK500 with serial interface
+- **Qualification:** Q1 + Q2
+- **Concepts:** USART, baud rate, polling, interrupts, ring buffer
+
 Configure USART0 for a documented asynchronous 8N1 link.
 
 ## Q1
@@ -35,3 +44,8 @@ Verify:
 Record the physical connection and level/interface assumptions.
 
 Do not connect incompatible voltage standards directly.
+
+
+## Under the hood
+
+Relate the implementation back through the full EduAVR chain: **C (where used) → generated AVR instructions → registers/memory → peripheral behavior → physical result (where applicable)**. Explain compiler choices instead of expecting C and hand-written assembly to be instruction-for-instruction identical.
