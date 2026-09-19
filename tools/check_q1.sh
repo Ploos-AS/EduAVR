@@ -318,13 +318,10 @@ probe_resource_budget() {
         -ex "target remote :1234" \
         -ex "break budget_ready" \
         -ex "continue" \
-        -ex "p/x (unsigned int)(*(unsigned char*)&budget_result & 0xff)" \
-        -ex "p/x (unsigned int)(*((unsigned char*)&budget_sp_before+0) & 0xff)" \
-        -ex "p/x (unsigned int)(*((unsigned char*)&budget_sp_before+1) & 0xff)" \
-        -ex "p/x (unsigned int)(*((unsigned char*)&budget_sp_deep+0) & 0xff)" \
-        -ex "p/x (unsigned int)(*((unsigned char*)&budget_sp_deep+1) & 0xff)" \
-        -ex "p/x (unsigned int)(*((unsigned char*)&budget_sp_after+0) & 0xff)" \
-        -ex "p/x (unsigned int)(*((unsigned char*)&budget_sp_after+1) & 0xff)" \
+        -ex "p/x (unsigned int)(budget_result & 0xff)" \
+        -ex "p/x (unsigned int)(budget_sp_before & 0xffff)" \
+        -ex "p/x (unsigned int)(budget_sp_deep & 0xffff)" \
+        -ex "p/x (unsigned int)(budget_sp_after & 0xffff)" \
         -ex "quit" >"$log" 2>&1
     rc=$?
     set -e
@@ -334,26 +331,18 @@ probe_resource_budget() {
     test "$rc" -eq 0 || { cat "$log" >&2; fail "GDB resource-budget probe failed for $elf"; }
     values=$(awk '/^[$][0-9]+ = 0x/ { sub(/^.*= /, ""); print }' "$log")
     set -- $values
-    test "$#" -ge 7 || { cat "$log" >&2; fail "could not read resource-budget bytes from $elf"; }
-    result=$1
-    before_lo=$2; before_hi=$3
-    deep_lo=$4; deep_hi=$5
-    after_lo=$6; after_hi=$7
+    test "$#" -ge 4 || { cat "$log" >&2; fail "could not read resource-budget values from $elf"; }
+    result=$1; before_hex=$2; deep_hex=$3; after_hex=$4
     test "$result" = "0x47" || fail "unexpected budget result in $elf: $result"
-    test "$before_lo" = "$after_lo" && test "$before_hi" = "$after_hi" ||
-        fail "stack did not restore in $elf: before=${before_hi}${before_lo} after=${after_hi}${after_lo}"
-    before_hi=${before_hi#0x}
-    before_lo=${before_lo#0x}
-    deep_hi=${deep_hi#0x}
-    deep_lo=${deep_lo#0x}
-    before=$(printf '%d' "0x$before_hi$before_lo")
-    deep=$(printf '%d' "0x$deep_hi$deep_lo")
+    test "$before_hex" = "$after_hex" ||
+        fail "stack did not restore in $elf: before=$before_hex after=$after_hex"
+    before=$(printf '%d' "$before_hex")
+    deep=$(printf '%d' "$deep_hex")
     test "$deep" -lt "$before" ||
-        fail "stack did not move downward in $elf: before=0x${before_hi}${before_lo} deep=0x${deep_hi}${deep_lo}"
+        fail "stack did not move downward in $elf: before=$before_hex deep=$deep_hex"
     avr-nm -S --size-sort "$elf" | grep -Eq '[[:space:]]00000010[[:space:]][Bb][[:space:]]budget_static$' ||
         fail "budget_static is not a 16-byte SRAM symbol in $elf"
 }
-
 probe_resource_budget build/resource-budget-c.elf
 probe_resource_budget build/resource-budget-asm.elf
 
