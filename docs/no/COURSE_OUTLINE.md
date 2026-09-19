@@ -19,6 +19,18 @@ EduAVR lærer AVR fra maskinvaren og opp, med **Assembly og C side om side**.
 10. [SPI](08-spi.md)
 11. [TWI / I²C](09-twi-i2c.md)
 
+## Planlagt utvidelse
+
+Følgende emner er ikke ferdige publiserte kjerneleksjoner ennå:
+
+- ADC
+- EEPROM — paret C/Assembly-implementasjon og Q1 write/readback finnes allerede, men den tospråklige kjerneleksjonen gjenstår
+- buffere, pekere, structs og `volatile`
+- compiler-optimalisering og disassembly
+- små gjenbrukbare drivere
+- systemintegrasjon
+- capstone-prosjekt
+
 ## Arbeidsmåte
 
 Hver leksjon kombinerer teori med praktisk inspeksjon av maskinen. Bygg C og Assembly, undersøk disassembly, bruk simulatoren i størst praktisk mulig grad der den gir gyldig evidens, og gå til fysisk maskinvare bare når oppgaven avhenger av elektrisk eller annen ikke-modellert oppførsel.
