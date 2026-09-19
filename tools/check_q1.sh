@@ -56,6 +56,8 @@ run_sim build/eeprom-c.elf
 run_sim build/eeprom-asm.elf
 run_sim build/adc-c.elf
 run_sim build/adc-asm.elf
+run_sim build/data-structures-c.elf
+run_sim build/data-structures-asm.elf
 
 probe_gpio_config() {
     elf="$1"
@@ -217,8 +219,49 @@ probe_adc_config() {
 probe_adc_config build/adc-c.elf
 probe_adc_config build/adc-asm.elf
 
+probe_data_structures() {
+    elf="$1"
+    log="$elf.data.gdb.log"
+    simavr -m atmega1284p -f 8000000 -g "$elf" >"$elf.data.sim.log" 2>&1 &
+    sim_pid=$!
+    trap 'kill "$sim_pid" 2>/dev/null || true' EXIT INT TERM
+    sleep 1
+    set +e
+    timeout 10s avr-gdb -q -batch "$elf" \
+        -ex "target remote :1234" \
+        -ex "break data_ready" \
+        -ex "continue" \
+        -ex "p/x *(unsigned char*)&sample_buffer" \
+        -ex "p/x *((unsigned char*)&sample_buffer+1)" \
+        -ex "p/x *((unsigned char*)&sample_buffer+2)" \
+        -ex "p/x *((unsigned char*)&sample_buffer+3)" \
+        -ex "p/x *(unsigned char*)&current_sample" \
+        -ex "p/x *((unsigned char*)&current_sample+1)" \
+        -ex "p/x *(unsigned char*)&sample_sum" \
+        -ex "p/x *(unsigned short*)&sample_ptr" \
+        -ex "p/x (unsigned short)&sample_buffer" \
+        -ex "quit" >"$log" 2>&1
+    rc=$?
+    set -e
+    kill "$sim_pid" 2>/dev/null || true
+    wait "$sim_pid" 2>/dev/null || true
+    trap - EXIT INT TERM
+    test "$rc" -eq 0 || { cat "$log" >&2; fail "GDB data-structures probe failed for $elf"; }
+    values=$(awk '/^[$][0-9]+ = 0x/ { sub(/^.*= /, ""); print }' "$log")
+    set -- $values
+    test "$#" -ge 9 || { cat "$log" >&2; fail "could not read data-structures values from $elf"; }
+    test "$1" = "0x10" && test "$2" = "0x20" && test "$3" = "0x30" && test "$4" = "0x40" ||
+        fail "buffer contents mismatch in $elf"
+    test "$5" = "0x2a" && test "$6" = "0x30" || fail "struct layout/value mismatch in $elf"
+    test "$7" = "0xa0" || fail "buffer sum mismatch in $elf: $7"
+    test "$8" = "$9" || fail "pointer does not reference sample_buffer in $elf: ptr=$8 buffer=$9"
+}
+
+probe_data_structures build/data-structures-c.elf
+probe_data_structures build/data-structures-asm.elf
+
 # Confirm GDB can read both AVR ELF files and their symbols non-interactively.
-for elf in build/blink-c.elf build/blink-asm.elf build/gpio-c.elf build/gpio-asm.elf build/stack-functions-c.elf build/stack-functions-asm.elf build/eeprom-c.elf build/eeprom-asm.elf build/adc-c.elf build/adc-asm.elf build/timer-isr-c.elf build/timer-isr-asm.elf build/pwm-c.elf build/pwm-asm.elf build/usart0-echo-c.elf build/usart0-echo-asm.elf build/usart0-irq-ring-c.elf build/usart0-irq-ring-asm.elf build/usart1-echo-c.elf build/usart1-echo-asm.elf build/usart1-irq-ring-c.elf build/usart1-irq-ring-asm.elf build/spi-c.elf build/spi-asm.elf build/twi-c.elf build/twi-asm.elf; do
+for elf in build/blink-c.elf build/blink-asm.elf build/gpio-c.elf build/gpio-asm.elf build/stack-functions-c.elf build/stack-functions-asm.elf build/eeprom-c.elf build/eeprom-asm.elf build/adc-c.elf build/adc-asm.elf build/data-structures-c.elf build/data-structures-asm.elf build/timer-isr-c.elf build/timer-isr-asm.elf build/pwm-c.elf build/pwm-asm.elf build/usart0-echo-c.elf build/usart0-echo-asm.elf build/usart0-irq-ring-c.elf build/usart0-irq-ring-asm.elf build/usart1-echo-c.elf build/usart1-echo-asm.elf build/usart1-irq-ring-c.elf build/usart1-irq-ring-asm.elf build/spi-c.elf build/spi-asm.elf build/twi-c.elf build/twi-asm.elf; do
     avr-gdb -q -batch         -ex "file $elf"         -ex "info files" >"$elf.gdb.log" 2>&1 ||
         { cat "$elf.gdb.log" >&2; fail "avr-gdb could not inspect $elf"; }
     grep -q "Symbols from" "$elf.gdb.log" ||
