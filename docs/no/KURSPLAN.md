@@ -1,5 +1,7 @@
 # EduAVR kursplan
 
+> **Status:** Dette dokumentet beskriver den langsiktige faglige planen. Den publiserte kursnavigasjonen og faktisk implementeringsstatus finnes i [COURSE_OUTLINE.md](COURSE_OUTLINE.md) og [../STATUS.md](../STATUS.md). Planpunkter nedenfor er derfor ikke automatisk ferdige kurskapitler.
+
 1. Mikrokontrollere og ATmega1284P
 2. Verktøykjede: bygg, programmer og inspiser
 3. AVR-arkitektur og minne
@@ -37,4 +39,4 @@
 - **L — AVR for retro computing** — observerbare serial/protocol bridges og retro-interfaces.
 - **M — Overlevelsesguide for datablad** — registre, timing, elektriske tabeller og errata.
 
-Engelsk og norsk er likestilte kursløp. Referansevedlegg og annet vesentlig elevmateriale skal holdes innholdsmessig synkronisert mellom `docs/en` og `docs/no`.
+Engelsk og norsk er likestilte kursløp. Referansevedlegg og annet vesentlig elevmateriale skal holdes innholdsmessig synkronisert mellom `docs/en` og `docs/no`. Filtilstedeværelse alene er ikke paritet; innhold, læringsmål, eksempler, kvalifikasjonsgrenser og vesentlige forklaringer skal være semantisk likeverdige.
