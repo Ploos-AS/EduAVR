@@ -1,12 +1,16 @@
 # AVR architecture and the ATmega1284P
 
+!!! abstract "Learning goals"
+    After this lesson you should be able to describe the AVR execution model, identify the main CPU registers and memory spaces, and connect simple C statements to AVR instructions.
+
+!!! info "Prerequisites"
+    Complete [M1 — Open AVR toolchain](01-toolchain.md) so you can build and inspect real compiler output.
+
 EduAVR starts with the machine, not a framework.
 
 ## The execution model
 
 The ATmega1284P is an 8-bit AVR microcontroller. A program is stored in Flash and executed by the CPU. Working data normally lives in SRAM; persistent data can live in EEPROM. Peripherals are controlled through registers that software can read and write.
-
-The most important idea for the first lessons is simple:
 
 **C and assembly ultimately manipulate the same machine state.**
 
@@ -70,8 +74,18 @@ add r24, r25
 
 The exact compiler output depends on context and optimization. EduAVR therefore does not ask students to memorize a fictional one-to-one translation. Build the real C program and inspect the actual output with `avr-objdump`.
 
-## Simulator exercise
+## Try it: inspect the CPU
 
 Build the examples and start an ELF under simavr + avr-gdb. Use `stepi` and `info registers` to watch the CPU state change one AVR instruction at a time.
 
-The goal is to connect source code to actual machine state before adding higher-level abstractions.
+!!! success "Expected result"
+    You can single-step instructions and identify which registers or status flags change. The goal is to connect source code to actual machine state before adding higher-level abstractions.
+
+## Check your understanding
+
+1. What is the difference between Flash, SRAM and EEPROM?
+2. Which register pairs can act as X, Y and Z pointers?
+3. Why can optimized compiler output differ from the simplified example above?
+
+!!! tip "Next"
+    Continue to [GPIO — from registers to pins](03-gpio.md).
