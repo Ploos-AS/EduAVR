@@ -24,7 +24,7 @@ EduAVR teaches AVR from the hardware upward, with **Assembly and C side by side*
 The original curriculum also identifies these topics for dedicated lessons as the course grows:
 
 - ADC
-- EEPROM
+- EEPROM — paired C/Assembly implementation and Q1 write/readback already exist; the bilingual core lesson still needs to be published
 - buffers, pointers, structs and `volatile`
 - compiler optimization and disassembly
 - small reusable drivers
