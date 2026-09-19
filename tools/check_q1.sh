@@ -411,6 +411,14 @@ probe_twi_config() {
 probe_twi_config build/twi-c.elf
 probe_twi_config build/twi-asm.elf
 
+# Modeled PWM waveform qualification. Observe PB3/OC0A edges through simavr's
+# IO-port IRQ API and require the configured ~25% duty cycle for both versions.
+cc -std=c11 -Wall -Wextra -Werror -o build/q1-pwm-waveform \
+    tools/q1_pwm_waveform.c \
+    -I/usr/include/simavr -lsimavr -lelf
+build/q1-pwm-waveform build/pwm-c.elf
+build/q1-pwm-waveform build/pwm-asm.elf
+
 # Deterministic USART0 data-path qualification using simavr's IRQ API.
 # Feed bytes into RX and require the echo firmware to reproduce them on TX.
 cc -std=c11 -Wall -Wextra -Werror -o build/q1-usart-loopback \
