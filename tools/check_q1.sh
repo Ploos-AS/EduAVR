@@ -32,6 +32,8 @@ run_sim() {
 
 run_sim build/blink-c.elf
 run_sim build/blink-asm.elf
+run_sim build/gpio-c.elf
+run_sim build/gpio-asm.elf
 run_sim build/stack-functions-c.elf
 run_sim build/stack-functions-asm.elf
 run_sim build/timer-isr-c.elf
@@ -50,6 +52,43 @@ run_sim build/spi-c.elf
 run_sim build/spi-asm.elf
 run_sim build/twi-c.elf
 run_sim build/twi-asm.elf
+
+probe_gpio_config() {
+    elf="$1"
+    log="$elf.gpio.gdb.log"
+
+    simavr -m atmega1284p -f 8000000 -g "$elf" >"$elf.gpio.sim.log" 2>&1 &
+    sim_pid=$!
+    trap 'kill "$sim_pid" 2>/dev/null || true' EXIT INT TERM
+    sleep 1
+
+    set +e
+    timeout 10s avr-gdb -q -batch "$elf" \
+        -ex "target remote :1234" \
+        -ex "break gpio_ready" \
+        -ex "continue" \
+        -ex "p/x *(unsigned char*)0x24" \
+        -ex "p/x *(unsigned char*)0x25" \
+        -ex "p/x *(unsigned char*)0x23" \
+        -ex "quit" >"$log" 2>&1
+    rc=$?
+    set -e
+
+    kill "$sim_pid" 2>/dev/null || true
+    wait "$sim_pid" 2>/dev/null || true
+    trap - EXIT INT TERM
+
+    test "$rc" -eq 0 || { cat "$log" >&2; fail "GDB GPIO probe failed for $elf"; }
+    values=$(awk '/^[$][0-9]+ = 0x/ { sub(/^.*= /, ""); print }' "$log")
+    set -- $values
+    test "$#" -ge 3 || { cat "$log" >&2; fail "could not read GPIO registers from $elf"; }
+    test "$1" = "0x1" || test "$1" = "0x01" || fail "unexpected DDRB in $elf: $1"
+    test "$2" = "0x2" || test "$2" = "0x02" || fail "unexpected PORTB in $elf: $2"
+    case "$3" in 0x* ) ;; *) fail "invalid PINB value in $elf: $3" ;; esac
+}
+
+probe_gpio_config build/gpio-c.elf
+probe_gpio_config build/gpio-asm.elf
 
 probe_stack_abi() {
     elf="$1"
@@ -96,7 +135,7 @@ probe_stack_abi build/stack-functions-c.elf
 probe_stack_abi build/stack-functions-asm.elf
 
 # Confirm GDB can read both AVR ELF files and their symbols non-interactively.
-for elf in build/blink-c.elf build/blink-asm.elf build/stack-functions-c.elf build/stack-functions-asm.elf build/timer-isr-c.elf build/timer-isr-asm.elf build/pwm-c.elf build/pwm-asm.elf build/usart0-echo-c.elf build/usart0-echo-asm.elf build/usart0-irq-ring-c.elf build/usart0-irq-ring-asm.elf build/usart1-echo-c.elf build/usart1-echo-asm.elf build/usart1-irq-ring-c.elf build/usart1-irq-ring-asm.elf build/spi-c.elf build/spi-asm.elf build/twi-c.elf build/twi-asm.elf; do
+for elf in build/blink-c.elf build/blink-asm.elf build/gpio-c.elf build/gpio-asm.elf build/stack-functions-c.elf build/stack-functions-asm.elf build/timer-isr-c.elf build/timer-isr-asm.elf build/pwm-c.elf build/pwm-asm.elf build/usart0-echo-c.elf build/usart0-echo-asm.elf build/usart0-irq-ring-c.elf build/usart0-irq-ring-asm.elf build/usart1-echo-c.elf build/usart1-echo-asm.elf build/usart1-irq-ring-c.elf build/usart1-irq-ring-asm.elf build/spi-c.elf build/spi-asm.elf build/twi-c.elf build/twi-asm.elf; do
     avr-gdb -q -batch         -ex "file $elf"         -ex "info files" >"$elf.gdb.log" 2>&1 ||
         { cat "$elf.gdb.log" >&2; fail "avr-gdb could not inspect $elf"; }
     grep -q "Symbols from" "$elf.gdb.log" ||
