@@ -18,7 +18,10 @@ budget_static: .skip 16
 .global budget_ready
 
 budget_worker:
-    ; Reserve exactly 8 bytes of local stack storage.
+    ; Preserve the ABI call-saved frame-pointer registers, then reserve
+    ; exactly 8 bytes of local stack storage.
+    push r28
+    push r29
     in r28, _SFR_IO_ADDR(SPL)
     in r29, _SFR_IO_ADDR(SPH)
     sbiw r28, 8
@@ -56,6 +59,8 @@ budget_worker:
     out _SFR_IO_ADDR(SPH), r29
     out _SFR_IO_ADDR(SREG), r0
     out _SFR_IO_ADDR(SPL), r28
+    pop r29
+    pop r28
     ret
 
 main:
