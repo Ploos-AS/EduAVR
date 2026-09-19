@@ -62,6 +62,10 @@ run_sim build/shared-state-c.elf
 run_sim build/shared-state-asm.elf
 run_sim build/resource-budget-c.elf
 run_sim build/resource-budget-asm.elf
+run_sim build/optimization-c-os.elf
+run_sim build/optimization-c-o0.elf
+run_sim build/optimization-c-o2.elf
+run_sim build/optimization-asm.elf
 
 probe_gpio_config() {
     elf="$1"
@@ -339,6 +343,35 @@ probe_resource_budget() {
 
 probe_resource_budget build/resource-budget-c.elf
 probe_resource_budget build/resource-budget-asm.elf
+
+probe_optimization() {
+    elf="$1"
+    log="$elf.optimization.gdb.log"
+    simavr -m atmega1284p -f 8000000 -g "$elf" >"$elf.optimization.sim.log" 2>&1 &
+    sim_pid=$!
+    trap 'kill "$sim_pid" 2>/dev/null || true' EXIT INT TERM
+    sleep 1
+    set +e
+    timeout 10s avr-gdb -q -batch "$elf" \
+        -ex "target remote :1234" \
+        -ex "break optimization_ready" \
+        -ex "continue" \
+        -ex "p/x *(unsigned short*)&opt_result" \
+        -ex "quit" >"$log" 2>&1
+    rc=$?
+    set -e
+    kill "$sim_pid" 2>/dev/null || true
+    wait "$sim_pid" 2>/dev/null || true
+    trap - EXIT INT TERM
+    test "$rc" -eq 0 || { cat "$log" >&2; fail "GDB optimization probe failed for $elf"; }
+    value=$(awk '/^[$][0-9]+ = 0x/ { sub(/^.*= /, ""); print; exit }' "$log")
+    test "$value" = "0x2a8" || fail "optimization semantic mismatch in $elf: result=$value"
+}
+
+probe_optimization build/optimization-c-os.elf
+probe_optimization build/optimization-c-o0.elf
+probe_optimization build/optimization-c-o2.elf
+probe_optimization build/optimization-asm.elf
 
 # Confirm GDB can read both AVR ELF files and their symbols non-interactively.
 for elf in build/blink-c.elf build/blink-asm.elf build/gpio-c.elf build/gpio-asm.elf build/stack-functions-c.elf build/stack-functions-asm.elf build/eeprom-c.elf build/eeprom-asm.elf build/adc-c.elf build/adc-asm.elf build/data-structures-c.elf build/data-structures-asm.elf build/shared-state-c.elf build/shared-state-asm.elf build/resource-budget-c.elf build/resource-budget-asm.elf build/timer-isr-c.elf build/timer-isr-asm.elf build/pwm-c.elf build/pwm-asm.elf build/usart0-echo-c.elf build/usart0-echo-asm.elf build/usart0-irq-ring-c.elf build/usart0-irq-ring-asm.elf build/usart1-echo-c.elf build/usart1-echo-asm.elf build/usart1-irq-ring-c.elf build/usart1-irq-ring-asm.elf build/spi-c.elf build/spi-asm.elf build/twi-c.elf build/twi-asm.elf; do
