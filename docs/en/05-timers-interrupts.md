@@ -1,6 +1,10 @@
 # Timers and interrupts
 
-Timers let firmware react to time without wasting the CPU in delay loops. Interrupts let hardware events transfer control to an interrupt service routine (ISR).
+!!! abstract "Learning goals"
+    Understand timer ticks, prescalers, compare/overflow events, interrupt vectors and the difference between polling and interrupt-driven firmware.
+
+!!! info "Prerequisites"
+    You should understand registers, control flow, the stack and basic AVR I/O configuration.
 
 ## From clock to timer tick
 
@@ -17,47 +21,47 @@ Always derive timing from the configured clock and registers rather than copying
 
 ## Polling first
 
-Before interrupts, configure a timer and poll its status flag. This makes the hardware state visible:
+Before interrupts, configure a timer and poll its status flag:
 
 1. configure timer mode;
 2. choose clock/prescaler;
 3. wait for a compare/overflow flag;
-4. clear/acknowledge the flag as specified by the datasheet;
+4. clear or acknowledge the flag as specified by the datasheet;
 5. perform the action.
 
 ## Interrupts
 
-An interrupt adds several concepts:
+An interrupt introduces an interrupt vector, global and peripheral interrupt enables, ISR entry/exit, saved machine state, `reti`, and data shared between foreground code and the ISR.
 
-- interrupt vector;
-- global interrupt enable;
-- peripheral-specific interrupt enable;
-- ISR entry/exit;
-- saved machine state;
-- `reti`;
-- shared data between normal code and ISR.
-
-In C, AVR-LibC provides the ISR machinery. In assembly, the programmer can see and manage the required state directly.
+In C, AVR-LibC provides ISR machinery. In Assembly, the programmer can see and manage the required state directly.
 
 ## volatile
 
-A variable changed asynchronously by an ISR may need `volatile` so the compiler does not assume the value remains unchanged between accesses.
+A variable changed asynchronously by an ISR may need `volatile` so the compiler does not assume it remains unchanged between accesses.
 
-`volatile` does not make multi-byte access atomic and is not a general concurrency primitive. Later lessons examine those problems separately.
+`volatile` does not make multi-byte access atomic and is not a general concurrency primitive.
 
-## ASM ↔ C
+## Under the hood
 
-For each timer lab:
+Configure the same timer in Assembly and C. Inspect the compiler output and vector/ISR code, then compare register saving/restoration and the instructions used to acknowledge the timer event.
 
-- configure the registers in assembly;
-- configure the same registers in C;
-- inspect compiler output;
-- inspect the vector/ISR code;
-- compare register saving and restoration;
-- observe timer state and ISR execution in the simulator.
+## Try it
+
+Implement a compare-match experiment first with polling and then with an ISR. Observe timer state and control flow in the simulator.
+
+!!! success "Expected result"
+    You can derive the timer tick from `F_CPU` and the prescaler, identify the interrupt vector, and explain the modeled transition into and out of the ISR.
 
 ## Qualification
 
-Timer register logic and modeled interrupt behavior are Q1 when simavr models the required peripheral behavior.
+Timer register logic and modeled interrupt behavior are Q1 where simavr models the required peripheral behavior. Real oscillator accuracy, electrical outputs and board-level timing measurements require Q2.
 
-Real oscillator accuracy, electrical outputs and board-level timing measurements require Q2.
+## Check your understanding
+
+1. What does the prescaler change?
+2. Why should an ISR normally be short?
+3. Why can `volatile` be necessary?
+4. What can Q1 not prove about a physical timer output?
+
+!!! tip "Next"
+    Continue to [PWM](06-pwm.md).
