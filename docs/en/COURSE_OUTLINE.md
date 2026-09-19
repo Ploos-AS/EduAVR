@@ -21,12 +21,12 @@ EduAVR teaches AVR from the hardware upward, with **Assembly and C side by side*
 12. [EEPROM](10-eeprom.md)
 13. [ADC](11-adc.md)
 14. [Pointers, buffers and structs](12-data-structures.md)
+15. [volatile, interrupts and atomicity](13-volatile-atomicity.md)
 
 ## Planned core expansion
 
 The original curriculum also identifies these topics for dedicated lessons as the course grows:
 
-- `volatile` and ISR/main shared state
 - stack/SRAM budgeting and compiler optimization/disassembly
 - small reusable drivers
 - systems integration
