@@ -26,6 +26,7 @@ jobs:
         run: sh tools/check_q1.sh
       - name: Produce V1 visual-source artifacts
         run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
           git fetch origin main
           git checkout origin/main -- tools/capture_v1.sh
           sh tools/capture_v1.sh
