@@ -1,59 +1,64 @@
 # USART — bytes mellom maskiner
 
-ATmega1284P har to USART-er. Det gjør den spesielt nyttig for å lære seriell kommunikasjon og senere bygge broer mellom en utviklingsterminal og en annen datamaskin.
+!!! abstract "Læringsmål"
+    Forstå 8N1, baudrate-generering, polling-basert sending og mottak, og hvordan samme USART-mekanisme uttrykkes i AVR Assembly og C.
 
-## Start med formatet på ledningen
+!!! info "Forutsetninger"
+    Du bør kjenne register-I/O, bitmasker, polling og grunnleggende interrupt-konsepter.
 
-En vanlig asynkron 8N1-forbindelse sender hvert tegn som:
+ATmega1284P har to USART-er. Det gjør den spesielt nyttig for seriell kommunikasjon og senere broer mellom en utviklingsterminal og andre maskiner.
 
-- én startbit;
-- åtte databiter;
-- ingen paritetsbit;
-- én stoppbit.
+## 8N1
 
-Begge ender må være enige om blant annet baudrate og rammeformat.
+En vanlig asynkron 8N1-forbindelse sender ett startbit, åtte databiter, ingen paritet og ett stoppbit. Begge ender må være enige om baudrate og rammeformat.
 
 ## Baudrate-generator
 
-USART-en utleder bittimingen fra MCU-klokken og en baudrate-divisor. Beregn riktig UBRR-verdi fra formelen i databladet, og beregn deretter faktisk baudfeil.
+Beregn UBRR fra databladets formel og beregn deretter faktisk baudfeil. Ikke kopier en UBRR-konstant uten å dokumentere `F_CPU` og valgt USART-modus.
 
-Ikke kopier en UBRR-konstant uten å dokumentere `F_CPU` og valgt USART-modus.
+## Sending og mottak
 
-## Sending
+En minimal polling-sender venter til transmit data register er klart og skriver én byte. En minimal mottaker venter på receive-complete, undersøker relevante feilflagg og leser mottatt byte.
 
-En minimal polling-sender:
+Periferiregistre kan ha sideeffekter; databladet definerer nødvendig leserekkefølge.
 
-1. vent til transmit data register er klart;
-2. skriv én byte til USART data register.
+## ASM ↔ C
 
-Implementer dette i AVR-assembler og C, og sammenlign instruksjonene.
+Implementer samme polling-operasjon i AVR Assembly og C. Sammenlign registertilgangene og den genererte maskinkoden.
 
-## Mottak
+## Under panseret
 
-En minimal polling-mottaker:
-
-1. vent til receive-complete er satt;
-2. undersøk relevante feilflagg;
-3. les mottatt byte.
-
-Lesing og skriving av periferiregistre kan ha sideeffekter. Databladet definerer nødvendig rekkefølge.
+Finn C-uttrykkene som blir til polling-løkken, registertesten og dataregistertilgangen. Skill mellom språkabstraksjonen og USART-maskinvaren som faktisk utfører seriell overføring.
 
 ## Fra polling til interrupts
 
-Polling gjør mekanismen lett å forstå. Senere gjør RX/TX-interrupts og ringbuffere at programmet kan gjøre nyttig arbeid samtidig som seriell trafikk kommer inn.
+RX/TX-interrupts og ringbuffere gjør at programmet kan arbeide videre mens trafikk kommer inn.
 
 ## To USART-er
-
-EduAVR bruker først én USART til terminaløvelser. Senere capstones kan bruke begge:
 
 ```text
 PC/Linux-terminal <-- USART0 --> ATmega1284P <-- USART1 --> retro-maskin/enhet
 ```
 
-Dette gir en naturlig vei mot terminal-, BBS- og retro serial gateway-prosjekter.
+Dette leder naturlig videre til terminal-, BBS- og retro serial gateway-prosjekter.
+
+## Prøv selv
+
+Bygg C- og Assembly-eksemplene. Beregn baudrate-konfigurasjonen fra `F_CPU`, spor én sendt og én mottatt byte og sammenlign instruksjonsflyten.
+
+!!! success "Forventet resultat"
+    Du kan forklare rammeformatet, utlede baudrate-konfigurasjonen og peke ut registertilgangene som sender og mottar en byte.
 
 ## Kvalifikasjon
 
-Q1 kan verifisere registerkonfigurasjon, baudberegninger, buffer/state-machine-logikk og simulert USART-oppførsel der modellen støtter det.
+Q1 kan verifisere registerkonfigurasjon, baudberegninger, buffer/state-machine-logikk og simulert USART-oppførsel der modellen støtter det. Q2 kreves for elektriske serieforbindelser, nivåkompatibilitet, kabling og fysiske målinger.
 
-Q2 kreves for elektriske serieforbindelser, nivåkompatibilitet, kabling og målinger på ekte maskinvare.
+## Sjekk forståelsen
+
+1. Hva betyr 8N1?
+2. Hvorfor må `F_CPU` være kjent?
+3. Hvilken fordel gir polling pedagogisk?
+4. Hva må testes fysisk i Q2?
+
+!!! tip "Neste"
+    Fortsett til [Dual-UART-bro](08-dual-uart-bridge.md).
