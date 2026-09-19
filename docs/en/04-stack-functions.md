@@ -53,7 +53,7 @@ Use avr-gdb to stop immediately before a function call. Record the stack pointer
 
 ## Qualification
 
-This lesson is Q1: stack state, calls, register state and generated code can be studied in simavr and avr-gdb without physical hardware.
+This lesson is Q1-qualified. The automated paired C/Assembly probe verifies argument/result flow, observes the stack pointer moving downward inside the call, and requires it to be restored after return in simavr + avr-gdb.
 
 ## Check your understanding
 
