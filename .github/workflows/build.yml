@@ -24,3 +24,10 @@ jobs:
         run: sh tools/check_m1.sh
       - name: Qualify Q1 simulator
         run: sh tools/check_q1.sh
+      - name: Produce V1 visual-source artifacts
+        run: sh tools/capture_v1.sh
+      - name: Upload V1 visual-source artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: eduavr-v1-visual-sources
+          path: build/visual-v1/
