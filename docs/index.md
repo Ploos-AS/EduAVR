@@ -4,7 +4,7 @@
 
 EduAVR is an open educational environment for learning how AVR microcontrollers actually work. The course combines reproducible builds, simulation and debugging with real hardware where it adds educational value.
 
-<div class="grid cards" markdown>
+<div class="grid cards" markdown="1">
 
 -   :material-school:{ .lg .middle } **Start in English**
 
