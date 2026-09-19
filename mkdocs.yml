@@ -74,6 +74,7 @@ nav:
       - Dual UART bridge: en/08-dual-uart-bridge.md
       - SPI: en/08-spi.md
       - TWI / I2C: en/09-twi-i2c.md
+      - EEPROM: en/10-eeprom.md
       - Appendices:
           - Arduino: en/appendix-a-arduino.md
           - Debugging: en/appendix-b-debugging.md
@@ -97,6 +98,7 @@ nav:
       - Dobbel UART-bro: no/08-dual-uart-bridge.md
       - SPI: no/08-spi.md
       - TWI / I2C: no/09-twi-i2c.md
+      - EEPROM: no/10-eeprom.md
       - Appendikser:
           - Arduino: no/appendix-a-arduino.md
           - Debugging: no/appendix-b-debugging.md
