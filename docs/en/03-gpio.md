@@ -60,7 +60,7 @@ Build both the C and assembly GPIO examples, inspect their disassembly, and iden
 
 ## Qualification boundary
 
-**Q1** can verify register-level firmware logic and instruction flow.
+**Q1** verifies register-level firmware logic and instruction flow. The automated paired C/Assembly probe deterministically checks `DDRB` and `PORTB` and observes `PINB` in simavr + avr-gdb.
 
 **Q2** is required to claim that a real LED lights, a switch is read electrically, pull-ups behave correctly on the board, or switch bounce has been observed.
 
