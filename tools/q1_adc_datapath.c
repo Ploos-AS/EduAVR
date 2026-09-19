@@ -61,15 +61,16 @@ int main(int argc, char **argv)
     avr_irq_t *adc0 = avr_io_getirq(avr, AVR_IOCTL_ADC_GETIRQ, ADC_IRQ_ADC0);
     if (!adc0) { fprintf(stderr, "ADC0 IRQ unavailable\n"); return 2; }
 
-    /* simavr ADC inputs use millivolts. AVCC is 5 V in the model; 2500 mV
-       should therefore produce approximately half scale (~512). */
+    /* simavr's ATmega1284P ADC model uses a 3.3 V AVCC reference unless
+       the board harness supplies another reference. 2500 mV therefore
+       converts to about 2500/3300 * 1023 = 775. */
     avr_raise_irq(adc0, 2500);
 
     for (unsigned long i = 0; i < 1000000UL; ++i) {
         avr_run(avr);
         uint16_t value = (uint16_t)avr->data[result_addr] |
                          ((uint16_t)avr->data[result_addr + 1] << 8);
-        if (value >= 500 && value <= 524) {
+        if (value >= 763 && value <= 787) {
             printf("ADC DATA PATH PASS: ADC0=2500mV result=%u\n", value);
             return 0;
         }
