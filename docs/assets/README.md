@@ -14,3 +14,8 @@ Prefer subdirectories such as:
 English and Norwegian should normally reuse the same language-neutral technical artifact and provide localized captions/explanation in their respective Markdown documents.
 
 Do not place generated depictions of EduBoard, fake tool screenshots or synthetic measurement traces here as if they were real artifacts.
+
+
+## Production plan
+
+The required and optional figure set is tracked in [../VISUAL_COVERAGE_PLAN.md](../VISUAL_COVERAGE_PLAN.md). Use its NOW/CAD/Q1/Q2 staging so physical evidence is not replaced by placeholders.
