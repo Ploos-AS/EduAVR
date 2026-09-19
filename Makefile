@@ -10,9 +10,9 @@ LDFLAGS := -mmcu=$(MCU)
 
 BUILD := build
 
-.PHONY: all c asm gpio stack timers pwm usart bridge robust spi twi eeprom adc data shared budget disasm size check clean
+.PHONY: all c asm gpio stack timers pwm usart bridge robust spi twi eeprom adc data shared budget optimize disasm size check clean
 
-all: c asm gpio stack timers pwm usart bridge robust spi twi eeprom adc data shared budget
+all: c asm gpio stack timers pwm usart bridge robust spi twi eeprom adc data shared budget optimize
 
 $(BUILD):
 	mkdir -p $(BUILD)
@@ -47,6 +47,8 @@ data: $(BUILD)/data-structures-c.hex $(BUILD)/data-structures-asm.hex
 shared: $(BUILD)/shared-state-c.hex $(BUILD)/shared-state-asm.hex
 
 budget: $(BUILD)/resource-budget-c.hex $(BUILD)/resource-budget-asm.hex
+
+optimize: $(BUILD)/optimization-c-os.hex $(BUILD)/optimization-c-o0.hex $(BUILD)/optimization-c-o2.hex $(BUILD)/optimization-asm.hex
 
 $(BUILD)/blink-c.elf: examples/c/blink/main.c | $(BUILD)
 	$(CC) $(CFLAGS) $< -o $@
@@ -162,6 +164,18 @@ $(BUILD)/resource-budget-c.elf: examples/c/resource-budget/main.c | $(BUILD)
 $(BUILD)/resource-budget-asm.elf: examples/asm/resource-budget/main.S | $(BUILD)
 	$(CC) $(CFLAGS) $< -o $@
 
+$(BUILD)/optimization-c-os.elf: examples/c/optimization/main.c | $(BUILD)
+	$(CC) -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os -Wall -Wextra -Werror $< -o $@
+
+$(BUILD)/optimization-c-o0.elf: examples/c/optimization/main.c | $(BUILD)
+	$(CC) -mmcu=$(MCU) -DF_CPU=$(F_CPU) -O0 -Wall -Wextra -Werror $< -o $@
+
+$(BUILD)/optimization-c-o2.elf: examples/c/optimization/main.c | $(BUILD)
+	$(CC) -mmcu=$(MCU) -DF_CPU=$(F_CPU) -O2 -Wall -Wextra -Werror $< -o $@
+
+$(BUILD)/optimization-asm.elf: examples/asm/optimization/main.S | $(BUILD)
+	$(CC) $(CFLAGS) $< -o $@
+
 $(BUILD)/%.hex: $(BUILD)/%.elf
 	$(OBJCOPY) -O ihex -R .eeprom $< $@
 
@@ -198,6 +212,10 @@ disasm: all
 	$(OBJDUMP) -d -S $(BUILD)/shared-state-asm.elf > $(BUILD)/shared-state-asm.lst
 	$(OBJDUMP) -d -S $(BUILD)/resource-budget-c.elf > $(BUILD)/resource-budget-c.lst
 	$(OBJDUMP) -d -S $(BUILD)/resource-budget-asm.elf > $(BUILD)/resource-budget-asm.lst
+	$(OBJDUMP) -d -S $(BUILD)/optimization-c-os.elf > $(BUILD)/optimization-c-os.lst
+	$(OBJDUMP) -d -S $(BUILD)/optimization-c-o0.elf > $(BUILD)/optimization-c-o0.lst
+	$(OBJDUMP) -d -S $(BUILD)/optimization-c-o2.elf > $(BUILD)/optimization-c-o2.lst
+	$(OBJDUMP) -d -S $(BUILD)/optimization-asm.elf > $(BUILD)/optimization-asm.lst
 
 size: all
 	$(SIZE) -C --mcu=$(MCU) $(BUILD)/*.elf
