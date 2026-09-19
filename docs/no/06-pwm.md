@@ -37,7 +37,7 @@ Når timeren er konfigurert kan firmware endre compare-verdien for å endre duty
 
 ## Kvalifikasjon
 
-Q1 kan verifisere registerkonfigurasjon, instruksjonsflyt og modellert timer/output-compare-oppførsel.
+Q1 verifiserer registerkonfigurasjon, instruksjonsflyt og modellert timer/output-compare-oppførsel. Den automatiserte C/Assembly-testen observerer OC0A/PB3-kanter gjennom simavr og måler duty cycle, som må samsvare med den konfigurerte bølgeformen på omtrent 25 %.
 
 Q2 kreves for påstander om den elektriske bølgeformen, frekvensnøyaktighet, rise/fall, faktisk LED-lysstyrke eller målinger med instrumenter.
 
