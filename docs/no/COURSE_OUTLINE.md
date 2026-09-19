@@ -19,12 +19,12 @@ EduAVR lærer AVR fra maskinvaren og opp, med **Assembly og C side om side**.
 10. [SPI](08-spi.md)
 11. [TWI / I²C](09-twi-i2c.md)
 12. [EEPROM](10-eeprom.md)
+13. [ADC](11-adc.md)
 
 ## Planlagt utvidelse
 
 Følgende emner er ikke ferdige publiserte kjerneleksjoner ennå:
 
-- ADC
 - buffere, pekere, structs og `volatile`
 - compiler-optimalisering og disassembly
 - små gjenbrukbare drivere
