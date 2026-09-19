@@ -28,7 +28,7 @@ The published navigation currently contains eleven core chapters in each languag
 10. SPI;
 11. TWI/I2C.
 
-ADC and EEPROM are **not yet published core chapters**.
+EEPROM is now a published bilingual core chapter with paired implementation and Q1 evidence. ADC is **not yet a published core chapter**.
 
 ## Executable paired C/Assembly examples
 
@@ -50,7 +50,7 @@ The build currently contains paired C and hand-written Assembly firmware for:
 - TWI/I2C;
 - EEPROM.
 
-This means EEPROM implementation and qualification are ahead of the published curriculum.
+EEPROM implementation, qualification and published curriculum are now aligned.
 
 ## Q1 simulator qualification
 
@@ -110,16 +110,15 @@ Implemented repository infrastructure includes:
 - **M2:** substantially implemented and represented in the published bilingual core.
 - **M3:** substantially implemented with Q1 timers/interrupts/PWM evidence.
 - **M4:** substantially implemented with Q1 USART/SPI/TWI evidence.
-- **M5:** started. EEPROM implementation and Q1 evidence exist, but ADC is missing and neither ADC nor EEPROM is yet a published core chapter.
+- **M5:** in progress. EEPROM implementation, Q1 evidence and bilingual core lesson are complete; ADC remains missing.
 - **M6-M8:** planned/incremental; not complete.
 - **M9/Q2:** board convergence is in progress; physical qualification remains separate.
 
 ## Known reconciliation items / next work
 
-1. Promote EEPROM from implementation-only material to a bilingual core lesson and add it to MkDocs navigation.
-2. Design and validate ADC simulation support before making a Q1 claim; analog/electrical accuracy remains Q2.
-3. Continue language-parity checks as new chapters are added.
-4. Expand appendices J-M only when their actual Markdown content exists.
-5. Add real EduBoard CAD/Q2 visuals only from stable board revisions and physical evidence.
+1. Design and validate ADC simulation support before making a Q1 claim; analog/electrical accuracy remains Q2.
+2. Continue language-parity checks as new chapters are added.
+3. Expand appendices J-M only when their actual Markdown content exists.
+4. Add real EduBoard CAD/Q2 visuals only from stable board revisions and physical evidence.
 
 This file should be updated whenever a milestone changes materially. The executable tests and CI are authoritative for qualification claims; the published navigation is authoritative for what is currently part of the course.
