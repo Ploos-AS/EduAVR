@@ -1,59 +1,64 @@
 # USART — bytes between machines
 
-The ATmega1284P has two USARTs. That makes it especially useful for learning serial communication and later building bridges between a development terminal and another computer.
+!!! abstract "Learning goals"
+    Understand 8N1 framing, baud-rate generation, polling-based transmit/receive, and how the same USART mechanism is expressed in AVR Assembly and C.
 
-## Start with the wire format
+!!! info "Prerequisites"
+    You should understand register I/O, bit masks, polling and basic interrupt concepts.
 
-For a common asynchronous 8N1 link, each character is transmitted as:
+The ATmega1284P has two USARTs, making it useful for serial communication and later bridges between a development terminal and other machines.
 
-- one start bit;
-- eight data bits;
-- no parity bit;
-- one stop bit.
+## 8N1
 
-Both ends must agree on parameters such as baud rate and frame format.
+A common asynchronous 8N1 link sends one start bit, eight data bits, no parity and one stop bit. Both ends must agree on baud rate and frame format.
 
 ## Baud-rate generator
 
-The USART derives its bit timing from the MCU clock and a baud-rate divisor. Calculate the required UBRR value from the datasheet formula, then calculate the resulting baud error.
+Calculate UBRR from the datasheet formula and then calculate the resulting baud error. Do not copy a UBRR constant without documenting `F_CPU` and the selected USART mode.
 
-Do not copy a UBRR constant without recording `F_CPU` and the selected USART mode.
+## Transmit and receive
 
-## Transmit path
+A minimal polling transmitter waits until the transmit data register is ready and writes one byte. A minimal receiver waits for receive-complete, checks relevant error flags and reads the received byte.
 
-A minimal polling transmitter:
+Peripheral-register accesses can have side effects; the datasheet defines the required read order.
 
-1. wait until the transmit data register is ready;
-2. write one byte to the USART data register.
+## ASM ↔ C
 
-Implement this in AVR assembly and C, then compare the generated instructions.
+Implement the same polling operation in AVR Assembly and C. Compare the register accesses and generated machine instructions.
 
-## Receive path
+## Under the hood
 
-A minimal polling receiver:
-
-1. wait until receive-complete is set;
-2. inspect error flags when relevant;
-3. read the received byte.
-
-Reading and writing peripheral registers can have side effects. The datasheet defines the required order.
+Identify the C expressions that become the polling loop, status-register test and data-register access. Separate the language abstraction from the USART hardware that performs the serial transfer.
 
 ## From polling to interrupts
 
-Polling makes the mechanism easy to understand. Later, RX/TX interrupts and ring buffers allow useful work to continue while serial traffic arrives.
+RX/TX interrupts and ring buffers allow useful foreground work while traffic arrives.
 
 ## Two USARTs
-
-EduAVR initially uses one USART for terminal exercises. Later capstones can use both:
 
 ```text
 PC/Linux terminal <-- USART0 --> ATmega1284P <-- USART1 --> retro computer/device
 ```
 
-This creates a natural path toward terminal, BBS and retro serial gateway projects.
+This leads naturally to terminal, BBS and retro serial gateway projects.
+
+## Try it
+
+Build the C and Assembly examples. Derive the baud configuration from `F_CPU`, trace one transmitted and one received byte, and compare instruction flow.
+
+!!! success "Expected result"
+    You can explain the frame format, derive the baud configuration and identify the register accesses that transmit and receive a byte.
 
 ## Qualification
 
-Q1 can verify register configuration, baud calculations, buffer/state-machine logic and simulated USART behavior where supported.
+Q1 can verify register configuration, baud calculations, buffer/state-machine logic and simulated USART behavior where supported. Q2 is required for electrical serial connections, level compatibility, cabling and physical measurements.
 
-Q2 is required for electrical serial connections, level compatibility, cabling and measurements on real hardware.
+## Check your understanding
+
+1. What does 8N1 mean?
+2. Why must `F_CPU` be known?
+3. What pedagogical advantage does polling provide?
+4. What must be tested physically in Q2?
+
+!!! tip "Next"
+    Continue to [Dual-UART bridge](08-dual-uart-bridge.md).
