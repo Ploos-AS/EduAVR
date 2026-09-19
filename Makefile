@@ -10,15 +10,17 @@ LDFLAGS := -mmcu=$(MCU)
 
 BUILD := build
 
-.PHONY: all c asm stack timers pwm usart bridge robust spi twi disasm size check clean
+.PHONY: all c asm gpio stack timers pwm usart bridge robust spi twi disasm size check clean
 
-all: c asm stack timers pwm usart bridge robust spi twi
+all: c asm gpio stack timers pwm usart bridge robust spi twi
 
 $(BUILD):
 	mkdir -p $(BUILD)
 
 c: $(BUILD)/blink-c.hex
 asm: $(BUILD)/blink-asm.hex
+
+gpio: $(BUILD)/gpio-c.hex $(BUILD)/gpio-asm.hex
 
 stack: $(BUILD)/stack-functions-c.hex $(BUILD)/stack-functions-asm.hex
 
@@ -40,6 +42,12 @@ $(BUILD)/blink-c.elf: examples/c/blink/main.c | $(BUILD)
 	$(CC) $(CFLAGS) $< -o $@
 
 $(BUILD)/blink-asm.elf: examples/asm/blink/main.S | $(BUILD)
+	$(CC) $(CFLAGS) $< -o $@
+
+$(BUILD)/gpio-c.elf: examples/c/gpio/main.c | $(BUILD)
+	$(CC) $(CFLAGS) $< -o $@
+
+$(BUILD)/gpio-asm.elf: examples/asm/gpio/main.S | $(BUILD)
 	$(CC) $(CFLAGS) $< -o $@
 
 $(BUILD)/stack-functions-c.elf: examples/c/stack-functions/main.c | $(BUILD)
@@ -120,6 +128,8 @@ $(BUILD)/%.hex: $(BUILD)/%.elf
 disasm: all
 	$(OBJDUMP) -d -S $(BUILD)/blink-c.elf > $(BUILD)/blink-c.lst
 	$(OBJDUMP) -d -S $(BUILD)/blink-asm.elf > $(BUILD)/blink-asm.lst
+	$(OBJDUMP) -d -S $(BUILD)/gpio-c.elf > $(BUILD)/gpio-c.lst
+	$(OBJDUMP) -d -S $(BUILD)/gpio-asm.elf > $(BUILD)/gpio-asm.lst
 	$(OBJDUMP) -d -S $(BUILD)/stack-functions-c.elf > $(BUILD)/stack-functions-c.lst
 	$(OBJDUMP) -d -S $(BUILD)/stack-functions-asm.elf > $(BUILD)/stack-functions-asm.lst
 	$(OBJDUMP) -d -S $(BUILD)/timer-isr-c.elf > $(BUILD)/timer-isr-c.lst
