@@ -1,5 +1,14 @@
 # Exercise 05 — Timer and interrupt
 
+## Metadata
+
+- **Mode:** SIM → BOARD
+- **Level:** 2 Intermediate
+- **Primary language phase:** ASM → C
+- **Hardware:** EduBoard-AVR or STK500
+- **Qualification:** Q1 + Q2
+- **Concepts:** timers, polling, interrupts, vectors, ISR, timing
+
 Use an ATmega1284P timer to create a periodic event.
 
 ## Part A — polling, Q1
@@ -39,3 +48,8 @@ On the STK500, expose the periodic event on an LED or output pin and measure/obs
 Compare observed timing with the calculated value. Record CPU clock assumptions and actual board configuration.
 
 Q2 is required for claims about real timing accuracy; Q1 remains sufficient for modeled firmware behavior.
+
+
+## Under the hood
+
+Relate the implementation back through the full EduAVR chain: **C (where used) → generated AVR instructions → registers/memory → peripheral behavior → physical result (where applicable)**. Explain compiler choices instead of expecting C and hand-written assembly to be instruction-for-instruction identical.
