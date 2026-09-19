@@ -10,9 +10,9 @@ LDFLAGS := -mmcu=$(MCU)
 
 BUILD := build
 
-.PHONY: all c asm gpio stack timers pwm usart bridge robust spi twi eeprom adc data shared disasm size check clean
+.PHONY: all c asm gpio stack timers pwm usart bridge robust spi twi eeprom adc data shared budget disasm size check clean
 
-all: c asm gpio stack timers pwm usart bridge robust spi twi eeprom adc data shared
+all: c asm gpio stack timers pwm usart bridge robust spi twi eeprom adc data shared budget
 
 $(BUILD):
 	mkdir -p $(BUILD)
@@ -45,6 +45,8 @@ adc: $(BUILD)/adc-c.hex $(BUILD)/adc-asm.hex
 data: $(BUILD)/data-structures-c.hex $(BUILD)/data-structures-asm.hex
 
 shared: $(BUILD)/shared-state-c.hex $(BUILD)/shared-state-asm.hex
+
+budget: $(BUILD)/resource-budget-c.hex $(BUILD)/resource-budget-asm.hex
 
 $(BUILD)/blink-c.elf: examples/c/blink/main.c | $(BUILD)
 	$(CC) $(CFLAGS) $< -o $@
@@ -154,6 +156,12 @@ $(BUILD)/shared-state-c.elf: examples/c/shared-state/main.c | $(BUILD)
 $(BUILD)/shared-state-asm.elf: examples/asm/shared-state/main.S | $(BUILD)
 	$(CC) $(CFLAGS) $< -o $@
 
+$(BUILD)/resource-budget-c.elf: examples/c/resource-budget/main.c | $(BUILD)
+	$(CC) $(CFLAGS) $< -o $@
+
+$(BUILD)/resource-budget-asm.elf: examples/asm/resource-budget/main.S | $(BUILD)
+	$(CC) $(CFLAGS) $< -o $@
+
 $(BUILD)/%.hex: $(BUILD)/%.elf
 	$(OBJCOPY) -O ihex -R .eeprom $< $@
 
@@ -188,6 +196,8 @@ disasm: all
 	$(OBJDUMP) -d -S $(BUILD)/data-structures-asm.elf > $(BUILD)/data-structures-asm.lst
 	$(OBJDUMP) -d -S $(BUILD)/shared-state-c.elf > $(BUILD)/shared-state-c.lst
 	$(OBJDUMP) -d -S $(BUILD)/shared-state-asm.elf > $(BUILD)/shared-state-asm.lst
+	$(OBJDUMP) -d -S $(BUILD)/resource-budget-c.elf > $(BUILD)/resource-budget-c.lst
+	$(OBJDUMP) -d -S $(BUILD)/resource-budget-asm.elf > $(BUILD)/resource-budget-asm.lst
 
 size: all
 	$(SIZE) -C --mcu=$(MCU) $(BUILD)/*.elf
