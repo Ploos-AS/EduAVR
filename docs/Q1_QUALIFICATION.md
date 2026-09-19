@@ -18,6 +18,7 @@ Q1 is EduAVR's default software runtime qualification.
 - Robust-USART normal data path. Simulator qualification does not claim FE/DOR/UPE electrical/error injection unless explicitly modeled.
 - SPI controller configuration and modeled transfer to a virtual peripheral.
 - TWI/I2C controller configuration and modeled EEPROM write/readback.
+- EEPROM write/readback in paired C/Assembly firmware: address `0x12`, value `0x5a`.
 
 ### PWM waveform
 
@@ -51,7 +52,7 @@ The simulator suite already provides strong Q1 coverage for the currently implem
 | SPI | Q1 data path | Add mode/clock variants with a virtual peripheral. |
 | TWI/I2C | Q1 roundtrip | Add ACK/NACK and error-path tests where simavr models them reliably. |
 | ADC | Not yet a core example | Add a simulator-backed ADC lesson only after validating the model/API; retain analog accuracy as Q2. |
-| EEPROM | Not yet a core example | Add deterministic simulated write/readback and persistence semantics. |
+| EEPROM | Q1 write/readback | Paired C/Assembly firmware deterministically writes `0x5a` at address `0x12` and reads it back. Promote this implemented material into a bilingual core lesson. |
 
 This table is intentionally conservative: a new Q1 claim is added only when the simulator test observes the behavior directly and reproducibly.
 
