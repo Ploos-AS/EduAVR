@@ -1,5 +1,14 @@
 # Exercise 04 — Calling convention
 
+## Metadata
+
+- **Mode:** SIM
+- **Level:** 2 Intermediate
+- **Primary language phase:** ASM → C
+- **Hardware:** None
+- **Qualification:** Q1 simulator
+- **Concepts:** ABI, registers, stack, call/return, compiler output
+
 Implement `uint8_t add8(uint8_t a, uint8_t b)` in C and as an AVR assembly routine compatible with AVR-GCC.
 
 Then:
@@ -16,3 +25,8 @@ Then:
 As a deliberate failure experiment, temporarily violate one preservation rule and observe how caller state can be corrupted. Restore the correct implementation before committing results.
 
 **Required qualification:** Q1 simulator.
+
+
+## Under the hood
+
+Relate the implementation back through the full EduAVR chain: **C (where used) → generated AVR instructions → registers/memory → peripheral behavior → physical result (where applicable)**. Explain compiler choices instead of expecting C and hand-written assembly to be instruction-for-instruction identical.
