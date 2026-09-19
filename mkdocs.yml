@@ -1,0 +1,90 @@
+site_name: EduAVR
+site_description: Learn AVR microcontrollers with assembly and C
+site_url: https://ploos-as.github.io/EduAVR/
+repo_url: https://github.com/Ploos-AS/EduAVR
+repo_name: Ploos-AS/EduAVR
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  language: en
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+
+nav:
+  - Home: index.md
+  - English:
+      - Course outline: en/COURSE_OUTLINE.md
+      - Course principles: en/00-course-principles.md
+      - Toolchain: en/01-toolchain.md
+      - AVR architecture: en/02-avr-architecture.md
+      - GPIO: en/03-gpio.md
+      - Stack and functions: en/04-stack-functions.md
+      - Timers and interrupts: en/05-timers-interrupts.md
+      - PWM: en/06-pwm.md
+      - USART: en/07-usart.md
+      - Dual UART bridge: en/08-dual-uart-bridge.md
+      - SPI: en/08-spi.md
+      - TWI / I2C: en/09-twi-i2c.md
+      - Appendices:
+          - Arduino: en/appendix-a-arduino.md
+          - Debugging: en/appendix-b-debugging.md
+          - Disassembly and reverse engineering: en/appendix-c-disassembly-reverse-engineering.md
+          - C, assembly and compiler: en/appendix-d-c-assembly-compiler.md
+          - Memory internals: en/appendix-e-memory-internals.md
+          - Programming and bootloaders: en/appendix-f-programming-bootloaders.md
+          - Electronics: en/appendix-g-electronics.md
+          - Protocol analysis: en/appendix-h-protocol-analysis.md
+  - Norsk:
+      - Kursoversikt: no/COURSE_OUTLINE.md
+      - Kursprinsipper: no/00-course-principles.md
+      - Verktøykjede: no/01-toolchain.md
+      - AVR-arkitektur: no/02-avr-architecture.md
+      - GPIO: no/03-gpio.md
+      - Stack og funksjoner: no/04-stack-functions.md
+      - Timere og avbrudd: no/05-timers-interrupts.md
+      - PWM: no/06-pwm.md
+      - USART: no/07-usart.md
+      - Dobbel UART-bro: no/08-dual-uart-bridge.md
+      - SPI: no/08-spi.md
+      - TWI / I2C: no/09-twi-i2c.md
+      - Appendikser:
+          - Arduino: no/appendix-a-arduino.md
+          - Debugging: no/appendix-b-debugging.md
+          - Disassembly og reverse engineering: no/appendix-c-disassembly-reverse-engineering.md
+          - C, assembly og compiler: no/appendix-d-c-assembly-compiler.md
+          - Minne og internals: no/appendix-e-memory-internals.md
+          - Programmering og bootloadere: no/appendix-f-programming-bootloaders.md
+          - Elektronikk: no/appendix-g-electronics.md
+          - Protokollanalyse: no/appendix-h-protocol-analysis.md
+  - Project documentation:
+      - Simulation policy: SIMULATION_POLICY.md
+      - Visual policy: VISUAL_POLICY.md
+      - Visual coverage plan: VISUAL_COVERAGE_PLAN.md
+      - M1 qualification: M1_QUALIFICATION.md
+      - Q1 qualification: Q1_QUALIFICATION.md
