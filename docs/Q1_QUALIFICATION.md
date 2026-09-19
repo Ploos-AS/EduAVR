@@ -10,7 +10,7 @@ Q1 is EduAVR's default software runtime qualification.
 - GPIO register-state qualification in paired C and Assembly: deterministic DDRB/PORTB checks plus PINB observation.
 - Stack/functions/ABI: paired C and Assembly call probes verify result flow, stack movement during the call, and restoration of the stack pointer after return.
 - Timer0 interrupt delivery to a stable firmware probe.
-- PWM register configuration.
+- PWM register configuration plus modeled OC0A/PB3 waveform and duty-cycle observation.
 - USART0 and USART1 polling RX -> firmware -> TX loopback.
 - USART0 and USART1 interrupt-driven RX/TX ring buffers with 32-byte deterministic loopback.
 - Bidirectional USART0 <-> USART1 polling bridge.
@@ -18,6 +18,10 @@ Q1 is EduAVR's default software runtime qualification.
 - Robust-USART normal data path. Simulator qualification does not claim FE/DOR/UPE electrical/error injection unless explicitly modeled.
 - SPI controller configuration and modeled transfer to a virtual peripheral.
 - TWI/I2C controller configuration and modeled EEPROM write/readback.
+
+### PWM waveform
+
+The PWM Q1 test observes the modeled OC0A signal on PB3 through simavr's IO-port IRQ interface. Both C and Assembly firmware must produce repeated edges and a measured duty cycle consistent with the configured ~25% Fast-PWM waveform. This is a modeled digital timing claim only; physical voltage, edge quality and oscillator accuracy remain Q2.
 
 ### TWI/I2C roundtrip
 
@@ -41,7 +45,7 @@ The simulator suite already provides strong Q1 coverage for the currently implem
 | Stack / functions / ABI | Q1 | Deterministic paired C/Assembly probe verifies argument/result flow and balanced stack behavior in simavr + avr-gdb. |
 | GPIO | Q1 | Deterministic paired C/Assembly probe verifies DDRB/PORTB state and reads PINB in simavr + avr-gdb. Electrical pin behavior remains Q2. |
 | Timers / interrupts | Q1 | Extend with counter/compare variants when new timer lessons are added. |
-| PWM | Q1 configuration | Add modeled duty-cycle/state observations where simavr exposes reliable evidence. |
+| PWM | Q1 waveform | Modeled OC0A/PB3 edges and ~25% duty cycle are observed for paired C/Assembly firmware. Physical waveform remains Q2. |
 | USART0/1 | Q1 data path | Keep expanding error/status behavior only where the model can inject it reliably. |
 | Dual USART bridge | Q1 bidirectional data path | Add overflow/back-pressure tests when those policies are taught. |
 | SPI | Q1 data path | Add mode/clock variants with a virtual peripheral. |
