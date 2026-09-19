@@ -23,6 +23,10 @@ Bruk avr-gdb til å stoppe før et funksjonskall. Noter stack pointer, single-st
 !!! success "Forventet resultat"
     Du kan forklare hvor returflyten kommer fra og identifisere hvilke registre compiler-output bruker for argumenter og resultat i eksemplet.
 
+## Kvalifikasjon
+
+Denne leksjonen er Q1-kvalifisert. Den automatiserte C/Assembly-proben verifiserer argument-/resultatflyt, observerer at stack pointer flytter seg nedover inne i funksjonskallet, og krever at stack pointer er gjenopprettet etter retur i simavr + avr-gdb.
+
 ## Sjekk forståelsen
 
 1. Hvor ligger AVR-stacken?
