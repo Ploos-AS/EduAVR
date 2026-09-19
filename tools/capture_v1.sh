@@ -17,9 +17,9 @@ mkdir -p "$OUT"
   avrdude --version 2>&1 | head -1
 } > "$OUT/01-toolchain.txt"
 
-make clean all disasm >/dev/null
-# make clean removes build/, including OUT; recreate capture directory afterwards.
-mkdir -p "$OUT"
+make all disasm >/dev/null
+# Q1 ran earlier in the same CI job. Do not clean here: its real simulator/debugger
+# logs are evidence that the visual-source pack must preserve.
 
 {
   echo "EduAVR build artifacts"
@@ -53,6 +53,57 @@ avr-objdump -d -S build/blink-asm.elf > "$OUT/07-blink-asm-disassembly.txt"
   avr-objdump -d -S build/timer-isr-c.elf
 } > "$OUT/09-timer-isr-disassembly.txt"
 
+
+# Preserve REAL Q1 simulator/debugger evidence produced by tools/check_q1.sh.
+# These files are copied verbatim; they are not synthetic screenshots.
+mkdir -p "$OUT/q1"
+for src in \
+  build/timer-isr-c.elf.irq.gdb.log \
+  build/timer-isr-asm.elf.irq.gdb.log \
+  build/pwm-c.elf.pwm.gdb.log \
+  build/pwm-asm.elf.pwm.gdb.log \
+  build/usart0-echo-c.elf.usart.gdb.log \
+  build/usart0-echo-asm.elf.usart.gdb.log \
+  build/usart1-echo-c.elf.usart1.gdb.log \
+  build/usart1-echo-asm.elf.usart1.gdb.log \
+  build/spi-c.elf.spi.gdb.log \
+  build/spi-asm.elf.spi.gdb.log \
+  build/twi-c.elf.twi.gdb.log \
+  build/twi-asm.elf.twi.gdb.log
+do
+  if [ -f "$src" ]; then
+    cp "$src" "$OUT/q1/"
+  fi
+done
+
+cat > "$OUT/q1/README.txt" <<EOF
+EduAVR Q1 simulator/debugger capture
+
+These are verbatim avr-gdb logs from the Q1 simavr qualification performed
+earlier in the same CI job. They are real reproducible simulator/debugger
+evidence, not generated terminal UI.
+
+Repository commit: $(git rev-parse HEAD)
+Qualification level: Q1 (simulated)
+
+Expected coverage:
+- Timer0 compare interrupt breakpoint and PC/SP
+- PWM register configuration
+- USART0 register configuration
+- USART1 register configuration
+- SPI register configuration
+- TWI register configuration
+
+A missing expected log is an error in the visual capture pipeline.
+EOF
+
+expected_q1_logs=12
+actual_q1_logs=$(find "$OUT/q1" -maxdepth 1 -name '*.log' | wc -l)
+test "$actual_q1_logs" -eq "$expected_q1_logs" || {
+  echo "V1 capture FAIL: expected $expected_q1_logs Q1 logs, found $actual_q1_logs" >&2
+  exit 1
+}
+
 cat > "$OUT/README.txt" <<EOF
 EduAVR V1 visual-source artifact pack
 
@@ -72,6 +123,8 @@ Files:
 07 assembly blink disassembly
 08 side-by-side source/disassembly material
 09 timer ISR/vector disassembly
+q1/ verbatim avr-gdb logs from the same CI job's Q1 simavr qualification
 
-Do not relabel these files as Q1/Q2 evidence.
+Top-level files are Q0 source material. Files under q1/ are explicitly Q1 evidence.
+Nothing in this artifact is Q2 physical-hardware evidence.
 EOF
