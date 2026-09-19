@@ -1,5 +1,14 @@
 # Exercise 03 — GPIO
 
+## Metadata
+
+- **Mode:** SIM → BOARD
+- **Level:** 1 Beginner
+- **Primary language phase:** ASM → C
+- **Hardware:** EduBoard-AVR or STK500
+- **Qualification:** Q1 + Q2
+- **Concepts:** DDRx, PORTx, PINx, bit operations, input, output, pull-up
+
 ## Part A — Q1
 
 Implement PB0 output control twice:
@@ -25,3 +34,8 @@ Record the actual port/pin wiring used. Do not assume PB0 is wired to a particul
 ## Boundary
 
 Part A can pass without hardware. Part B is a hardware observation and cannot be replaced by simulator evidence.
+
+
+## Under the hood
+
+Relate the implementation back through the full EduAVR chain: **C (where used) → generated AVR instructions → registers/memory → peripheral behavior → physical result (where applicable)**. Explain compiler choices instead of expecting C and hand-written assembly to be instruction-for-instruction identical.
