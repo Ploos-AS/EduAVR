@@ -35,7 +35,7 @@ These are roadmap items rather than published core lessons until their Markdown 
 
 ## Working method
 
-Each lesson combines theory with practical inspection of the machine. Build C and Assembly, inspect disassembly, use simulation where it provides valid evidence, and move to physical hardware when the claim concerns electrical behavior.
+Each lesson combines theory with practical inspection of the machine. Build C and Assembly, inspect disassembly, use simulation wherever it provides valid evidence, and move to physical hardware only when the claim depends on electrical or other non-modeled behavior.
 
 ## Reference appendices
 
@@ -49,7 +49,8 @@ Published appendices currently cover:
 - **F — Programming and bootloaders**
 - **G — Electronics for AVR programmers**
 - **H — Protocol analysis**
+- **I — [Reading AVR datasheets](appendix-i-reading-datasheets.md)**
 
-The curriculum also reserves future appendices for performance/optimization, testing/qualification, building an AVR board, retro-computing interfaces and datasheet reading. They should be added to the published course only when their Markdown sources exist.
+Future appendices may cover performance/optimization, testing/qualification, building an AVR board and retro-computing interfaces. They should be added to the published course only when their Markdown sources exist.
 
 The appendices are reference material and advanced practice. They can mature while EduBoard-AVR hardware is being stabilized because most are not tied to a moving board revision.
