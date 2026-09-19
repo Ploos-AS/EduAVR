@@ -10,7 +10,7 @@ LDFLAGS := -mmcu=$(MCU)
 
 BUILD := build
 
-.PHONY: all c asm timers pwm usart spi twi disasm size check clean
+.PHONY: all c asm timers pwm usart bridge robust spi twi disasm size check clean
 
 all: c asm timers pwm usart bridge robust spi twi
 
