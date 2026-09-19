@@ -502,6 +502,14 @@ cc -std=c11 -Wall -Wextra -Werror -o build/q1-pwm-waveform \
 build/q1-pwm-waveform build/pwm-c.elf
 build/q1-pwm-waveform build/pwm-asm.elf
 
+# Deterministic ADC0 data-path qualification using simavr's ADC IRQ API.
+# Inject 2500 mV into ADC0 and require approximately half-scale conversion.
+cc -std=c11 -Wall -Wextra -Werror -o build/q1-adc-datapath \
+    tools/q1_adc_datapath.c \
+    -I/usr/include/simavr -lsimavr -lelf
+build/q1-adc-datapath build/adc-c.elf
+build/q1-adc-datapath build/adc-asm.elf
+
 # Deterministic USART0 data-path qualification using simavr's IRQ API.
 # Feed bytes into RX and require the echo firmware to reproduce them on TX.
 cc -std=c11 -Wall -Wextra -Werror -o build/q1-usart-loopback \
