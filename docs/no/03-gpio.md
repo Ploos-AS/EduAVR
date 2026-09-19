@@ -57,7 +57,7 @@ Bygg både C- og assembler-eksemplene for GPIO, undersøk disassembly, og finn i
 
 ## Kvalifikasjonsgrense
 
-**Q1** kan verifisere registerlogikk og instruksjonsflyt.
+**Q1** verifiserer registerlogikk og instruksjonsflyt. Den automatiserte C/Assembly-proben kontrollerer deterministisk `DDRB` og `PORTB` og observerer `PINB` i simavr + avr-gdb.
 
 **Q2** kreves før vi hevder at en ekte LED lyser, en knapp leses elektrisk, pull-up fungerer på kortet eller ekte kontaktsprett er observert.
 
