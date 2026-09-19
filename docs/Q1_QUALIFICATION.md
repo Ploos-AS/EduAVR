@@ -7,6 +7,7 @@ Q1 is EduAVR's default software runtime qualification.
 `tools/check_q1.sh` builds and runs paired C and hand-written AVR assembly examples against the ATmega1284P simavr model. The current suite qualifies:
 
 - Blink execution and avr-gdb inspection.
+- GPIO register-state qualification in paired C and Assembly: deterministic DDRB/PORTB checks plus PINB observation.
 - Stack/functions/ABI: paired C and Assembly call probes verify result flow, stack movement during the call, and restoration of the stack pointer after return.
 - Timer0 interrupt delivery to a stable firmware probe.
 - PWM register configuration.
@@ -38,7 +39,7 @@ The simulator suite already provides strong Q1 coverage for the currently implem
 | --- | --- | --- |
 | CPU / Blink / debugger | Q1 | Add explicit CPU/register-state teaching probes as new architecture exercises appear. |
 | Stack / functions / ABI | Q1 | Deterministic paired C/Assembly probe verifies argument/result flow and balanced stack behavior in simavr + avr-gdb. |
-| GPIO | Execution Q1 | Add a deterministic DDR/PORT/PIN register-state probe. |
+| GPIO | Q1 | Deterministic paired C/Assembly probe verifies DDRB/PORTB state and reads PINB in simavr + avr-gdb. Electrical pin behavior remains Q2. |
 | Timers / interrupts | Q1 | Extend with counter/compare variants when new timer lessons are added. |
 | PWM | Q1 configuration | Add modeled duty-cycle/state observations where simavr exposes reliable evidence. |
 | USART0/1 | Q1 data path | Keep expanding error/status behavior only where the model can inject it reliably. |
