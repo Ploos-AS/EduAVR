@@ -85,7 +85,12 @@ nav:
           - Programming and bootloaders: en/appendix-f-programming-bootloaders.md
           - Electronics: en/appendix-g-electronics.md
           - Protocol analysis: en/appendix-h-protocol-analysis.md
-          - Reading datasheets: en/appendix-i-reading-datasheets.md
+          - Performance and optimization: en/appendix-i-performance.md
+          - Testing and qualification: en/appendix-j-testing-qualification.md
+          - Build your own AVR board: en/appendix-k-build-board.md
+          - AVR for retro computing: en/appendix-l-retro-computing.md
+          - Datasheet survival guide: en/appendix-m-datasheet-guide.md
+          - Extended datasheet reading guide: en/appendix-i-reading-datasheets.md
   - Norsk:
       - Kursoversikt: no/COURSE_OUTLINE.md
       - Kursprinsipper: no/00-course-principles.md
@@ -110,7 +115,12 @@ nav:
           - Programmering og bootloadere: no/vedlegg-f-programmering-bootloadere.md
           - Elektronikk: no/vedlegg-g-elektronikk.md
           - Protokollanalyse: no/vedlegg-h-protokollanalyse.md
-          - Lese datablader: no/appendix-i-reading-datasheets.md
+          - Ytelse og optimalisering: no/vedlegg-i-ytelse.md
+          - Testing og kvalifikasjon: no/vedlegg-j-testing-kvalifikasjon.md
+          - Bygg ditt eget AVR-board: no/vedlegg-k-bygg-avr-board.md
+          - AVR for retro computing: no/vedlegg-l-retro.md
+          - Overlevelsesguide for datablad: no/vedlegg-m-databladguide.md
+          - Utvidet guide til å lese datablad: no/appendix-i-reading-datasheets.md
   - Project documentation:
       - Course authoring guide: COURSE_AUTHORING.md
       - Simulation policy: SIMULATION_POLICY.md
