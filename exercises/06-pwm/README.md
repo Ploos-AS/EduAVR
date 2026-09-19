@@ -1,5 +1,14 @@
 # Exercise 06 — PWM
 
+## Metadata
+
+- **Mode:** SIM → BOARD
+- **Level:** 2 Intermediate
+- **Primary language phase:** ASM → C
+- **Hardware:** EduBoard-AVR or STK500
+- **Qualification:** Q1 + Q2
+- **Concepts:** timer, PWM, compare registers, frequency, duty cycle
+
 Configure an ATmega1284P timer for PWM in both AVR assembly and C.
 
 ## Q1
@@ -28,3 +37,8 @@ Observe the signal with an LED and, where available, an oscilloscope or logic an
 - measured frequency/duty cycle.
 
 Explain any difference between calculated and measured values.
+
+
+## Under the hood
+
+Relate the implementation back through the full EduAVR chain: **C (where used) → generated AVR instructions → registers/memory → peripheral behavior → physical result (where applicable)**. Explain compiler choices instead of expecting C and hand-written assembly to be instruction-for-instruction identical.
