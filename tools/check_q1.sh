@@ -342,6 +342,10 @@ probe_resource_budget() {
     test "$result" = "0x47" || fail "unexpected budget result in $elf: $result"
     test "$before_lo" = "$after_lo" && test "$before_hi" = "$after_hi" ||
         fail "stack did not restore in $elf: before=${before_hi}${before_lo} after=${after_hi}${after_lo}"
+    before_hi=${before_hi#0x}
+    before_lo=${before_lo#0x}
+    deep_hi=${deep_hi#0x}
+    deep_lo=${deep_lo#0x}
     before=$((16#$before_hi$before_lo))
     deep=$((16#$deep_hi$deep_lo))
     test "$deep" -lt "$before" ||
