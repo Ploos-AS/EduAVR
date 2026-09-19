@@ -8,13 +8,47 @@
 
 EduAVR uses a command-line-first toolchain built around AVR-GCC, GNU AVR Binutils, AVR-LibC, AVRDUDE and GNU Make.
 
-## Install the tools
+## Recommended: EduAVR development container
 
-On Debian-family systems the required packages are typically:
+The published EduAVR OCI image is the recommended reproducible environment for the course. It contains the AVR compiler/toolchain, avr-gdb, AVRDUDE, AVaRICE, simavr and the native libraries used by the Q1 simulator harnesses.
+
+Clone the course repository and run the image with the repository mounted as `/workspace`.
+
+### Docker
 
 ```sh
-sudo apt install gcc-avr binutils-avr avr-libc avrdude make
+docker pull ghcr.io/ploos-as/eduavr:latest
+docker run --rm -it \
+  -v "$PWD:/workspace" \
+  -w /workspace \
+  ghcr.io/ploos-as/eduavr:latest
 ```
+
+### Podman
+
+```sh
+podman pull ghcr.io/ploos-as/eduavr:latest
+podman run --rm -it \
+  -v "$PWD:/workspace:Z" \
+  -w /workspace \
+  ghcr.io/ploos-as/eduavr:latest
+```
+
+Inside the container, `make check` and `sh tools/check_q1.sh` use the same tool environment that is qualified by CI.
+
+!!! note "Hardware access"
+    The container is intended first for building, inspection and simulator-based Q1 work. Passing a physical programmer or serial device into Docker/Podman is host-specific and belongs to Q2 hardware setup.
+
+## Native Debian installation
+
+A native Debian-family installation remains fully supported:
+
+```sh
+sudo apt update
+sudo apt install gcc gcc-avr binutils-avr avr-libc avrdude avarice gdb-avr make simavr libsimavr-dev libelf-dev
+```
+
+The container is preferred when you want the most reproducible course environment; native packages are useful when direct host access to hardware is convenient.
 
 ## Try it
 
