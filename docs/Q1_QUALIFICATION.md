@@ -29,6 +29,26 @@ The TWI Q1 data-path test performs a complete modeled firmware roundtrip in both
 
 This verifies that the firmware consumes the modeled read response, not merely that bus events occurred.
 
+## Coverage audit
+
+The simulator suite already provides strong Q1 coverage for the currently implemented peripheral examples. The largest remaining gaps are curriculum topics that do not yet have dedicated paired C/Assembly examples, rather than missing simulator checks for existing examples.
+
+| Course area | Current automated level | Next simulator target |
+| --- | --- | --- |
+| CPU / Blink / debugger | Q1 | Add explicit CPU/register-state teaching probes as new architecture exercises appear. |
+| Stack / functions / ABI | Partial Q1 via GDB inspection | Add a deterministic call/stack/ABI example in both C and Assembly. |
+| GPIO | Execution Q1 | Add a deterministic DDR/PORT/PIN register-state probe. |
+| Timers / interrupts | Q1 | Extend with counter/compare variants when new timer lessons are added. |
+| PWM | Q1 configuration | Add modeled duty-cycle/state observations where simavr exposes reliable evidence. |
+| USART0/1 | Q1 data path | Keep expanding error/status behavior only where the model can inject it reliably. |
+| Dual USART bridge | Q1 bidirectional data path | Add overflow/back-pressure tests when those policies are taught. |
+| SPI | Q1 data path | Add mode/clock variants with a virtual peripheral. |
+| TWI/I2C | Q1 roundtrip | Add ACK/NACK and error-path tests where simavr models them reliably. |
+| ADC | Not yet a core example | Add a simulator-backed ADC lesson only after validating the model/API; retain analog accuracy as Q2. |
+| EEPROM | Not yet a core example | Add deterministic simulated write/readback and persistence semantics. |
+
+This table is intentionally conservative: a new Q1 claim is added only when the simulator test observes the behavior directly and reproducibly.
+
 ## Running Q1
 
 ```sh
