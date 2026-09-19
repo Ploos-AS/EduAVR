@@ -14,7 +14,7 @@ This is the repository-level status snapshot. It distinguishes published course 
 
 ## Published core course
 
-The published navigation currently contains fifteen core chapters in each language:
+The published navigation currently contains sixteen core chapters in each language:
 
 1. course principles;
 2. toolchain;
@@ -30,7 +30,8 @@ The published navigation currently contains fifteen core chapters in each langua
 12. EEPROM;
 13. ADC;
 14. pointers, buffers and structs;
-15. volatile, interrupts and atomicity.
+15. volatile, interrupts and atomicity;
+16. SRAM and stack resource budgets.
 
 ## Executable paired C/Assembly examples
 
@@ -53,7 +54,8 @@ The build currently contains paired C and hand-written Assembly firmware for:
 - EEPROM;
 - ADC;
 - data structures;
-- shared ISR/main state.
+- shared ISR/main state;
+- SRAM/stack resource budgeting.
 
 EEPROM and ADC implementation, qualification and published curriculum are now aligned.
 
@@ -78,6 +80,7 @@ Current automated Q1 evidence covers:
 | ADC | paired firmware converts modeled ADC0 2500 mV input to approximately 775 |
 | Data structures | deterministic buffer, pointer, struct layout and sum state |
 | Shared state | Timer0 interrupt progress plus coherent protected 16-bit snapshot in paired C/Assembly |
+| Resource budget | paired C/Assembly stack-depth observation, balanced SP and deterministic worker result |
 
 ## Published appendices
 
@@ -122,7 +125,7 @@ Implemented repository infrastructure includes:
 - **M3:** substantially implemented with Q1 timers/interrupts/PWM evidence.
 - **M4:** substantially implemented with Q1 USART/SPI/TWI evidence.
 - **M5:** complete at Q1/course level. EEPROM and ADC both have paired C/Assembly examples, deterministic simulator evidence and bilingual core lessons. Physical ADC behavior remains Q2.
-- **M6:** in progress with two published bilingual lessons: data structures and volatile/interrupt atomicity, both backed by paired C/Assembly and deterministic Q1 evidence.
+- **M6:** in progress with three published bilingual lessons: data structures, volatile/interrupt atomicity, and SRAM/stack resource budgeting, backed by paired C/Assembly and deterministic Q1 evidence.
 - **M7-M8:** planned/incremental; not complete.
 - **M9/Q2:** board convergence is in progress; physical qualification remains separate.
 
