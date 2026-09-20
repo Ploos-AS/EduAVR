@@ -14,7 +14,7 @@ This is the repository-level status snapshot. It distinguishes published course 
 
 ## Published core course
 
-The published navigation currently contains eighteen core chapters in each language:
+The published navigation currently contains nineteen core chapters in each language:
 
 1. course principles;
 2. toolchain;
@@ -33,7 +33,8 @@ The published navigation currently contains eighteen core chapters in each langu
 15. volatile, interrupts and atomicity;
 16. SRAM and stack resource budgets;
 17. optimization and generated code;
-18. code size and SRAM analysis.
+18. code size and SRAM analysis;
+19. integrated systems capstone.
 
 ## Executable paired C/Assembly examples
 
@@ -88,6 +89,7 @@ Current automated Q1 evidence covers:
 | Optimization | O0/Os/O2 plus Assembly preserve deterministic weighted-sum result; ELF `.text` is measurable |
 | Code/SRAM analysis | reproducible ELF section/symbol report plus explicit static-SRAM/Flash budgeting model |
 | Resource guard | CI-enforced course guardrails for Flash/static-SRAM growth, with documented non-universal limits |
+| Integrated capstone | paired C/Assembly Timer/ADC/EEPROM/USART system with deterministic Q1 integration probe |
 
 ## Published appendices
 
@@ -132,7 +134,7 @@ Implemented repository infrastructure includes:
 - **M3:** substantially implemented with Q1 timers/interrupts/PWM evidence.
 - **M4:** substantially implemented with Q1 USART/SPI/TWI evidence.
 - **M5:** complete at Q1/course level. EEPROM and ADC both have paired C/Assembly examples, deterministic simulator evidence and bilingual core lessons. Physical ADC behavior remains Q2.
-- **M6:** in progress with five published bilingual lessons: data structures, volatile/interrupt atomicity, SRAM/stack resource budgeting, optimization/code analysis, and code-size/static-SRAM analysis. The latter has a reproducible `make analyze` report and CI resource guardrails; dynamic stack remains separately qualified.
+- **M6:** in progress with six published bilingual lessons: data structures, volatile/interrupt atomicity, SRAM/stack resource budgeting, optimization/code analysis, and code-size/static-SRAM analysis, and an integrated systems capstone. The capstone has paired C/Assembly sources and a dedicated Q1 integration probe; dynamic stack remains separately qualified.
 - **M7-M8:** planned/incremental; not complete.
 - **M9/Q2:** board convergence is in progress; physical qualification remains separate.
 
@@ -146,6 +148,7 @@ Implemented repository infrastructure includes:
 
 1. Continue language-parity checks as new chapters are added.
 2. Continue M6 with targeted regression evidence and keep resource guardrails aligned with the actual course examples.
+3. Use the capstone as the integration baseline before moving core teaching scope into M7.
 3. Preserve semantic EN/NO parity for appendices A-M and the extended datasheet-reading guide as they evolve.
 4. Add real EduBoard CAD/Q2 visuals only from stable board revisions and physical evidence.
 
