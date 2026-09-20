@@ -57,6 +57,16 @@ EduAVR is designed around a simple principle: a microcontroller course is more u
 
     Begynn med [kursoversikten](no/COURSE_OUTLINE.md), og jobb deg gjennom leksjonene i rekkefølge. Bruk appendiksene når du ønsker å gå dypere inn i et tema.
 
+## EPUB / Kindle editions
+
+The course is also built automatically as two reflowable EPUB editions: **English** and **Norsk**. They are generated from the same Markdown source as this website and validated with EPUBCheck.
+
+For the latest build, open the [Ebooks workflow](https://github.com/Ploos-AS/EduAVR/actions/workflows/ebooks.yml), select the latest successful run and download the **EduAVR-ebooks** artifact. It contains `EduAVR-en.epub` and `EduAVR-no.epub`.
+
+EPUB is also the source format intended for Kindle import/conversion; a separate legacy MOBI build is not maintained.
+
+[:octicons-download-16: Open ebook builds](https://github.com/Ploos-AS/EduAVR/actions/workflows/ebooks.yml){ .md-button }
+
 ## What's new
 
 See the [course changelog](CHANGELOG.md) for recent published course changes.
