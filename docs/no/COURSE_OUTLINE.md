@@ -63,3 +63,8 @@ Publiserte appendikser:
 - **Utvidet guide — [Slik leser du AVR-datablader](appendix-i-reading-datasheets.md)**
 
 Disse kildene finnes nå i begge språkspor. Semantisk paritet vurderes separat fra at filene bare finnes.
+
+
+## M6-utvidelse — analyse av kodestørrelse og SRAM
+
+Leksjon 18 gjør ELF-seksjons- og symboldata om til en reproduserbar Flash/SRAM-rapport, mens dynamisk stackbruk holdes som en separat runtime-måling.
