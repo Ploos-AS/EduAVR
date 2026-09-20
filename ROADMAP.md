@@ -45,7 +45,7 @@ ADC, EEPROM, sensors and data acquisition.
 ## M6 — Systems programming
 Pointers, structs, buffers, volatile, stack use, optimization and code/SRAM analysis.
 
-Current M6 extension: **optimization and generated-code analysis** is now published as core lesson 17 with deterministic Q1 evidence across O0, Os, O2 and hand-written Assembly.
+Current M6 extensions: **optimization and generated-code analysis** is published as core lesson 17, followed by **code-size and SRAM analysis** as lesson 18. The latter adds a reproducible `make analyze` report over ELF sections and symbols.
 
 ## M7 — Networking / Home Assistant
 
