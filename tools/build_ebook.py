@@ -11,7 +11,16 @@ def clean(s):
     """Convert MkDocs-oriented Markdown into conservative Pandoc Markdown."""
     # Keep the transformation deliberately small and robust. Pandoc can
     # consume ordinary Markdown and MkDocs admonitions as text.
-    return s
+    # Strip only local Markdown-document targets: those files are merged into
+    # one manuscript and do not exist as separate resources in the EPUB.
+    def local_md_link(match):
+        label, target = match.group(1), match.group(2)
+        base = target.split("#", 1)[0].split("?", 1)[0]
+        if base.lower().endswith(".md"):
+            return label
+        return match.group(0)
+
+    return re.sub(r"\\[([^]\\n]+)\\]\\(([^)\\n]+)\\)", local_md_link, s)
 
 def main():
     a=argparse.ArgumentParser(); a.add_argument("language",choices=["en","no"]); a.add_argument("output",type=Path); x=a.parse_args()
