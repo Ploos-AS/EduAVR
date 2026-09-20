@@ -8,7 +8,7 @@
 - **M3:** substantially implemented; timer/interrupt/PWM paths are exercised by Q1.
 - **M4:** substantially implemented; USART0/1 polling and IRQ/ring buffers, dual-UART bridges, SPI and TWI/I2C have Q1 coverage.
 - **M5:** complete at published-course/Q1 level; EEPROM and ADC have paired C/Assembly implementations, deterministic Q1 evidence and bilingual core lessons. Physical analog/electrical behaviour remains Q2.
-- **M6:** in progress; bilingual chapters and paired C/Assembly Q1 evidence cover data structures, ISR/main shared-state atomicity, and SRAM/stack resource budgeting. Optimization and broader code/SRAM analysis remain.
+- **M6:** in progress; bilingual chapters and paired C/Assembly Q1 evidence cover data structures, ISR/main shared-state atomicity, SRAM/stack resource budgeting, and optimization/code analysis. Broader code/SRAM analysis remains.
 - **M7-M8:** planned/incremental material only; not complete.
 - **M9/Q2:** in progress through EduBoard-AVR convergence; physical qualification remains separate from simulator claims.
 
@@ -44,6 +44,8 @@ ADC, EEPROM, sensors and data acquisition.
 
 ## M6 — Systems programming
 Pointers, structs, buffers, volatile, stack use, optimization and code/SRAM analysis.
+
+Current M6 extension: **optimization and generated-code analysis** is now published as core lesson 17 with deterministic Q1 evidence across O0, Os, O2 and hand-written Assembly.
 
 ## M7 — Networking / Home Assistant
 
