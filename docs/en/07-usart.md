@@ -61,4 +61,4 @@ Q1 can verify register configuration, baud calculations, buffer/state-machine lo
 4. What must be tested physically in Q2?
 
 !!! tip "Next"
-    Continue to [Dual-UART bridge](08-dual-uart-bridge.md).
+    Continue to [Dual-UART bridge](09-dual-uart-bridge.md).
