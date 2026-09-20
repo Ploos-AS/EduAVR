@@ -26,6 +26,10 @@ EduAVR teaches AVR from the hardware upward, with **Assembly and C side by side*
 
 ## Planned core expansion
 
+### M6 extension — optimization and code analysis
+
+Lesson 17 adds optimization-level comparison and generated-assembly analysis, backed by paired C/Assembly examples and Q1 evidence.
+
 Milestone mapping: **M7 = networking/Home Assistant**, **M8 = capstone projects**. These remain roadmap scope until the lessons, examples and qualification evidence are complete.
 
 The original curriculum also identifies these topics for dedicated lessons as the course grows:
