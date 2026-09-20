@@ -45,7 +45,7 @@ ADC, EEPROM, sensors and data acquisition.
 ## M6 — Systems programming
 Pointers, structs, buffers, volatile, stack use, optimization and code/SRAM analysis.
 
-Current M6 extensions: **optimization and generated-code analysis** is lesson 17, **code-size and SRAM analysis** is lesson 18, and **integrated systems capstone** is lesson 19. The capstone combines Timer, ADC, EEPROM and USART in paired C/Assembly implementations with dedicated Q1 integration evidence. M6 exits only after `tools/check_m6.sh` is green in CI.
+Completed M6 extensions: **optimization and generated-code analysis** is lesson 17, **code-size and SRAM analysis** is lesson 18, and **integrated systems capstone** is lesson 19. The capstone combines Timer, ADC, EEPROM and USART in paired C/Assembly implementations with dedicated Q1 integration evidence. M6 is closed at the course/Q1 level; `tools/check_m6.sh` remains its regression gate and `docs/M6_QUALIFICATION.md` records the qualification boundary.
 
 ## M7 — Networking / Home Assistant
 
