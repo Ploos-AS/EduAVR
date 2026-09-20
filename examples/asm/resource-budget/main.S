@@ -34,9 +34,9 @@ budget_worker:
     ; Z as a writable frame pointer here: an off-by-one stack address can
     ; overwrite saved state or a return address. Keep the deterministic
     ; computation in registers while SP remains eight bytes deeper.
-    mov r18, r24
-    ldi r19, 7
-    add r18, r19
+    mov r20, r24
+    ldi r21, 7
+    add r20, r21
 
     in r18, _SFR_IO_ADDR(SPL)
     sts budget_sp_deep, r18
@@ -44,7 +44,7 @@ budget_worker:
     sts budget_sp_deep+1, r19
 
     ; Equivalent result to local[0] + local[7]: x + (x + 7).
-    add r24, r18
+    add r24, r20
 
     pop r16
     pop r16
