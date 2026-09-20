@@ -39,6 +39,25 @@ Inne i containeren bruker `make check` og `sh tools/check_q1.sh` samme verktøym
 !!! note "Tilgang til fysisk maskinvare"
     Containeren er først og fremst laget for bygging, inspeksjon og simulatorbasert Q1-arbeid. Viderekobling av fysisk programmerer eller serieport til Docker/Podman er vertsspesifikt og hører til Q2-oppsettet.
 
+## Simulatoroppsett
+
+EduAVR bruker **simavr** som Q1-simulator. Du trenger ikke laste ned en egen EduAVR-simulator. Den enkleste løsningen er utviklingscontaineren over, der simavr, avr-gdb og nødvendige simulatorbiblioteker allerede er installert.
+
+Kontroller simulatoren inne i containeren med:
+
+```sh
+simavr --help
+avr-gdb --version
+```
+
+Kjør hele den deterministiske simulator-kvalifikasjonen for kurset med:
+
+```sh
+sh tools/check_q1.sh
+```
+
+Kurset bruker simavr til å kjøre ATmega1284P-firmware og avr-gdb sammen med små simulator-harnesser for å observere registre, SRAM, avbrudd og modellerte periferienheter. De enkelte leksjonene forklarer den relevante proben; det kreves ikke en separat grafisk simulatorapplikasjon.
+
 ## Native installasjon på Debian
 
 Native Debian-installasjon støttes fortsatt fullt ut:
