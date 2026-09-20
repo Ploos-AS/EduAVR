@@ -57,6 +57,9 @@ The simulator suite already provides strong Q1 coverage for the currently implem
 | ADC | Q1 modeled data path | Paired C/Assembly firmware converts an injected 2500 mV ADC0 input to approximately 775 in the qualified simavr model. Physical accuracy remains Q2. |
 | EEPROM | Q1 write/readback | Paired C/Assembly firmware deterministically writes `0x5a` at address `0x12` and reads it back. Bilingual core lesson published. |
 | Systems/resource budget | Q1 | Paired C/Assembly firmware observes stack depth and verifies balanced SP; static SRAM remains visible through ELF/`avr-size`. |
+| Optimization / generated code | Q1 | O0/Os/O2 C builds and hand-written Assembly preserve the deterministic weighted-sum result while exposing measurable code-generation differences. |
+| Code/SRAM analysis | Q1/static analysis | Reproducible ELF section/symbol reporting and CI resource guardrails track Flash and static SRAM; dynamic stack remains a separate runtime observation. |
+| Integrated systems capstone | Q1 integration | Paired C/Assembly firmware deterministically integrates Timer0, modeled ADC input, EEPROM calibration and USART before reaching the capstone probe. |
 
 This table is intentionally conservative: a new Q1 claim is added only when the simulator test observes the behavior directly and reproducibly.
 
