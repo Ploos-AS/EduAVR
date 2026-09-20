@@ -185,7 +185,7 @@ $(BUILD)/optimization-asm.elf: examples/asm/optimization/main.S | $(BUILD)
 $(BUILD)/%.hex: $(BUILD)/%.elf
 	$(OBJCOPY) -O ihex -R .eeprom $< $@
 
-disasm: all
+disasm: all $(BUILD)/capstone-c.elf $(BUILD)/capstone-asm.elf
 	$(OBJDUMP) -d -S $(BUILD)/blink-c.elf > $(BUILD)/blink-c.lst
 	$(OBJDUMP) -d -S $(BUILD)/blink-asm.elf > $(BUILD)/blink-asm.lst
 	$(OBJDUMP) -d -S $(BUILD)/gpio-c.elf > $(BUILD)/gpio-c.lst
