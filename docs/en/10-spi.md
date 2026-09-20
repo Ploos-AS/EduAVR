@@ -37,4 +37,4 @@ Q0 builds and disassembles both implementations. Q1 verifies modeled SPI registe
 4. Why can simulation not qualify the electrical SCK waveform?
 
 !!! tip "Next"
-    Continue to [TWI / I2C](11-twi-i2c.md).
+    Continue to [TWI / I2C](09-twi-i2c.md).
