@@ -68,8 +68,8 @@ main:
 
     in r18, _SFR_IO_ADDR(SPL)
     sts budget_sp_before, r18
-    in r18, _SFR_IO_ADDR(SPH)
-    sts budget_sp_before+1, r18
+    in r19, _SFR_IO_ADDR(SPH)
+    sts budget_sp_before+1, r19
 
     ldi r24, 0x20
     call budget_worker
@@ -77,8 +77,8 @@ main:
 
     in r18, _SFR_IO_ADDR(SPL)
     sts budget_sp_after, r18
-    in r18, _SFR_IO_ADDR(SPH)
-    sts budget_sp_after+1, r18
+    in r19, _SFR_IO_ADDR(SPH)
+    sts budget_sp_after+1, r19
 
     call budget_ready
 3:  rjmp 3b
