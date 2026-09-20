@@ -10,9 +10,9 @@ LDFLAGS := -mmcu=$(MCU)
 
 BUILD := build
 
-.PHONY: all c asm gpio stack timers pwm usart bridge robust spi twi eeprom adc data shared budget optimize analyze resource-gate disasm size check clean
+.PHONY: all c asm gpio stack timers pwm usart bridge robust spi twi eeprom adc data shared budget optimize capstone analyze resource-gate disasm size check clean
 
-all: c asm gpio stack timers pwm usart bridge robust spi twi eeprom adc data shared budget optimize
+all: c asm gpio stack timers pwm usart bridge robust spi twi eeprom adc data shared budget optimize capstone
 
 $(BUILD):
 	mkdir -p $(BUILD)
@@ -164,6 +164,12 @@ $(BUILD)/resource-budget-c.elf: examples/c/resource-budget/main.c | $(BUILD)
 $(BUILD)/resource-budget-asm.elf: examples/asm/resource-budget/main.S | $(BUILD)
 	$(CC) $(CFLAGS) $< -o $@
 
+$(BUILD)/capstone-c.elf: examples/c/capstone/main.c | $(BUILD)
+	$(CC) $(CFLAGS) $< -o $@
+
+$(BUILD)/capstone-asm.elf: examples/asm/capstone/main.S | $(BUILD)
+	$(CC) $(CFLAGS) $< -o $@
+
 $(BUILD)/optimization-c-os.elf: examples/c/optimization/main.c | $(BUILD)
 	$(CC) -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os -Wall -Wextra -Werror $< -o $@
 
@@ -216,6 +222,8 @@ disasm: all
 	$(OBJDUMP) -d -S $(BUILD)/optimization-c-o0.elf > $(BUILD)/optimization-c-o0.lst
 	$(OBJDUMP) -d -S $(BUILD)/optimization-c-o2.elf > $(BUILD)/optimization-c-o2.lst
 	$(OBJDUMP) -d -S $(BUILD)/optimization-asm.elf > $(BUILD)/optimization-asm.lst
+	$(OBJDUMP) -d -S $(BUILD)/capstone-c.elf > $(BUILD)/capstone-c.lst
+	$(OBJDUMP) -d -S $(BUILD)/capstone-asm.elf > $(BUILD)/capstone-asm.lst
 
 size: all
 	$(SIZE) -C --mcu=$(MCU) $(BUILD)/*.elf
