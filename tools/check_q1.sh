@@ -321,9 +321,9 @@ probe_resource_budget() {
         -ex "break budget_ready" \
         -ex "continue" \
         -ex "p/x (unsigned int)(*(unsigned char*)&budget_result)" \
-        -ex "p/x (unsigned int)(*(unsigned char*)&budget_sp_before | ((unsigned int)*(unsigned char*)(&budget_sp_before+1) << 8))" \
-        -ex "p/x (unsigned int)(*(unsigned char*)&budget_sp_deep | ((unsigned int)*(unsigned char*)(&budget_sp_deep+1) << 8))" \
-        -ex "p/x (unsigned int)(*(unsigned char*)&budget_sp_after | ((unsigned int)*(unsigned char*)(&budget_sp_after+1) << 8))" \
+        -ex "p/x (unsigned int)(*(unsigned char*)&budget_sp_before | ((unsigned int)*((unsigned char*)&budget_sp_before + 1) << 8))" \
+        -ex "p/x (unsigned int)(*(unsigned char*)&budget_sp_deep | ((unsigned int)*((unsigned char*)&budget_sp_deep + 1) << 8))" \
+        -ex "p/x (unsigned int)(*(unsigned char*)&budget_sp_after | ((unsigned int)*((unsigned char*)&budget_sp_after + 1) << 8))" \
         -ex "quit" >"$log" 2>&1
     rc=$?
     set -e
