@@ -19,8 +19,8 @@ budget_static: .skip 16
 
 budget_worker:
     ; AVR-GCC ABI: r24 carries the argument and r24 returns the result.
-    ; Reserve exactly 8 bytes using ordinary PUSH operations.  r16 is
-    ; call-clobbered, so its saved values do not need ABI preservation.
+    ; Reserve exactly 8 bytes using ordinary PUSH operations. r16 is
+    ; call-saved by the AVR-GCC ABI; the matching POPs preserve it.
     push r16
     push r16
     push r16
@@ -58,7 +58,7 @@ budget_worker:
 
 main:
     ldi r30, lo8(budget_static)
-    ldi r31, hi8(budget_static)
+    ldi r31, hi8(budget_static + 0x800000)
     clr r18
 2:
     st Z+, r18
