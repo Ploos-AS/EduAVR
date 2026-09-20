@@ -30,9 +30,11 @@ budget_worker:
     push r16
     push r16
 
-    ; Z points at the current top of the stack.
+    ; Z points at the current top of the stack. AVR PUSH stores at SP and
+    ; then decrements SP, so the eight reserved bytes live at SP+1..SP+8.
     in r30, _SFR_IO_ADDR(SPL)
     in r31, _SFR_IO_ADDR(SPH)
+    adiw r30, 1
 
     mov r18, r24
     ldi r19, 8
@@ -47,9 +49,11 @@ budget_worker:
     in r19, _SFR_IO_ADDR(SPH)
     sts budget_sp_deep+1, r19
 
-    ; Read local[0] and local[7] back from the stack frame.
+    ; Read local[0] and local[7] back from SP+1..SP+8 without touching
+    ; the caller's return address below the frame.
     in r30, _SFR_IO_ADDR(SPL)
     in r31, _SFR_IO_ADDR(SPH)
+    adiw r30, 1
     ld r24, Z
     adiw r30, 7
     ld r18, Z
