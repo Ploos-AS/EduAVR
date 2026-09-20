@@ -135,7 +135,7 @@ Implemented repository infrastructure includes:
 - **M3:** substantially implemented with Q1 timers/interrupts/PWM evidence.
 - **M4:** substantially implemented with Q1 USART/SPI/TWI evidence.
 - **M5:** complete at Q1/course level. EEPROM and ADC both have paired C/Assembly examples, deterministic simulator evidence and bilingual core lessons. Physical ADC behavior remains Q2.
-- **M6:** implementation complete at the course/Q1 level, pending the final CI qualification run. Six published bilingual lessons cover data structures, volatile/interrupt atomicity, SRAM/stack resource budgeting, optimization/code analysis, code-size/static-SRAM analysis, and an integrated systems capstone. The capstone has paired C/Assembly sources and a dedicated Q1 integration probe; dynamic stack remains separately qualified.
+- **M6:** complete and CI-qualified at the course/Q1 level (GitHub Actions run 524). Six published bilingual lessons cover data structures, volatile/interrupt atomicity, SRAM/stack resource budgeting, optimization/code analysis, code-size/static-SRAM analysis, and an integrated systems capstone. The capstone has paired C/Assembly sources and a dedicated Q1 integration probe; dynamic stack remains separately qualified.
 - **M7-M8:** planned/incremental; not complete.
 - **M9/Q2:** board convergence is in progress; physical qualification remains separate.
 
@@ -151,10 +151,10 @@ The milestone exit gate is `tools/check_m6.sh`. It combines clean build/disassem
 
 ## Known reconciliation items / next work
 
-1. After a green M6 CI run, begin M7 planning and preserve the Q1/Q2 boundary.
-2. Continue M6 with targeted regression evidence and keep resource guardrails aligned with the actual course examples.
-3. Use the capstone as the integration baseline before moving core teaching scope into M7.
+1. Begin M7 planning and preserve the Q1/Q2 boundary; obtain actual hardware mappings from the EduBoard repository before defining board-specific networking exercises.
+2. Keep M6 resource guardrails aligned with the actual course examples.
+3. Use the qualified capstone as the integration baseline for M7.
 4. Preserve semantic EN/NO parity for appendices A-M and the extended datasheet-reading guide as they evolve.
-4. Add real EduBoard CAD/Q2 visuals only from stable board revisions and physical evidence.
+5. Add real EduBoard CAD/Q2 visuals only from stable board revisions and physical evidence.
 
 This file should be updated whenever a milestone changes materially. The executable tests and CI are authoritative for qualification claims; the published navigation is authoritative for what is currently part of the course.
