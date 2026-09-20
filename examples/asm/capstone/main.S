@@ -88,6 +88,13 @@ main:
     sbrc r24, EEPE
     rjmp 1b
 
+    ldi r24, 0x20
+    sts EEARL, r24
+    clr r24
+    sts EEARH, r24
+    lds r24, EECR
+    ori r24, _BV(EERE)
+    sts EECR, r24
     lds r24, EEDR
     sts capstone_eeprom, r24
     sts capstone_calibration, r24
@@ -107,7 +114,8 @@ main:
     sts capstone_adc, r24
     sts capstone_adc+1, r25
 
-    add r24, r30
+    lds r18, capstone_calibration
+    add r24, r18
     adc r25, r1
     sts capstone_value, r24
     sts capstone_value+1, r25
