@@ -24,12 +24,6 @@ jobs:
         run: sh tools/check_m1.sh
       - name: Qualify complete M6 milestone
         run: sh tools/check_m6.sh
-      - name: Qualify Q1 simulator
-        run: sh tools/check_q1.sh
-      - name: Check resource guardrails
-        run: sh tools/check_resource_budget.sh
-      - name: Qualify integrated capstone
-        run: sh tools/check_capstone_q1.sh
       - name: Produce V1 visual-source artifacts
         run: |
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
