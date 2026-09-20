@@ -37,4 +37,4 @@ Q0 bygger og disassemblerer begge implementasjonene. Q1 verifiserer modellert SP
 4. Hvorfor kan simulatoren ikke kvalifisere den elektriske SCK-bølgeformen?
 
 !!! tip "Neste"
-    Fortsett til [TWI / I2C](09-twi-i2c.md).
+    Fortsett til [TWI / I2C](11-twi-i2c.md).
