@@ -57,6 +57,18 @@ EduAVR is designed around a simple principle: a microcontroller course is more u
 
     Begynn med [kursoversikten](no/COURSE_OUTLINE.md), og jobb deg gjennom leksjonene i rekkefølge. Bruk appendiksene når du ønsker å gå dypere inn i et tema.
 
+## What's new
+
+See the [course changelog](CHANGELOG.md) for recent published course changes.
+
+## Licensing
+
+- Software and code examples: MIT
+- Documentation and course material: CC BY-SA 4.0
+- Future hardware/PCB designs: CERN-OHL-P-2.0
+
+See the [full license notice](LICENSE.md) for the repository's licensing details.
+
 ## EduAVR project
 
 The repository also contains examples, exercises, qualification infrastructure, simulation policies and visual-source material used by the course.
