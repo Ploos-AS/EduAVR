@@ -61,4 +61,4 @@ Bruk bare TTL-seriell direkte når spenningsnivåene er kompatible. Ekte RS-232-
 6. Avansert: legg til en linjebasert kommandomodus uten å ødelegge transparent brotrafikk.
 
 !!! tip "Neste"
-    Fortsett til [SPI](08-spi.md). Senere capstone-arbeid kan legge til flytkontroll, feilhåndtering og konfigurerbare serieparametere.
+    Fortsett til [SPI](10-spi.md). Senere capstone-arbeid kan legge til flytkontroll, feilhåndtering og konfigurerbare serieparametere.
