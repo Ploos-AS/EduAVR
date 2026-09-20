@@ -87,6 +87,7 @@ Current automated Q1 evidence covers:
 | Resource budget | paired C/Assembly stack-depth observation, balanced SP and deterministic worker result |
 | Optimization | O0/Os/O2 plus Assembly preserve deterministic weighted-sum result; ELF `.text` is measurable |
 | Code/SRAM analysis | reproducible ELF section/symbol report plus explicit static-SRAM/Flash budgeting model |
+| Resource guard | CI-enforced course guardrails for Flash/static-SRAM growth, with documented non-universal limits |
 
 ## Published appendices
 
@@ -131,7 +132,7 @@ Implemented repository infrastructure includes:
 - **M3:** substantially implemented with Q1 timers/interrupts/PWM evidence.
 - **M4:** substantially implemented with Q1 USART/SPI/TWI evidence.
 - **M5:** complete at Q1/course level. EEPROM and ADC both have paired C/Assembly examples, deterministic simulator evidence and bilingual core lessons. Physical ADC behavior remains Q2.
-- **M6:** in progress with five published bilingual lessons: data structures, volatile/interrupt atomicity, SRAM/stack resource budgeting, optimization/code analysis, and code-size/static-SRAM analysis. The latter has a reproducible `make analyze` report; dynamic stack remains separately qualified.
+- **M6:** in progress with five published bilingual lessons: data structures, volatile/interrupt atomicity, SRAM/stack resource budgeting, optimization/code analysis, and code-size/static-SRAM analysis. The latter has a reproducible `make analyze` report and CI resource guardrails; dynamic stack remains separately qualified.
 - **M7-M8:** planned/incremental; not complete.
 - **M9/Q2:** board convergence is in progress; physical qualification remains separate.
 
@@ -144,7 +145,7 @@ Implemented repository infrastructure includes:
 ## Known reconciliation items / next work
 
 1. Continue language-parity checks as new chapters are added.
-2. Extend M6 with broader code-size/SRAM analysis after the optimization lesson.
+2. Continue M6 with targeted regression evidence and keep resource guardrails aligned with the actual course examples.
 3. Preserve semantic EN/NO parity for appendices A-M and the extended datasheet-reading guide as they evolve.
 4. Add real EduBoard CAD/Q2 visuals only from stable board revisions and physical evidence.
 
