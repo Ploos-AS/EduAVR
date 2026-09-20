@@ -61,4 +61,4 @@ Q1 kan verifisere registerkonfigurasjon, baudberegninger, buffer/state-machine-l
 4. Hva må testes fysisk i Q2?
 
 !!! tip "Neste"
-    Fortsett til [Dual-UART-bro](08-dual-uart-bridge.md).
+    Fortsett til [Dual-UART-bro](09-dual-uart-bridge.md).
