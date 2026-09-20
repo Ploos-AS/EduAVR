@@ -365,7 +365,7 @@ probe_optimization() {
         -ex "target remote :1234" \
         -ex "break optimization_ready" \
         -ex "continue" \
-        -ex "p/x (unsigned int)(*(unsigned char*)&opt_result | ((unsigned int)*((unsigned char*)&opt_result + 1) << 8))" \
+        -ex "p/x (unsigned int)(*(unsigned char*)0x108 | ((unsigned int)*(unsigned char*)0x109 << 8))" \
         -ex "quit" >"$log" 2>&1
     rc=$?
     set -e
