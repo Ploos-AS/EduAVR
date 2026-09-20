@@ -129,6 +129,12 @@ Implemented repository infrastructure includes:
 - **M7-M8:** planned/incremental; not complete.
 - **M9/Q2:** board convergence is in progress; physical qualification remains separate.
 
+## Recent course changes
+
+- Core lesson source filenames have been normalized to match the published lesson numbering: 09–16 now use matching `09-` through `16-` prefixes in both language tracks.
+- The course outline now maps planned core expansion explicitly to M7/M8.
+- Learner-facing changelog and project-documentation license pages are now part of the published site.
+
 ## Known reconciliation items / next work
 
 1. Continue language-parity checks as new chapters are added.
