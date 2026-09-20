@@ -79,6 +79,7 @@ nav:
       - Pointers, buffers and structs: en/14-data-structures.md
       - volatile, interrupts and atomicity: en/15-volatile-atomicity.md
       - SRAM and stack resource budgets: en/16-resource-budget.md
+      - Optimization and generated code: en/17-optimization.md
       - Appendices:
           - Arduino: en/appendix-a-arduino.md
           - Debugging: en/appendix-b-debugging.md
@@ -112,6 +113,7 @@ nav:
       - Pekere, buffere og structs: no/14-data-structures.md
       - volatile, interrupts og atomicitet: no/15-volatile-atomicity.md
       - SRAM- og stackbudsjett: no/16-resource-budget.md
+      - Optimalisering og generert kode: no/17-optimalisering.md
       - Appendikser:
           - Arduino: no/vedlegg-a-arduino.md
           - Debugging: no/vedlegg-b-debugging.md
