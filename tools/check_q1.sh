@@ -338,7 +338,11 @@ probe_resource_budget() {
     test "$result" = "0x47" || fail "unexpected budget result in $elf: $result"
     if test "$before_hex" != "$after_hex"; then
         printf '%s\n' "Resource-budget diagnostic for $elf:" >&2
-        avr-nm -n "$elf" | grep -E 'budget_(result|sp_before|sp_deep|sp_after|static)
+        avr-nm -n "$elf" | grep -E 'budget_(result|sp_before|sp_deep|sp_after|static)$' >&2 || true
+        avr-objdump -d "$elf" | sed -n '/<main>:/,/<budget_ready>:/p' >&2 || true
+        cat "$log" >&2
+        fail "stack did not restore in $elf: before=$before_hex after=$after_hex"
+    fi
     before=$(printf '%d' "$before_hex")
     deep=$(printf '%d' "$deep_hex")
     test "$deep" -lt "$before" ||
