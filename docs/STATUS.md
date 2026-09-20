@@ -147,14 +147,14 @@ Implemented repository infrastructure includes:
 
 ## M6 exit criteria
 
-The milestone exit gate is `tools/check_m6.sh`. It combines clean build/disassembly/size, the complete Q1 suite, resource regression guardrails, the integrated capstone qualification and generation of the memory report. A green CI run is required before M6 is marked CI-qualified.
+M6 is closed at the course/Q1 level. The milestone exit gate is `tools/check_m6.sh`; it combines clean build/disassembly/size, the complete Q1 suite, resource regression guardrails, the integrated capstone qualification and generation of the memory report. The qualification record is published in [M6_QUALIFICATION.md](M6_QUALIFICATION.md).
+
 
 ## Known reconciliation items / next work
 
 1. Begin M7 planning and preserve the Q1/Q2 boundary; obtain actual hardware mappings from the EduBoard repository before defining board-specific networking exercises.
-2. Keep M6 resource guardrails aligned with the actual course examples.
-3. Use the qualified capstone as the integration baseline for M7.
-4. Preserve semantic EN/NO parity for appendices A-M and the extended datasheet-reading guide as they evolve.
-5. Add real EduBoard CAD/Q2 visuals only from stable board revisions and physical evidence.
+2. Use the qualified M6 capstone as the integration baseline for M7 while keeping its resource guardrails under regression control.
+3. Preserve semantic EN/NO parity for appendices A-M and the extended datasheet-reading guide as they evolve.
+4. Add real EduBoard CAD/Q2 visuals only from stable board revisions and physical evidence.
 
 This file should be updated whenever a milestone changes materially. The executable tests and CI are authoritative for qualification claims; the published navigation is authoritative for what is currently part of the course.
