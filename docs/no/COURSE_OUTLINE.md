@@ -15,16 +15,18 @@ EduAVR lærer AVR fra maskinvaren og opp, med **Assembly og C side om side**.
 6. [Timere og avbrudd](05-timers-interrupts.md)
 7. [PWM](06-pwm.md)
 8. [USART](07-usart.md)
-9. [Dual-UART-bro](08-dual-uart-bridge.md)
-10. [SPI](08-spi.md)
-11. [TWI / I²C](09-twi-i2c.md)
-12. [EEPROM](10-eeprom.md)
-13. [ADC](11-adc.md)
-14. [Pekere, buffere og structs](12-data-structures.md)
-15. [volatile, interrupts og atomicitet](13-volatile-atomicity.md)
-16. [SRAM- og stackbudsjett](14-resource-budget.md)
+9. [Dual-UART-bro](09-dual-uart-bridge.md)
+10. [SPI](10-spi.md)
+11. [TWI / I²C](11-twi-i2c.md)
+12. [EEPROM](12-eeprom.md)
+13. [ADC](13-adc.md)
+14. [Pekere, buffere og structs](14-data-structures.md)
+15. [volatile, interrupts og atomicitet](15-volatile-atomicity.md)
+16. [SRAM- og stackbudsjett](16-resource-budget.md)
 
 ## Planlagt utvidelse
+
+Milepæl-kobling: **M7 = nettverk/Home Assistant**, **M8 = capstone-prosjekter**. Dette er fortsatt roadmap-stoff til leksjoner, eksempler og kvalifikasjonsevidens er ferdig.
 
 Følgende emner er ikke ferdige publiserte kjerneleksjoner ennå:
 
