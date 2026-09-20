@@ -8,7 +8,7 @@
 - **M3:** substantially implemented; timer/interrupt/PWM paths are exercised by Q1.
 - **M4:** substantially implemented; USART0/1 polling and IRQ/ring buffers, dual-UART bridges, SPI and TWI/I2C have Q1 coverage.
 - **M5:** complete at published-course/Q1 level; EEPROM and ADC have paired C/Assembly implementations, deterministic Q1 evidence and bilingual core lessons. Physical analog/electrical behaviour remains Q2.
-- **M6:** in progress; bilingual chapters and paired C/Assembly Q1 evidence cover data structures, ISR/main shared-state atomicity, SRAM/stack resource budgeting, and optimization/code analysis. Broader code/SRAM analysis is implemented, and M6 now includes an integrated systems capstone.
+- **M6:** implementation complete at course/Q1 level; final CI qualification gate pending. Bilingual chapters and paired C/Assembly Q1 evidence cover data structures, ISR/main shared-state atomicity, SRAM/stack resource budgeting, optimization/code analysis, code/SRAM analysis, and an integrated systems capstone.
 - **M7-M8:** planned/incremental material only; not complete.
 - **M9/Q2:** in progress through EduBoard-AVR convergence; physical qualification remains separate from simulator claims.
 
@@ -45,7 +45,7 @@ ADC, EEPROM, sensors and data acquisition.
 ## M6 — Systems programming
 Pointers, structs, buffers, volatile, stack use, optimization and code/SRAM analysis.
 
-Current M6 extensions: **optimization and generated-code analysis** is lesson 17, **code-size and SRAM analysis** is lesson 18, and **integrated systems capstone** is lesson 19. The capstone combines Timer, ADC, EEPROM and USART in paired C/Assembly implementations with dedicated Q1 integration evidence.
+Current M6 extensions: **optimization and generated-code analysis** is lesson 17, **code-size and SRAM analysis** is lesson 18, and **integrated systems capstone** is lesson 19. The capstone combines Timer, ADC, EEPROM and USART in paired C/Assembly implementations with dedicated Q1 integration evidence. M6 exits only after `tools/check_m6.sh` is green in CI.
 
 ## M7 — Networking / Home Assistant
 
