@@ -8,7 +8,7 @@
 - **M3:** substantially implemented; timer/interrupt/PWM paths are exercised by Q1.
 - **M4:** substantially implemented; USART0/1 polling and IRQ/ring buffers, dual-UART bridges, SPI and TWI/I2C have Q1 coverage.
 - **M5:** complete at published-course/Q1 level; EEPROM and ADC have paired C/Assembly implementations, deterministic Q1 evidence and bilingual core lessons. Physical analog/electrical behaviour remains Q2.
-- **M6:** implementation complete at course/Q1 level; final CI qualification gate pending. Bilingual chapters and paired C/Assembly Q1 evidence cover data structures, ISR/main shared-state atomicity, SRAM/stack resource budgeting, optimization/code analysis, code/SRAM analysis, and an integrated systems capstone.
+- **M6:** complete and CI-qualified at course/Q1 level (GitHub Actions run 524). Bilingual chapters and paired C/Assembly Q1 evidence cover data structures, ISR/main shared-state atomicity, SRAM/stack resource budgeting, optimization/code analysis, code/SRAM analysis, and an integrated systems capstone.
 - **M7-M8:** planned/incremental material only; not complete.
 - **M9/Q2:** in progress through EduBoard-AVR convergence; physical qualification remains separate from simulator claims.
 
