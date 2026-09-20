@@ -40,8 +40,8 @@ budget_worker:
 
     in r18, _SFR_IO_ADDR(SPL)
     sts budget_sp_deep, r18
-    in r19, _SFR_IO_ADDR(SPH)
-    sts budget_sp_deep+1, r19
+    in r18, _SFR_IO_ADDR(SPH)
+    sts budget_sp_deep+1, r18
 
     ; Equivalent result to local[0] + local[7]: x + (x + 7).
     add r24, r20
@@ -58,7 +58,7 @@ budget_worker:
 
 main:
     ldi r30, lo8(budget_static)
-    ldi r31, hi8(budget_static + 0x800000)
+    ldi r31, hi8(budget_static)
     clr r18
 2:
     st Z+, r18
@@ -68,8 +68,8 @@ main:
 
     in r18, _SFR_IO_ADDR(SPL)
     sts budget_sp_before, r18
-    in r19, _SFR_IO_ADDR(SPH)
-    sts budget_sp_before+1, r19
+    in r18, _SFR_IO_ADDR(SPH)
+    sts budget_sp_before+1, r18
 
     ldi r24, 0x20
     call budget_worker
@@ -77,8 +77,8 @@ main:
 
     in r18, _SFR_IO_ADDR(SPL)
     sts budget_sp_after, r18
-    in r19, _SFR_IO_ADDR(SPH)
-    sts budget_sp_after+1, r19
+    in r18, _SFR_IO_ADDR(SPH)
+    sts budget_sp_after+1, r18
 
     call budget_ready
 3:  rjmp 3b
