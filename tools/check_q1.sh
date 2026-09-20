@@ -375,7 +375,9 @@ probe_optimization() {
     test "$rc" -eq 0 || { cat "$log" >&2; fail "GDB optimization probe failed for $elf"; }
     value=$(awk '/^[$][0-9]+ = 0x/ { sub(/^.*= /, ""); print; exit }' "$log")
     test "$value" = "0x232" || fail "optimization semantic mismatch in $elf: result=$value"
-    avr-size -A "$elf" | awk '/\\.text[[:space:]]/ { found=1 } END { exit(found ? 0 : 1) }' || fail "could not inspect .text size in $elf"
+    text_size=$(avr-size -A "$elf" | awk '$1 == ".text" { print $2; exit }')
+    test -n "$text_size" || fail "could not inspect .text size in $elf"
+    test "$text_size" -gt 0 || fail ".text size is zero in $elf"
 }
 
 probe_optimization build/optimization-c-os.elf
