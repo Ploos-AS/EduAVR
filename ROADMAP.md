@@ -46,9 +46,13 @@ ADC, EEPROM, sensors and data acquisition.
 Pointers, structs, buffers, volatile, stack use, optimization and code/SRAM analysis.
 
 ## M7 — Networking / Home Assistant
+
+**Course outline mapping:** planned core expansion — networking, MQTT and Home Assistant integration.
 Ethernet experiments, MQTT concepts and Home Assistant integration.
 
 ## M8 — Capstones
+
+**Course outline mapping:** planned core expansion — final integrated/capstone projects.
 Serial/retro gateway, sensor node, protocol/debug tool and terminal/BBS controller candidates.
 
 ## M9 — EduBoard-AVR convergence and qualification
