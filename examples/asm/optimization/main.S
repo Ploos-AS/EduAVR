@@ -1,7 +1,7 @@
-.section .data
+.section .bss
 .global opt_input
 opt_input:
-    .byte 3,5,7,11,13,17,19,23
+    .skip 8
 
 .section .bss
 .global opt_result
@@ -39,6 +39,27 @@ optimization_ready:
 .global main
 .type main, @function
 main:
+    ; Initialize the deterministic input explicitly. This keeps the
+    ; assembly example independent of simulator CRT .data-copy behavior.
+    ldi r26, lo8(opt_input - 0x800000)
+    ldi r27, hi8(opt_input - 0x800000)
+    ldi r18, 3
+    st X+, r18
+    ldi r18, 5
+    st X+, r18
+    ldi r18, 7
+    st X+, r18
+    ldi r18, 11
+    st X+, r18
+    ldi r18, 13
+    st X+, r18
+    ldi r18, 17
+    st X+, r18
+    ldi r18, 19
+    st X+, r18
+    ldi r18, 23
+    st X+, r18
+
     ldi r24, lo8(opt_input - 0x800000)
     ldi r25, hi8(opt_input - 0x800000)
     call weighted_sum
