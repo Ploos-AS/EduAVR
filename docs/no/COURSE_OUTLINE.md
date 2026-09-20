@@ -24,6 +24,10 @@ EduAVR lærer AVR fra maskinvaren og opp, med **Assembly og C side om side**.
 15. [volatile, interrupts og atomicitet](15-volatile-atomicity.md)
 16. [SRAM- og stackbudsjett](16-resource-budget.md)
 
+## M6-utvidelse — optimalisering og kodeanalyse
+
+Leksjon 17 legger til sammenligning av optimaliseringsnivåer og analyse av generert Assembly, med parede C/Assembly-eksempler og Q1-evidens.
+
 ## Planlagt utvidelse
 
 Milepæl-kobling: **M7 = nettverk/Home Assistant**, **M8 = capstone-prosjekter**. Dette er fortsatt roadmap-stoff til leksjoner, eksempler og kvalifikasjonsevidens er ferdig.
