@@ -10,7 +10,7 @@ LDFLAGS := -mmcu=$(MCU)
 
 BUILD := build
 
-.PHONY: all c asm gpio stack timers pwm usart bridge robust spi twi eeprom adc data shared budget optimize analyze disasm size check clean
+.PHONY: all c asm gpio stack timers pwm usart bridge robust spi twi eeprom adc data shared budget optimize analyze resource-gate disasm size check clean
 
 all: c asm gpio stack timers pwm usart bridge robust spi twi eeprom adc data shared budget optimize
 
