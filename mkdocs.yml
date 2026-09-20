@@ -71,14 +71,14 @@ nav:
       - Timers and interrupts: en/05-timers-interrupts.md
       - PWM: en/06-pwm.md
       - USART: en/07-usart.md
-      - Dual UART bridge: en/08-dual-uart-bridge.md
-      - SPI: en/08-spi.md
-      - TWI / I2C: en/09-twi-i2c.md
-      - EEPROM: en/10-eeprom.md
-      - ADC: en/11-adc.md
-      - Pointers, buffers and structs: en/12-data-structures.md
-      - volatile, interrupts and atomicity: en/13-volatile-atomicity.md
-      - SRAM and stack resource budgets: en/14-resource-budget.md
+      - Dual UART bridge: en/09-dual-uart-bridge.md
+      - SPI: en/10-spi.md
+      - TWI / I2C: en/11-twi-i2c.md
+      - EEPROM: en/12-eeprom.md
+      - ADC: en/13-adc.md
+      - Pointers, buffers and structs: en/14-data-structures.md
+      - volatile, interrupts and atomicity: en/15-volatile-atomicity.md
+      - SRAM and stack resource budgets: en/16-resource-budget.md
       - Appendices:
           - Arduino: en/appendix-a-arduino.md
           - Debugging: en/appendix-b-debugging.md
@@ -104,14 +104,14 @@ nav:
       - Timere og avbrudd: no/05-timers-interrupts.md
       - PWM: no/06-pwm.md
       - USART: no/07-usart.md
-      - Dobbel UART-bro: no/08-dual-uart-bridge.md
-      - SPI: no/08-spi.md
-      - TWI / I2C: no/09-twi-i2c.md
-      - EEPROM: no/10-eeprom.md
-      - ADC: no/11-adc.md
-      - Pekere, buffere og structs: no/12-data-structures.md
-      - volatile, interrupts og atomicitet: no/13-volatile-atomicity.md
-      - SRAM- og stackbudsjett: no/14-resource-budget.md
+      - Dobbel UART-bro: no/09-dual-uart-bridge.md
+      - SPI: no/10-spi.md
+      - TWI / I2C: no/11-twi-i2c.md
+      - EEPROM: no/12-eeprom.md
+      - ADC: no/13-adc.md
+      - Pekere, buffere og structs: no/14-data-structures.md
+      - volatile, interrupts og atomicitet: no/15-volatile-atomicity.md
+      - SRAM- og stackbudsjett: no/16-resource-budget.md
       - Appendikser:
           - Arduino: no/vedlegg-a-arduino.md
           - Debugging: no/vedlegg-b-debugging.md
@@ -135,3 +135,5 @@ nav:
       - M1 qualification: M1_QUALIFICATION.md
       - Q1 qualification: Q1_QUALIFICATION.md
       - Repository status: STATUS.md
+      - License: LICENSE.md
+      - Changelog: CHANGELOG.md
