@@ -320,10 +320,10 @@ probe_resource_budget() {
         -ex "target remote :1234" \
         -ex "break budget_ready" \
         -ex "continue" \
-        -ex "p/x (unsigned int)(budget_result & 0xff)" \
-        -ex "p/x (unsigned int)(budget_sp_before & 0xffff)" \
-        -ex "p/x (unsigned int)(budget_sp_deep & 0xffff)" \
-        -ex "p/x (unsigned int)(budget_sp_after & 0xffff)" \
+        -ex "p/x (unsigned int)(*(unsigned char*)&budget_result)" \
+        -ex "p/x (unsigned int)(*(unsigned short*)&budget_sp_before)" \
+        -ex "p/x (unsigned int)(*(unsigned short*)&budget_sp_deep)" \
+        -ex "p/x (unsigned int)(*(unsigned short*)&budget_sp_after)" \
         -ex "quit" >"$log" 2>&1
     rc=$?
     set -e
