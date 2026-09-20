@@ -41,7 +41,7 @@ for elf in "$BUILD"/resource-budget-c.elf "$BUILD"/resource-budget-asm.elf; do
     static=$(avr-nm -S --size-sort "$elf" |
       awk '$NF=="budget_static" {print $2; exit}')
     test -n "$static" || fail "budget_static symbol missing from $elf"
-    static_dec=$((16#$static))
+    static_dec=$(printf "%d" "0x$static")
     test "$static_dec" -le "$RESOURCE_BUDGET_STATIC_SRAM_GUARD_BYTES" ||
       fail "$elf budget_static=$static_dec exceeds guard $RESOURCE_BUDGET_STATIC_SRAM_GUARD_BYTES"
 done
