@@ -26,6 +26,8 @@ jobs:
         run: sh tools/check_q1.sh
       - name: Check resource guardrails
         run: sh tools/check_resource_budget.sh
+      - name: Qualify integrated capstone
+        run: sh tools/check_capstone_q1.sh
       - name: Produce V1 visual-source artifacts
         run: |
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
