@@ -67,3 +67,8 @@ Published appendices currently cover:
 These sources now exist in both language tracks. Semantic parity is reviewed separately from mere file presence.
 
 The appendices are reference material and advanced practice. They can mature while EduBoard-AVR hardware is being stabilized because most are not tied to a moving board revision.
+
+
+### M6 extension — code size and SRAM analysis
+
+Lesson 18 turns ELF section and symbol data into a reproducible Flash/SRAM report, while keeping dynamic stack usage as a separate runtime measurement.
