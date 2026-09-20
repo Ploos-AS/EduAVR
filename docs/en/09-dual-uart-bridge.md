@@ -61,4 +61,4 @@ Use TTL-level serial directly only where voltage levels are compatible. Real RS-
 6. Advanced: add a line-oriented command mode without corrupting transparent bridge traffic.
 
 !!! tip "Next"
-    Continue to [SPI](08-spi.md). Later capstone work can add flow control, error handling and configurable serial parameters.
+    Continue to [SPI](10-spi.md). Later capstone work can add flow control, error handling and configurable serial parameters.
