@@ -2,7 +2,10 @@ name: Ebooks
 on:
   push:
     branches: [main]
-    paths: ["docs/**","tools/build_ebook.py",".github/workflows/ebooks.yml"]
+    paths:
+      - "docs/**"
+      - "tools/build_ebook.py"
+      - ".github/workflows/ebooks.yml"
   workflow_dispatch:
 permissions:
   contents: read
