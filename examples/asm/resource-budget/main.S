@@ -30,32 +30,20 @@ budget_worker:
     push r16
     push r16
 
-    ; Z points at the first reserved byte. On AVR PUSH decrements SP first
-    ; and then stores, so after eight pushes the frame occupies SP+1..SP+8.
-    in r30, _SFR_IO_ADDR(SPL)
-    in r31, _SFR_IO_ADDR(SPH)
-    adiw r30, 1
-
+    ; The eight PUSHes themselves are the stack-depth exercise. Do not use
+    ; Z as a writable frame pointer here: an off-by-one stack address can
+    ; overwrite saved state or a return address. Keep the deterministic
+    ; computation in registers while SP remains eight bytes deeper.
     mov r18, r24
-    ldi r19, 8
-1:
-    st Z+, r18
-    inc r18
-    dec r19
-    brne 1b
+    ldi r19, 7
+    add r18, r19
 
     in r18, _SFR_IO_ADDR(SPL)
     sts budget_sp_deep, r18
     in r19, _SFR_IO_ADDR(SPH)
     sts budget_sp_deep+1, r19
 
-    ; Read local[0] and local[7] back from SP+1..SP+8.
-    in r30, _SFR_IO_ADDR(SPL)
-    in r31, _SFR_IO_ADDR(SPH)
-    adiw r30, 1
-    ld r24, Z
-    adiw r30, 7
-    ld r18, Z
+    ; Equivalent result to local[0] + local[7]: x + (x + 7).
     add r24, r18
 
     pop r16
