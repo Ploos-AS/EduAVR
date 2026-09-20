@@ -14,7 +14,7 @@ This is the repository-level status snapshot. It distinguishes published course 
 
 ## Published core course
 
-The published navigation currently contains sixteen core chapters in each language:
+The published navigation currently contains seventeen core chapters in each language:
 
 1. course principles;
 2. toolchain;
@@ -31,7 +31,8 @@ The published navigation currently contains sixteen core chapters in each langua
 13. ADC;
 14. pointers, buffers and structs;
 15. volatile, interrupts and atomicity;
-16. SRAM and stack resource budgets.
+16. SRAM and stack resource budgets;
+17. optimization and generated code.
 
 ## Executable paired C/Assembly examples
 
@@ -55,7 +56,8 @@ The build currently contains paired C and hand-written Assembly firmware for:
 - ADC;
 - data structures;
 - shared ISR/main state;
-- SRAM/stack resource budgeting.
+- SRAM/stack resource budgeting;
+- optimization-level comparison and generated-code analysis.
 
 EEPROM and ADC implementation, qualification and published curriculum are now aligned.
 
@@ -81,6 +83,7 @@ Current automated Q1 evidence covers:
 | Data structures | deterministic buffer, pointer, struct layout and sum state |
 | Shared state | Timer0 interrupt progress plus coherent protected 16-bit snapshot in paired C/Assembly |
 | Resource budget | paired C/Assembly stack-depth observation, balanced SP and deterministic worker result |
+| Optimization | O0/Os/O2 plus Assembly preserve deterministic weighted-sum result; ELF `.text` is measurable |
 
 ## Published appendices
 
@@ -125,7 +128,7 @@ Implemented repository infrastructure includes:
 - **M3:** substantially implemented with Q1 timers/interrupts/PWM evidence.
 - **M4:** substantially implemented with Q1 USART/SPI/TWI evidence.
 - **M5:** complete at Q1/course level. EEPROM and ADC both have paired C/Assembly examples, deterministic simulator evidence and bilingual core lessons. Physical ADC behavior remains Q2.
-- **M6:** in progress with three published bilingual lessons: data structures, volatile/interrupt atomicity, and SRAM/stack resource budgeting, backed by paired C/Assembly and deterministic Q1 evidence.
+- **M6:** in progress with four published bilingual lessons: data structures, volatile/interrupt atomicity, SRAM/stack resource budgeting, and optimization/code analysis. The optimization lesson has paired C/Assembly examples and deterministic Q1 evidence.
 - **M7-M8:** planned/incremental; not complete.
 - **M9/Q2:** board convergence is in progress; physical qualification remains separate.
 
@@ -138,7 +141,8 @@ Implemented repository infrastructure includes:
 ## Known reconciliation items / next work
 
 1. Continue language-parity checks as new chapters are added.
-2. Preserve semantic EN/NO parity for appendices A-M and the extended datasheet-reading guide as they evolve.
-3. Add real EduBoard CAD/Q2 visuals only from stable board revisions and physical evidence.
+2. Extend M6 with broader code-size/SRAM analysis after the optimization lesson.
+3. Preserve semantic EN/NO parity for appendices A-M and the extended datasheet-reading guide as they evolve.
+4. Add real EduBoard CAD/Q2 visuals only from stable board revisions and physical evidence.
 
 This file should be updated whenever a milestone changes materially. The executable tests and CI are authoritative for qualification claims; the published navigation is authoritative for what is currently part of the course.
