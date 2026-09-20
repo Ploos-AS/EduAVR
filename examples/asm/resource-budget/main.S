@@ -14,6 +14,8 @@ budget_sp_deep:
 budget_sp_after:
     .skip 2
 .global budget_static
+.type budget_static, @object
+.size budget_static, 16
 budget_static:
     .skip 16
 
