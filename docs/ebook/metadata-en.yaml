@@ -1,0 +1,11 @@
+---
+title: "EduAVR Course"
+subtitle: "Learn AVR microcontrollers from the registers up — Assembly and C"
+author: "Ploos AS"
+lang: "en"
+rights: "Course text © 2026 Ploos AS. Licensed CC BY-SA 4.0."
+publisher: "Ploos AS"
+subject: "AVR; microcontrollers; assembly language; C; embedded systems"
+description: "A hardware-up course for ATmega1284P covering AVR architecture, assembly, C, peripherals, simulation and systems programming."
+identifier: "https://github.com/Ploos-AS/EduAVR"
+---
