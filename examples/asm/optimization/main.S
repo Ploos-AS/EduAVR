@@ -39,8 +39,8 @@ optimization_ready:
 .global main
 .type main, @function
 main:
-    ldi r24, lo8(opt_input)
-    ldi r25, hi8(opt_input)
+    ldi r24, lo8(opt_input - 0x800000)
+    ldi r25, hi8(opt_input - 0x800000)
     call weighted_sum
     sts opt_result, r24
     sts opt_result+1, r25
