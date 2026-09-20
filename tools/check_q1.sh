@@ -66,6 +66,8 @@ run_sim build/optimization-c-os.elf
 run_sim build/optimization-c-o0.elf
 run_sim build/optimization-c-o2.elf
 run_sim build/optimization-asm.elf
+run_sim build/capstone-c.elf
+run_sim build/capstone-asm.elf
 
 probe_gpio_config() {
     elf="$1"
