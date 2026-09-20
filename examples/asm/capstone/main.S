@@ -120,6 +120,13 @@ main:
     sts capstone_value, r24
     sts capstone_value+1, r25
 
+    ; Deterministic Q1 checkpoint: wait until Timer0 ISR has advanced ticks.
+4:
+    lds r18, capstone_ticks
+    lds r19, capstone_ticks+1
+    or r18, r19
+    breq 4b
+
     rcall capstone_ready
 3:  rjmp 3b
 
