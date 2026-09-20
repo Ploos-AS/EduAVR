@@ -376,7 +376,12 @@ probe_optimization() {
     value=$(awk '/^[$][0-9]+ = 0x/ { sub(/^.*= /, ""); print; exit }' "$log")
     if test "$value" != "0x232"; then
         printf '%s\n' "Optimization diagnostic for $elf:" >&2
-        avr-nm -n "$elf" | grep -E 'opt_(input|result)$|weighted_sum$|optimization_ready
+        avr-nm -n "$elf" | grep -E 'opt_(input|result)$|weighted_sum$|optimization_ready$' >&2 || true
+        avr-objdump -s -j .data "$elf" >&2 || true
+        avr-objdump -d "$elf" | sed -n '/<weighted_sum>:/,/<optimization_ready>:/p' >&2 || true
+        cat "$log" >&2
+        fail "optimization semantic mismatch in $elf: result=$value"
+    fi
     text_size=$(avr-size -A "$elf" | awk '$1 == ".text" { print $2; exit }')
     test -n "$text_size" || fail "could not inspect .text size in $elf"
     test "$text_size" -gt 0 || fail ".text size is zero in $elf"
