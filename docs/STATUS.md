@@ -60,7 +60,8 @@ The build currently contains paired C and hand-written Assembly firmware for:
 - shared ISR/main state;
 - SRAM/stack resource budgeting;
 - optimization-level comparison and generated-code analysis;
-- reproducible code-size and static-SRAM analysis.
+- reproducible code-size and static-SRAM analysis;
+- integrated Timer/ADC/EEPROM/USART capstone;
 
 EEPROM and ADC implementation, qualification and published curriculum are now aligned.
 
@@ -149,7 +150,7 @@ Implemented repository infrastructure includes:
 1. Continue language-parity checks as new chapters are added.
 2. Continue M6 with targeted regression evidence and keep resource guardrails aligned with the actual course examples.
 3. Use the capstone as the integration baseline before moving core teaching scope into M7.
-3. Preserve semantic EN/NO parity for appendices A-M and the extended datasheet-reading guide as they evolve.
+4. Preserve semantic EN/NO parity for appendices A-M and the extended datasheet-reading guide as they evolve.
 4. Add real EduBoard CAD/Q2 visuals only from stable board revisions and physical evidence.
 
 This file should be updated whenever a milestone changes materially. The executable tests and CI are authoritative for qualification claims; the published navigation is authoritative for what is currently part of the course.
