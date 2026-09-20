@@ -365,6 +365,9 @@ probe_optimization() {
         -ex "target remote :1234" \
         -ex "break optimization_ready" \
         -ex "continue" \
+        -ex "info registers r24 r25 r26 r27" \
+        -ex "x/10bx 0x100" \
+        -ex "x/10bx 0x800100" \
         -ex "p/x (unsigned int)(*(unsigned char*)0x108 | ((unsigned int)*(unsigned char*)0x109 << 8))" \
         -ex "quit" >"$log" 2>&1
     rc=$?
