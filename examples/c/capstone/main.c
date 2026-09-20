@@ -66,6 +66,10 @@ int main(void)
     capstone_adc = adc_read();
     capstone_value = (uint16_t)(capstone_adc + capstone_calibration);
 
+    /* Make the integration checkpoint deterministic: observe at least one\n       Timer0 compare interrupt before exposing capstone_ready to Q1. */
+    while (capstone_ticks == 0) {
+    }
+
     capstone_ready();
 
     for (;;) {
