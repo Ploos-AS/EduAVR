@@ -76,6 +76,17 @@ Docker can use the same Containerfile.
 
 Both tracks are first-class course material.
 
+## Ebooks
+
+CI builds two reflowable EPUB editions from the same Markdown source as the website:
+
+- `EduAVR-en.epub` — English
+- `EduAVR-no.epub` — Norsk
+
+The EPUB files are validated with EPUBCheck and are suitable for EPUB readers and Kindle workflows that accept EPUB. To download the latest CI build, open **Actions → Ebooks**, choose the latest successful run, and download the **EduAVR-ebooks** artifact.
+
+To build locally, install Pandoc, EPUBCheck and librsvg, then run the same steps defined in `.github/workflows/ebooks.yml`. The generated books are build artifacts; Markdown remains the source of truth.
+
 ## Status
 
 M0 foundation and M1 reproducible toolchain: complete and qualified in GitHub Actions.
