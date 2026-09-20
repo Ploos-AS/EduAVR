@@ -1,0 +1,11 @@
+---
+title: "EduAVR-kurset"
+subtitle: "Lær AVR-mikrokontrollere fra registrene og opp — Assembly og C"
+author: "Ploos AS"
+lang: "nb-NO"
+rights: "Kursinnhold © 2026 Ploos AS. Lisensiert CC BY-SA 4.0."
+publisher: "Ploos AS"
+subject: "AVR; mikrokontrollere; assembly; C; embedded-systemer"
+description: "Et maskinvarenært kurs for ATmega1284P som dekker AVR-arkitektur, Assembly, C, periferiutstyr, simulering og systemprogrammering."
+identifier: "https://github.com/Ploos-AS/EduAVR"
+---
