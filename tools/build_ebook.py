@@ -9,18 +9,27 @@ CORE={
 APP={"en":["appendix-a-arduino.md","appendix-b-debugging.md","appendix-c-disassembly-reverse-engineering.md","appendix-d-c-assembly-compiler.md","appendix-e-memory-internals.md","appendix-f-programming-bootloaders.md","appendix-g-electronics.md","appendix-h-protocol-analysis.md","appendix-i-performance.md","appendix-j-testing-qualification.md","appendix-k-build-board.md","appendix-l-retro-computing.md","appendix-m-datasheet-guide.md","appendix-i-reading-datasheets.md"],"no":["vedlegg-a-arduino.md","vedlegg-b-debugging.md","vedlegg-c-disassembly-reverse-engineering.md","vedlegg-d-c-assembler-kompilator.md","vedlegg-e-minne.md","vedlegg-f-programmering-bootloadere.md","vedlegg-g-elektronikk.md","vedlegg-h-protokollanalyse.md","vedlegg-i-ytelse.md","vedlegg-j-testing-kvalifikasjon.md","vedlegg-k-bygg-avr-board.md","vedlegg-l-retro.md","vedlegg-m-databladguide.md","appendix-i-reading-datasheets.md"]}
 def clean(s):
     """Convert MkDocs-oriented Markdown into conservative Pandoc Markdown."""
-    # Keep the transformation deliberately small and robust. Pandoc can
-    # consume ordinary Markdown and MkDocs admonitions as text.
-    # Strip only local Markdown-document targets: those files are merged into
-    # one manuscript and do not exist as separate resources in the EPUB.
-    def local_md_link(match):
-        label, target = match.group(1), match.group(2)
-        base = target.split("#", 1)[0].split("?", 1)[0]
-        if base.lower().endswith(".md"):
-            return label
-        return match.group(0)
-
-    return re.sub(r"\\[([^]\\n]+)\\]\\(([^)\\n]+)\\)", local_md_link, s)
+    # Remove targets from ordinary local .md links without regular expressions.
+    # The source documents are merged into one EPUB manuscript, so those
+    # source filenames are not resources in the resulting EPUB.
+    out = []
+    i = 0
+    while i < len(s):
+        if s[i] == "[":
+            close_label = s.find("](", i + 1)
+            if close_label != -1:
+                close_target = s.find(")", close_label + 2)
+                if close_target != -1:
+                    label = s[i + 1:close_label]
+                    target = s[close_label + 2:close_target]
+                    base = target.split("#", 1)[0].split("?", 1)[0]
+                    if base.lower().endswith(".md"):
+                        out.append(label)
+                        i = close_target + 1
+                        continue
+        out.append(s[i])
+        i += 1
+    return "".join(out)
 
 def main():
     a=argparse.ArgumentParser(); a.add_argument("language",choices=["en","no"]); a.add_argument("output",type=Path); x=a.parse_args()
