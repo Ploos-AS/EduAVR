@@ -16,15 +16,17 @@ EduAVR teaches AVR from the hardware upward, with **Assembly and C side by side*
 7. [PWM](06-pwm.md)
 8. [USART](07-usart.md)
 9. [Dual-UART bridge](08-dual-uart-bridge.md)
-10. [SPI](08-spi.md)
-11. [TWI / I2C](09-twi-i2c.md)
-12. [EEPROM](10-eeprom.md)
-13. [ADC](11-adc.md)
-14. [Pointers, buffers and structs](12-data-structures.md)
-15. [volatile, interrupts and atomicity](13-volatile-atomicity.md)
-16. [SRAM and stack resource budgets](14-resource-budget.md)
+10. [SPI](10-spi.md)
+11. [TWI / I2C](11-twi-i2c.md)
+12. [EEPROM](12-eeprom.md)
+13. [ADC](13-adc.md)
+14. [Pointers, buffers and structs](14-data-structures.md)
+15. [volatile, interrupts and atomicity](15-volatile-atomicity.md)
+16. [SRAM and stack resource budgets](16-resource-budget.md)
 
 ## Planned core expansion
+
+Milestone mapping: **M7 = networking/Home Assistant**, **M8 = capstone projects**. These remain roadmap scope until the lessons, examples and qualification evidence are complete.
 
 The original curriculum also identifies these topics for dedicated lessons as the course grows:
 
