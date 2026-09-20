@@ -81,6 +81,7 @@ nav:
       - SRAM and stack resource budgets: en/16-resource-budget.md
       - Optimization and generated code: en/17-optimization.md
       - Code size and SRAM analysis: en/18-code-size-sram-analysis.md
+      - Integrated systems capstone: en/19-integrated-systems-capstone.md
       - Appendices:
           - Arduino: en/appendix-a-arduino.md
           - Debugging: en/appendix-b-debugging.md
@@ -116,6 +117,7 @@ nav:
       - SRAM- og stackbudsjett: no/16-resource-budget.md
       - Optimalisering og generert kode: no/17-optimalisering.md
       - Analyse av kodestørrelse og SRAM: no/18-kode-storrelse-sram-analyse.md
+      - Integrert systems-capstone: no/19-integrert-systems-capstone.md
       - Appendikser:
           - Arduino: no/vedlegg-a-arduino.md
           - Debugging: no/vedlegg-b-debugging.md
