@@ -15,7 +15,7 @@ EduAVR teaches AVR from the hardware upward, with **Assembly and C side by side*
 6. [Timers and interrupts](05-timers-interrupts.md)
 7. [PWM](06-pwm.md)
 8. [USART](07-usart.md)
-9. [Dual-UART bridge](08-dual-uart-bridge.md)
+9. [Dual-UART bridge](09-dual-uart-bridge.md)
 10. [SPI](10-spi.md)
 11. [TWI / I2C](11-twi-i2c.md)
 12. [EEPROM](12-eeprom.md)
