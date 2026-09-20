@@ -65,6 +65,18 @@ Useful evidence includes .text, .data and .bss sizes, named symbol sizes, genera
 
 Do not turn these measurements into a universal ranking. The relevant constraint is the firmware's actual workload, memory limit and timing requirement.
 
+## CI resource guardrails
+
+The repository also runs `tools/check_resource_budget.sh` in CI. It enforces documented guardrails for the educational examples: a maximum Flash image, a maximum static SRAM footprint, and a tighter limit for the intentionally small resource-budget fixture.
+
+These are **regression guardrails for this course**, not claims about universally safe AVR firmware limits. The target MCU's physical capacity is documented in `tools/resource-policy.env`, while dynamic stack depth remains a separate runtime measurement.
+
+Run locally with:
+
+```sh
+make resource-gate
+```
+
 ## Qualification boundary
 
 Q1 checks that the analysis can be generated from the ELF and that the deterministic examples remain semantically valid.
