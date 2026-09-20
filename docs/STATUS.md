@@ -135,7 +135,7 @@ Implemented repository infrastructure includes:
 - **M3:** substantially implemented with Q1 timers/interrupts/PWM evidence.
 - **M4:** substantially implemented with Q1 USART/SPI/TWI evidence.
 - **M5:** complete at Q1/course level. EEPROM and ADC both have paired C/Assembly examples, deterministic simulator evidence and bilingual core lessons. Physical ADC behavior remains Q2.
-- **M6:** in progress with six published bilingual lessons: data structures, volatile/interrupt atomicity, SRAM/stack resource budgeting, optimization/code analysis, and code-size/static-SRAM analysis, and an integrated systems capstone. The capstone has paired C/Assembly sources and a dedicated Q1 integration probe; dynamic stack remains separately qualified.
+- **M6:** implementation complete at the course/Q1 level, pending the final CI qualification run. Six published bilingual lessons cover data structures, volatile/interrupt atomicity, SRAM/stack resource budgeting, optimization/code analysis, code-size/static-SRAM analysis, and an integrated systems capstone. The capstone has paired C/Assembly sources and a dedicated Q1 integration probe; dynamic stack remains separately qualified.
 - **M7-M8:** planned/incremental; not complete.
 - **M9/Q2:** board convergence is in progress; physical qualification remains separate.
 
@@ -145,9 +145,13 @@ Implemented repository infrastructure includes:
 - The course outline now maps planned core expansion explicitly to M7/M8.
 - Learner-facing changelog and project-documentation license pages are now part of the published site.
 
+## M6 exit criteria
+
+The milestone exit gate is `tools/check_m6.sh`. It combines clean build/disassembly/size, the complete Q1 suite, resource regression guardrails, the integrated capstone qualification and generation of the memory report. A green CI run is required before M6 is marked CI-qualified.
+
 ## Known reconciliation items / next work
 
-1. Continue language-parity checks as new chapters are added.
+1. After a green M6 CI run, begin M7 planning and preserve the Q1/Q2 boundary.
 2. Continue M6 with targeted regression evidence and keep resource guardrails aligned with the actual course examples.
 3. Use the capstone as the integration baseline before moving core teaching scope into M7.
 4. Preserve semantic EN/NO parity for appendices A-M and the extended datasheet-reading guide as they evolve.
