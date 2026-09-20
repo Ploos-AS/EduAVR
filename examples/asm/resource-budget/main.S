@@ -2,15 +2,20 @@
 
 .section .bss
 .global budget_result
-budget_result: .byte 1
+budget_result:
+    .skip 1
 .global budget_sp_before
-budget_sp_before: .byte 2
+budget_sp_before:
+    .skip 2
 .global budget_sp_deep
-budget_sp_deep: .byte 2
+budget_sp_deep:
+    .skip 2
 .global budget_sp_after
-budget_sp_after: .byte 2
+budget_sp_after:
+    .skip 2
 .global budget_static
-budget_static: .skip 16
+budget_static:
+    .skip 16
 
 .section .text
 .global main
