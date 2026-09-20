@@ -22,6 +22,8 @@ jobs:
         run: apt-get update && apt-get install -y gcc gcc-avr binutils-avr avr-libc avrdude avarice gdb-avr make simavr libsimavr-dev libelf-dev coreutils
       - name: Qualify M1 / Q0
         run: sh tools/check_m1.sh
+      - name: Qualify complete M6 milestone
+        run: sh tools/check_m6.sh
       - name: Qualify Q1 simulator
         run: sh tools/check_q1.sh
       - name: Check resource guardrails
