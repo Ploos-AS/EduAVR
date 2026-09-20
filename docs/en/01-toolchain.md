@@ -39,6 +39,25 @@ Inside the container, `make check` and `sh tools/check_q1.sh` use the same tool 
 !!! note "Hardware access"
     The container is intended first for building, inspection and simulator-based Q1 work. Passing a physical programmer or serial device into Docker/Podman is host-specific and belongs to Q2 hardware setup.
 
+## Simulator setup
+
+EduAVR uses **simavr** as its Q1 simulator. You do not need a separate EduAVR simulator download. The easiest route is the development container above, where simavr, avr-gdb and the required simulator libraries are already installed.
+
+Verify the simulator inside the container with:
+
+```sh
+simavr --help
+avr-gdb --version
+```
+
+To run the course's complete deterministic simulator qualification:
+
+```sh
+sh tools/check_q1.sh
+```
+
+The course uses simavr to execute ATmega1284P firmware and avr-gdb plus small simulator harnesses to inspect registers, SRAM, interrupts and modeled peripherals. Individual lessons explain the relevant probe rather than requiring a separate graphical simulator application.
+
 ## Native Debian installation
 
 A native Debian-family installation remains fully supported:
