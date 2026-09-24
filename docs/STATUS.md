@@ -155,6 +155,7 @@ M6 is closed at the course/Q1 level. The milestone exit gate is `tools/check_m6.
 1. Begin M7 planning and preserve the Q1/Q2 boundary; obtain actual hardware mappings from the EduBoard repository before defining board-specific networking exercises.
 2. Use the qualified M6 capstone as the integration baseline for M7 while keeping its resource guardrails under regression control.
 3. Preserve semantic EN/NO parity for appendices A-M and the extended datasheet-reading guide as they evolve.
-4. Add real EduBoard CAD/Q2 visuals only from stable board revisions and physical evidence.
+4. Execute the Q2 hardware qualification contract in [Q2_QUALIFICATION.md](Q2_QUALIFICATION.md) against a stable EduBoard-AVR revision; keep the result Q2-BLOCKED until reproducible physical evidence exists.
+5. Add real EduBoard CAD/Q2 visuals only from stable board revisions and physical evidence.
 
 This file should be updated whenever a milestone changes materially. The executable tests and CI are authoritative for qualification claims; the published navigation is authoritative for what is currently part of the course.
